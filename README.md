@@ -9,141 +9,150 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
     body {
       background: linear-gradient(135deg, #0b2b2f 0%, #05181c 100%);
-      font-family: 'Segoe UI', 'Cairo', system-ui, sans-serif;
-      padding: 16px;
+      font-family: 'Segoe UI', 'Cairo', system-ui, -apple-system, 'Roboto', sans-serif;
+      padding: 12px;
       min-height: 100vh;
       color: #f0f9ff;
+      font-size: 14px;
     }
     .app-container {
-      max-width: 1400px;
+      max-width: 800px;
       margin: 0 auto;
+      width: 100%;
     }
+    /* الهيدر */
     .hero {
       background: rgba(0, 15, 20, 0.65);
       backdrop-filter: blur(14px);
-      border-radius: 56px;
-      padding: 20px 24px;
-      margin-bottom: 28px;
+      border-radius: 28px;
+      padding: 16px 16px;
+      margin-bottom: 20px;
       text-align: center;
       border: 1px solid rgba(255, 180, 70, 0.5);
     }
     .hero h1 {
-      font-size: 1.9rem;
+      font-size: 1.6rem;
       background: linear-gradient(120deg, #FFE6B0, #FFB347);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
+      margin-bottom: 6px;
     }
     .school-badge {
       background: #1e4a5f;
       display: inline-block;
-      padding: 8px 20px;
-      border-radius: 60px;
-      font-size: 0.9rem;
-      margin-top: 8px;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      margin-top: 6px;
     }
+    /* لوحة التحكم */
     .control-panel {
       background: rgba(0, 22, 30, 0.7);
       backdrop-filter: blur(12px);
-      border-radius: 60px;
-      padding: 12px 20px;
+      border-radius: 50px;
+      padding: 10px 15px;
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 10px;
       margin-bottom: 20px;
     }
-    .search-group { flex: 2; min-width: 160px; }
+    .search-group { flex: 2; min-width: 140px; }
     .search-group input {
       width: 100%;
-      padding: 14px 22px;
-      border-radius: 50px;
+      padding: 12px 18px;
+      border-radius: 40px;
       border: none;
       background: #fef7e0;
       text-align: right;
       outline: none;
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
-    .round-group { flex: 1; min-width: 150px; }
+    .round-group { flex: 1; min-width: 120px; }
     .round-group select {
       width: 100%;
-      padding: 14px 16px;
-      border-radius: 50px;
+      padding: 12px 12px;
+      border-radius: 40px;
       background: #fef7e0;
       font-weight: bold;
       cursor: pointer;
+      font-size: 0.85rem;
     }
     .stats-card {
       background: #00000055;
-      border-radius: 60px;
-      padding: 8px 22px;
+      border-radius: 40px;
+      padding: 6px 16px;
       display: flex;
       align-items: center;
       font-weight: bold;
+      font-size: 0.8rem;
+      white-space: nowrap;
     }
     /* نتائج البحث السريع */
     .quick-search-results {
       background: rgba(0, 22, 30, 0.85);
       backdrop-filter: blur(12px);
-      border-radius: 40px;
-      padding: 16px;
-      margin-bottom: 25px;
+      border-radius: 28px;
+      padding: 12px;
+      margin-bottom: 20px;
       border: 1px solid #ffb34780;
       display: none;
     }
-    .quick-search-results.visible {
-      display: block;
-    }
+    .quick-search-results.visible { display: block; }
     .quick-search-title {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: bold;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       border-right: 4px solid #ffb347;
       padding-right: 12px;
     }
     .quick-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 15px;
+      grid-template-columns: 1fr;
+      gap: 12px;
     }
     .quick-match-card {
       background: #0a2e38cc;
-      border-radius: 28px;
-      padding: 12px;
+      border-radius: 24px;
+      padding: 10px;
       border: 1px solid #ffc97a50;
     }
     .quick-match-teams {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       font-weight: bold;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
     }
     .quick-result {
       background: #1e4a5f;
-      padding: 4px 12px;
-      border-radius: 40px;
-      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 30px;
+      font-size: 0.75rem;
       text-align: center;
       margin-top: 8px;
-      font-family: monospace;
     }
+    /* التبويبات */
     .tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin: 20px 0;
+      gap: 8px;
+      margin: 15px 0;
       border-bottom: 1px solid #ffb34760;
-      padding-bottom: 10px;
+      padding-bottom: 8px;
     }
     .tab-btn {
       background: rgba(0,0,0,0.4);
       border: none;
-      padding: 10px 24px;
+      padding: 8px 16px;
       border-radius: 40px;
-      font-size: 1rem;
+      font-size: 0.85rem;
       font-weight: bold;
       cursor: pointer;
       color: #ffdfa5;
@@ -155,19 +164,20 @@
     }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
+    /* شبكة المباريات */
     .matches-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 22px;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
     .match-card {
       background: linear-gradient(145deg, #0e3843, #06232b);
-      border-radius: 40px;
-      padding: 18px;
+      border-radius: 28px;
+      padding: 14px;
       border: 1px solid #ffc97a30;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
     .match-card.live-card {
       border: 2px solid #ff3a2f;
@@ -177,42 +187,46 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       background: #021d24a0;
-      padding: 12px;
+      padding: 10px;
       border-radius: 60px;
     }
     .team {
       background: #00000055;
-      padding: 8px 12px;
-      border-radius: 50px;
+      padding: 6px 10px;
+      border-radius: 40px;
       flex: 1;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       font-weight: bold;
+      font-size: 0.85rem;
+      white-space: normal;
+      word-break: keep-all;
     }
-    .team span:first-child { font-size: 1.3rem; }
+    .team span:first-child { font-size: 1.2rem; }
     .vs {
       background: #FFB347;
-      padding: 5px 12px;
+      padding: 3px 10px;
       border-radius: 40px;
       font-weight: bold;
+      font-size: 0.75rem;
     }
     .datetime-row {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       background: #0a2e38;
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: 50px;
     }
     .match-day, .match-full-date {
-      padding: 6px 14px;
+      padding: 4px 10px;
       border-radius: 40px;
-      font-size: 0.85rem;
+      font-size: 0.7rem;
       text-align: center;
     }
     .match-day { background: #1e4a5f; color: #FFE0A3; flex:1; }
@@ -222,20 +236,20 @@
       justify-content: space-between;
       align-items: baseline;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 8px;
     }
     .round-tag {
       background: #263b44;
-      padding: 5px 14px;
+      padding: 4px 12px;
       border-radius: 60px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
     }
     .countdown-timer {
       background: #00000070;
       font-family: monospace;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: bold;
-      padding: 8px 12px;
+      padding: 6px 12px;
       border-radius: 60px;
       text-align: center;
     }
@@ -243,7 +257,7 @@
       background: #d32f2f;
       animation: pulse 1.2s infinite;
       border-radius: 40px;
-      padding: 6px 16px;
+      padding: 4px 12px;
     }
     @keyframes pulse {
       0% { opacity: 0.7; background: #b71c1c; }
@@ -254,16 +268,17 @@
       grid-column: 1/-1;
       text-align: center;
       background: #102e36b3;
-      padding: 48px;
-      border-radius: 70px;
+      padding: 30px;
+      border-radius: 50px;
+      font-size: 1rem;
     }
     .filter-bar {
       display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 10px;
+      margin-bottom: 15px;
       background: rgba(0,0,0,0.3);
-      padding: 12px;
-      border-radius: 60px;
+      padding: 10px;
+      border-radius: 50px;
       flex-wrap: wrap;
     }
     .filter-bar input {
@@ -273,34 +288,37 @@
       border-radius: 40px;
       outline: none;
       flex: 1;
+      font-size: 0.85rem;
     }
-    /* جداول الترتيب - لون خلفية جديد وخط غامق */
+    /* جداول الترتيب - متجاوبة */
     .groups-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 24px;
+      grid-template-columns: 1fr;
+      gap: 20px;
     }
     .group-card {
-      background: #2c4f5e;  /* خلفية أفتح قليلاً لتحسين التباين */
+      background: #2c4f5e;
       backdrop-filter: blur(4px);
-      border-radius: 32px;
-      padding: 16px;
+      border-radius: 28px;
+      padding: 12px;
       border: 1px solid #ffb34780;
+      overflow-x: auto;
     }
     .group-title {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: bold;
       text-align: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       color: #FFE0A3;
     }
     .standings-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
+      min-width: 500px;
     }
     .standings-table th, .standings-table td {
-      padding: 8px 4px;
+      padding: 6px 2px;
       text-align: center;
       border-bottom: 1px solid #ffb34760;
     }
@@ -310,28 +328,43 @@
       font-weight: bold;
     }
     .standings-table td {
-      background-color: #eef4f5;  /* خلفية فاتحة جداً */
-      color: #1a2c34;             /* لون خط غامق جداً (أسود تقريباً) */
-      font-weight: 600;           /* خط عريض */
+      background-color: #eef4f5;
+      color: #1a2c34;
+      font-weight: 600;
     }
     .team-name-td {
       text-align: right;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       justify-content: flex-start;
+      font-size: 0.7rem;
     }
     footer {
-      margin-top: 48px;
+      margin-top: 30px;
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.65rem;
       color: #90b8c2;
       border-top: 1px dashed #ffb34760;
-      padding-top: 24px;
+      padding-top: 16px;
     }
-    @media (max-width: 700px) {
-      .groups-container { grid-template-columns: 1fr; }
-      .team-name-td { font-size: 0.7rem; }
+    /* تحسينات إضافية للجوال */
+    @media (min-width: 550px) {
+      body { padding: 16px; }
+      .matches-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+      .quick-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+      .groups-container { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+      .team { font-size: 0.9rem; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.3rem; }
+      .control-panel { border-radius: 40px; padding: 8px 12px; gap: 8px; }
+      .search-group input { padding: 10px 14px; font-size: 0.8rem; }
+      .round-group select { padding: 10px 10px; font-size: 0.75rem; }
+      .stats-card { padding: 4px 12px; font-size: 0.7rem; }
+      .team { font-size: 0.75rem; }
+      .team span:first-child { font-size: 1rem; }
+      .countdown-timer { font-size: 0.85rem; }
     }
   </style>
 </head>
@@ -344,7 +377,7 @@
 
   <div class="control-panel">
     <div class="search-group">
-      <input type="text" id="globalSearchInput" placeholder="🔍 ابحث عن منتخب (يعرض المباريات القادمة والسابقة مع النتيجة)" autocomplete="off">
+      <input type="text" id="globalSearchInput" placeholder="🔍 ابحث عن منتخب (مباريات قادمة وسابقة)" autocomplete="off">
     </div>
     <div class="round-group">
       <select id="roundFilter">
@@ -357,14 +390,14 @@
     <div class="stats-card" id="matchesCounter">🕒 جار التحميل</div>
   </div>
 
-  <!-- منطقة نتائج البحث السريع -->
+  <!-- نتائج البحث السريع -->
   <div id="quickSearchResults" class="quick-search-results">
     <div class="quick-search-title">🔍 نتائج البحث عن "<span id="searchKeyword"></span>"</div>
     <div id="quickResultsContainer" class="quick-grid"></div>
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active" data-tab="upcoming">⚡ المباريات القادمة والجارية</button>
+    <button class="tab-btn active" data-tab="upcoming">⚡ القادمة والجارية</button>
     <button class="tab-btn" data-tab="previous">📋 المباريات السابقة</button>
     <button class="tab-btn" data-tab="standings">📊 ترتيب المجموعات</button>
   </div>
@@ -384,12 +417,12 @@
     <div id="standingsContainer" class="groups-container"><div class="empty-state">📊 جاري حساب ترتيب المجموعات...</div></div>
   </div>
 
-  <footer>🔄 تحديث تلقائي للمباريات القادمة | البحث الشامل يعرض جميع المباريات المرتبطة بالمنتخب</footer>
+  <footer>🔄 تحديث تلقائي للمباريات القادمة | البحث الشامل يشمل النتائج</footer>
 </div>
 
 <script>
   // =============================================
-  // الدوال الأساسية للمباريات القادمة
+  // الدوال الأساسية
   // =============================================
   function now() { return new Date().getTime(); }
   function matchTime(t) { return new Date(t).getTime(); }
@@ -425,7 +458,7 @@
   }
 
   // =============================================
-  // بيانات المباريات القادمة (دور المجموعات كاملاً)
+  // بيانات المباريات القادمة (دور المجموعات)
   // =============================================
   const rawMatches = [
     { team1:"المكسيك", team2:"جنوب أفريقيا", time:"2026-06-11T22:00:00", round:"first" },
@@ -528,27 +561,27 @@
   }
 
   // =============================================
-  // المباريات السابقة (API) مع ترجمة الأسماء
+  // المباريات السابقة (API) + الترجمة
   // =============================================
   const translationMap = new Map([
-    ["مکزیک","المكسيك"], ["Mexico","المكسيك"], ["آفریقای جنوبی","جنوب أفريقيا"], ["South Africa","جنوب أفريقيا"],
-    ["آرژانتین","الأرجنتين"], ["Argentina","الأرجنتين"], ["الجزایر","الجزائر"], ["Algeria","الجزائر"],
-    ["اتریش","النمسا"], ["Austria","النمسا"], ["اردن","الأردن"], ["Jordan","الأردن"], ["پرتغال","البرتغال"], ["Portugal","البرتغال"],
-    ["کنگو دمکراتیک","الكونغو الديمقراطية"], ["DR Congo","الكونغو الديمقراطية"], ["کره جنوبی","كوريا الجنوبية"], ["South Korea","كوريا الجنوبية"],
-    ["جمهوری چک","التشيك"], ["Czech Republic","التشيك"], ["کانادا","كندا"], ["Canada","كندا"], ["بوسنی و هرزگوین","البوسنة والهرسك"], ["Bosnia and Herzegovina","البوسنة والهرسك"],
-    ["آمریکا","أمريكا"], ["United States","أمريكا"], ["عراق","العراق"], ["Iraq","العراق"], ["سوئیس","سويسرا"], ["Switzerland","سويسرا"],
-    ["قطر","قطر"], ["Qatar","قطر"], ["برزیل","البرازيل"], ["Brazil","البرازيل"], ["مراکش","المغرب"], ["Morocco","المغرب"],
-    ["هائیتی","هايتي"], ["Haiti","هايتي"], ["اسکاتلند","إسكتلندا"], ["Scotland","إسكتلندا"], ["استرالیا","أستراليا"], ["Australia","أستراليا"],
-    ["ترکیه","تركيا"], ["Turkey","تركيا"], ["آلمان","ألمانيا"], ["Germany","ألمانيا"], ["کوزوو","كوسوفو"], ["Kosovo","كوسوفو"],
-    ["ژاپن","اليابان"], ["Japan","اليابان"], ["هلند","هولندا"], ["Netherlands","هولندا"], ["اکوادور","الإكوادور"], ["Ecuador","الإكوادور"],
-    ["ساحل عاج","ساحل العاج"], ["Ivory Coast","ساحل العاج"], ["سوئد","السويد"], ["Sweden","السويد"], ["تونس","تونس"], ["Tunisia","تونس"],
-    ["اسپانیا","إسبانيا"], ["Spain","إسبانيا"], ["کیپ ورد","الرأس الأخضر"], ["Cape Verde","الرأس الأخضر"], ["مصر","مصر"], ["Egypt","مصر"],
-    ["بلژیک","بلجيكا"], ["Belgium","بلجيكا"], ["عربستان سعودی","السعودية"], ["Saudi Arabia","السعودية"], ["اروگوئه","أوروغواي"], ["Uruguay","أوروگوئه"],
-    ["ایران","إيران"], ["Iran","إيران"], ["نیوزیلند","نيوزيلندا"], ["New Zealand","نيوزيلندا"], ["سنگال","السنغال"], ["Senegal","السنغال"],
-    ["فرانسه","فرنسا"], ["France","فرنسا"], ["نروژ","النرويج"], ["Norway","النرويج"], ["انگلستان","إنجلترا"], ["England","إنجلترا"],
-    ["کرواسی","كرواتيا"], ["Croatia","كرواتيا"], ["پاناما","بنما"], ["Panama","بنما"], ["کلمبیا","كولومبيا"], ["Colombia","كولومبيا"],
-    ["ازبکستان","أوزبكستان"], ["Uzbekistan","أوزبكستان"], ["غنا","غانا"], ["Ghana","غانا"], ["پاراگوئه","باراغواي"], ["Paraguay","باراغواي"],
-    ["بوسني و هرزكوين","البوسنة والهرسك"], ["كوريا الجنوبية (كوريا الشمالية)","كوريا الجنوبية"], ["تشيك","التشيك"], ["امریکا","أمريكا"]
+    ["مکزیک","المكسيك"],["Mexico","المكسيك"],["آفریقای جنوبی","جنوب أفريقيا"],["South Africa","جنوب أفريقيا"],
+    ["آرژانتین","الأرجنتين"],["Argentina","الأرجنتين"],["الجزایر","الجزائر"],["Algeria","الجزائر"],
+    ["اتریش","النمسا"],["Austria","النمسا"],["اردن","الأردن"],["Jordan","الأردن"],["پرتغال","البرتغال"],["Portugal","البرتغال"],
+    ["کنگو دمکراتیک","الكونغو الديمقراطية"],["DR Congo","الكونغو الديمقراطية"],["کره جنوبی","كوريا الجنوبية"],["South Korea","كوريا الجنوبية"],
+    ["جمهوری چک","التشيك"],["Czech Republic","التشيك"],["کانادا","كندا"],["Canada","كندا"],["بوسنی و هرزگوین","البوسنة والهرسك"],["Bosnia and Herzegovina","البوسنة والهرسك"],
+    ["آمریکا","أمريكا"],["United States","أمريكا"],["عراق","العراق"],["Iraq","العراق"],["سوئیس","سويسرا"],["Switzerland","سويسرا"],
+    ["قطر","قطر"],["Qatar","قطر"],["برزیل","البرازيل"],["Brazil","البرازيل"],["مراکش","المغرب"],["Morocco","المغرب"],
+    ["هائیتی","هايتي"],["Haiti","هايتي"],["اسکاتلند","إسكتلندا"],["Scotland","إسكتلندا"],["استرالیا","أستراليا"],["Australia","أستراليا"],
+    ["ترکیه","تركيا"],["Turkey","تركيا"],["آلمان","ألمانيا"],["Germany","ألمانيا"],["کوزوو","كوسوفو"],["Kosovo","كوسوفو"],
+    ["ژاپن","اليابان"],["Japan","اليابان"],["هلند","هولندا"],["Netherlands","هولندا"],["اکوادور","الإكوادور"],["Ecuador","الإكوادور"],
+    ["ساحل عاج","ساحل العاج"],["Ivory Coast","ساحل العاج"],["سوئد","السويد"],["Sweden","السويد"],["تونس","تونس"],["Tunisia","تونس"],
+    ["اسپانیا","إسبانيا"],["Spain","إسبانيا"],["کیپ ورد","الرأس الأخضر"],["Cape Verde","الرأس الأخضر"],["مصر","مصر"],["Egypt","مصر"],
+    ["بلژیک","بلجيكا"],["Belgium","بلجيكا"],["عربستان سعودی","السعودية"],["Saudi Arabia","السعودية"],["اروگوئه","أوروغواي"],["Uruguay","أوروگوئه"],
+    ["ایران","إيران"],["Iran","إيران"],["نیوزیلند","نيوزيلندا"],["New Zealand","نيوزيلندا"],["سنگال","السنغال"],["Senegal","السنغال"],
+    ["فرانسه","فرنسا"],["France","فرنسا"],["نروژ","النرويج"],["Norway","النرويج"],["انگلستان","إنجلترا"],["England","إنجلترا"],
+    ["کرواسی","كرواتيا"],["Croatia","كرواتيا"],["پاناما","بنما"],["Panama","بنما"],["کلمبیا","كولومبيا"],["Colombia","كولومبيا"],
+    ["ازبکستان","أوزبكستان"],["Uzbekistan","أوزبكستان"],["غنا","غانا"],["Ghana","غانا"],["پاراگوئه","باراغواي"],["Paraguay","باراغواي"],
+    ["بوسني و هرزكوين","البوسنة والهرسك"],["كوريا الجنوبية (كوريا الشمالية)","كوريا الجنوبية"],["تشيك","التشيك"],["امریکا","أمريكا"]
   ]);
 
   function translateToArabic(rawName) {
@@ -616,7 +649,7 @@
   }
 
   // =============================================
-  // البحث الشامل (المباريات القادمة + السابقة)
+  // البحث الشامل
   // =============================================
   function performGlobalSearch() {
     const keyword = document.getElementById('globalSearchInput').value.trim();
@@ -633,7 +666,7 @@
       html = `<div class="empty-state" style="grid-column:1/-1; padding:20px;">❌ لا توجد مباريات قادمة أو سابقة تحمل اسم "${keyword}"</div>`;
     } else {
       if (upcomingFiltered.length) {
-        html += `<div style="grid-column:1/-1; margin:5px 0 10px 0; font-weight:bold; color:#FFE0A3;">⚡ المباريات القادمة والجارية (${upcomingFiltered.length})</div>`;
+        html += `<div style="grid-column:1/-1; margin:5px 0 8px 0; font-weight:bold; color:#FFE0A3;">⚡ المباريات القادمة والجارية (${upcomingFiltered.length})</div>`;
         upcomingFiltered.forEach(m => {
           const st = getMatchStatus(m);
           html += `<div class="quick-match-card"><div class="quick-match-teams"><span>${getFlag(m.team1)}</span> ${m.team1} 🆚 ${m.team2} <span>${getFlag(m.team2)}</span></div>
@@ -642,7 +675,7 @@
         });
       }
       if (previousFiltered.length) {
-        html += `<div style="grid-column:1/-1; margin:15px 0 10px 0; font-weight:bold; color:#FFE0A3;">📋 المباريات السابقة (${previousFiltered.length})</div>`;
+        html += `<div style="grid-column:1/-1; margin:15px 0 8px 0; font-weight:bold; color:#FFE0A3;">📋 المباريات السابقة (${previousFiltered.length})</div>`;
         previousFiltered.forEach(g => {
           html += `<div class="quick-match-card"><div class="quick-match-teams"><span>${getFlag(g.homeAr)}</span> ${g.homeAr} 🆚 ${g.awayAr} <span>${getFlag(g.awayAr)}</span></div>
             <div class="quick-result">النتيجة: ${g.homeScore} - ${g.awayScore}</div>
@@ -654,74 +687,45 @@
   }
 
   // =============================================
-  // جدول ترتيب المجموعات
+  // ترتيب المجموعات (نفس السابق)
   // =============================================
   const finalGroups = {
-    "A": ["المكسيك", "جنوب أفريقيا", "كوريا الجنوبية", "التشيك"],
-    "B": ["الأرجنتين", "الجزائر", "النمسا", "الأردن"],
-    "C": ["البرتغال", "الكونغو الديمقراطية", "كرواتيا", "أوزبكستان"],
-    "D": ["كندا", "البوسنة والهرسك", "سويسرا", "قطر"],
-    "E": ["أمريكا", "العراق", "تركيا", "باراغواي"],
-    "F": ["البرازيل", "المغرب", "هايتي", "إسكتلندا"],
-    "G": ["أستراليا", "هولندا", "السويد", "تونس"],
-    "H": ["ألمانيا", "كوسوفو", "الإكوادور", "ساحل العاج"],
-    "I": ["إسبانيا", "الرأس الأخضر", "السعودية", "أوروغواي"],
-    "J": ["مصر", "بلجيكا", "إيران", "نيوزيلندا"],
-    "K": ["السنغال", "فرنسا", "النرويج", "إنجلترا"],
-    "L": ["غانا", "بنما", "كولومبيا", "الكونغو الديمقراطية"]
+    "A": ["المكسيك","جنوب أفريقيا","كوريا الجنوبية","التشيك"], "B": ["الأرجنتين","الجزائر","النمسا","الأردن"],
+    "C": ["البرتغال","الكونغو الديمقراطية","كرواتيا","أوزبكستان"], "D": ["كندا","البوسنة والهرسك","سويسرا","قطر"],
+    "E": ["أمريكا","العراق","تركيا","باراغواي"], "F": ["البرازيل","المغرب","هايتي","إسكتلندا"],
+    "G": ["أستراليا","هولندا","السويد","تونس"], "H": ["ألمانيا","كوسوفو","الإكوادور","ساحل العاج"],
+    "I": ["إسبانيا","الرأس الأخضر","السعودية","أوروغواي"], "J": ["مصر","بلجيكا","إيران","نيوزيلندا"],
+    "K": ["السنغال","فرنسا","النرويج","إنجلترا"], "L": ["غانا","بنما","كولومبيا","الكونغو الديمقراطية"]
   };
-
   function calculateStandings() {
     let standings = {};
     for (let [group, teams] of Object.entries(finalGroups)) {
       standings[group] = {};
-      teams.forEach(team => {
-        standings[group][team] = { played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, points: 0 };
-      });
+      teams.forEach(team => { standings[group][team] = { played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0, points:0 }; });
     }
     previousGamesData.forEach(game => {
       const { homeAr, awayAr, homeScore, awayScore } = game;
       let groupName = null;
-      for (let [g, teams] of Object.entries(finalGroups)) {
-        if (teams.includes(homeAr) && teams.includes(awayAr)) { groupName = g; break; }
-      }
+      for (let [g, teams] of Object.entries(finalGroups)) { if (teams.includes(homeAr) && teams.includes(awayAr)) { groupName = g; break; } }
       if (!groupName) return;
       const stats = standings[groupName];
       if (!stats[homeAr] || !stats[awayAr]) return;
       stats[homeAr].played++; stats[awayAr].played++;
       stats[homeAr].goalsFor += homeScore; stats[homeAr].goalsAgainst += awayScore;
       stats[awayAr].goalsFor += awayScore; stats[awayAr].goalsAgainst += homeScore;
-      if (homeScore > awayScore) {
-        stats[homeAr].wins++; stats[homeAr].points += 3; stats[awayAr].losses++;
-      } else if (awayScore > homeScore) {
-        stats[awayAr].wins++; stats[awayAr].points += 3; stats[homeAr].losses++;
-      } else {
-        stats[homeAr].draws++; stats[awayAr].draws++;
-        stats[homeAr].points += 1; stats[awayAr].points += 1;
-      }
+      if (homeScore > awayScore) { stats[homeAr].wins++; stats[homeAr].points += 3; stats[awayAr].losses++; }
+      else if (awayScore > homeScore) { stats[awayAr].wins++; stats[awayAr].points += 3; stats[homeAr].losses++; }
+      else { stats[homeAr].draws++; stats[awayAr].draws++; stats[homeAr].points += 1; stats[awayAr].points += 1; }
     });
     const container = document.getElementById('standingsContainer');
     let html = '';
     for (let [group, teamsStats] of Object.entries(standings)) {
       let tableRows = [];
-      for (let [team, stat] of Object.entries(teamsStats)) {
-        const goalDiff = stat.goalsFor - stat.goalsAgainst;
-        tableRows.push({ team, ...stat, goalDiff });
-      }
-      tableRows.sort((a,b) => {
-        if (a.points !== b.points) return b.points - a.points;
-        if (a.goalDiff !== b.goalDiff) return b.goalDiff - a.goalDiff;
-        return b.goalsFor - a.goalsFor;
-      });
-      html += `<div class="group-card"><div class="group-title">المجموعة ${group}</div>
-        <table class="standings-table"><thead><tr><th>#</th><th>الفريق</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>فارق</th><th>نقاط</th></tr></thead><tbody>`;
+      for (let [team, stat] of Object.entries(teamsStats)) { tableRows.push({ team, ...stat, goalDiff: stat.goalsFor - stat.goalsAgainst }); }
+      tableRows.sort((a,b) => { if (a.points !== b.points) return b.points - a.points; if (a.goalDiff !== b.goalDiff) return b.goalDiff - a.goalDiff; return b.goalsFor - a.goalsFor; });
+      html += `<div class="group-card"><div class="group-title">المجموعة ${group}</div><table class="standings-table"><thead><tr><th>#</th><th>الفريق</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>فارق</th><th>نقاط</th></tr></thead><tbody>`;
       tableRows.forEach((row, idx) => {
-        html += `<tr>
-          <td>${idx+1}</td>
-          <td style="text-align:right;"><div class="team-name-td"><span>${getFlag(row.team)}</span> ${row.team}</div></td>
-          <td>${row.played}</td><td>${row.wins}</td><td>${row.draws}</td><td>${row.losses}</td>
-          <td>${row.goalsFor}</td><td>${row.goalsAgainst}</td><td>${row.goalDiff}</td><td>${row.points}</td>
-        </tr>`;
+        html += `<tr><td>${idx+1}</td><td style="text-align:right;"><div class="team-name-td"><span>${getFlag(row.team)}</span> ${row.team}</div></td><td>${row.played}</td><td>${row.wins}</td><td>${row.draws}</td><td>${row.losses}</td><td>${row.goalsFor}</td><td>${row.goalsAgainst}</td><td>${row.goalDiff}</td><td>${row.points}</td></tr>`;
       });
       html += `</tbody></table></div>`;
     }
@@ -729,7 +733,7 @@
   }
 
   // =============================================
-  // التهيئة والأحداث
+  // التهيئة
   // =============================================
   function initTabs() {
     const btns = document.querySelectorAll('.tab-btn');
@@ -745,22 +749,15 @@
       });
     });
   }
-
   function bindEvents() {
     document.getElementById('roundFilter').addEventListener('change', renderUpcoming);
     document.getElementById('prevSearchInput').addEventListener('input', renderPreviousGamesFiltered);
     document.getElementById('globalSearchInput').addEventListener('input', performGlobalSearch);
   }
-
   function startAutoUpdate() {
     setInterval(renderUpcoming, 1000);
-    setInterval(() => {
-      if (document.querySelector('.tab-btn[data-tab="previous"]').classList.contains('active')) loadPreviousGames();
-      if (document.querySelector('.tab-btn[data-tab="standings"]').classList.contains('active')) calculateStandings();
-      performGlobalSearch();
-    }, 60000);
+    setInterval(() => { if (document.querySelector('.tab-btn[data-tab="previous"]').classList.contains('active')) loadPreviousGames(); if (document.querySelector('.tab-btn[data-tab="standings"]').classList.contains('active')) calculateStandings(); performGlobalSearch(); }, 60000);
   }
-
   function init() {
     bindEvents();
     renderUpcoming();
