@@ -266,24 +266,26 @@
       border-radius: 60px;
       flex-wrap: wrap;
     }
-    .filter-bar select, .filter-bar input {
+    .filter-bar input {
       background: #fef7e0;
       border: none;
       padding: 8px 16px;
       border-radius: 40px;
       outline: none;
+      flex: 1;
     }
+    /* جداول الترتيب - لون خلفية جديد */
     .groups-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
       gap: 24px;
     }
     .group-card {
-      background: #0a2e38cc;
+      background: #1e3a4d;  /* لون خلفية جديد للبطاقات */
       backdrop-filter: blur(4px);
       border-radius: 32px;
       padding: 16px;
-      border: 1px solid #ffb34760;
+      border: 1px solid #ffb34780;
     }
     .group-title {
       font-size: 1.5rem;
@@ -303,8 +305,11 @@
       border-bottom: 1px solid #ffb34730;
     }
     .standings-table th {
-      background: #1e4a5f;
+      background: #0f2a33;
       color: #FFE0A3;
+    }
+    .standings-table td {
+      background-color: rgba(0, 0, 0, 0.2);
     }
     .team-name-td {
       text-align: right;
@@ -336,7 +341,7 @@
 
   <div class="control-panel">
     <div class="search-group">
-      <input type="text" id="globalSearchInput" placeholder="🔍 ابحث عن منتخب (يعرض النتائج من المباريات القادمة والسابقة مع النتيجة)" autocomplete="off">
+      <input type="text" id="globalSearchInput" placeholder="🔍 ابحث عن منتخب (يعرض المباريات القادمة والسابقة مع النتيجة)" autocomplete="off">
     </div>
     <div class="round-group">
       <select id="roundFilter">
@@ -349,7 +354,7 @@
     <div class="stats-card" id="matchesCounter">🕒 جار التحميل</div>
   </div>
 
-  <!-- منطقة نتائج البحث السريع (المباريات القادمة والسابقة) -->
+  <!-- منطقة نتائج البحث السريع -->
   <div id="quickSearchResults" class="quick-search-results">
     <div class="quick-search-title">🔍 نتائج البحث عن "<span id="searchKeyword"></span>"</div>
     <div id="quickResultsContainer" class="quick-grid"></div>
@@ -376,12 +381,12 @@
     <div id="standingsContainer" class="groups-container"><div class="empty-state">📊 جاري حساب ترتيب المجموعات...</div></div>
   </div>
 
-  <footer>🔄 تحديث تلقائي للمباريات القادمة | البحث الشامل يعرض المباريات القادمة (مع الوقت المتبقي) والمباريات السابقة (مع النتيجة)</footer>
+  <footer>🔄 تحديث تلقائي للمباريات القادمة | البحث الشامل يعرض جميع المباريات المرتبطة بالمنتخب</footer>
 </div>
 
 <script>
   // =============================================
-  // 1. الدوال الأساسية للمباريات القادمة
+  // الدوال الأساسية للمباريات القادمة
   // =============================================
   function now() { return new Date().getTime(); }
   function matchTime(t) { return new Date(t).getTime(); }
@@ -400,7 +405,6 @@
     else return { live: false, text: "✅ انتهت" };
   }
   function upcomingMatches(arr) { return arr.filter(m => (matchTime(m.timeISO)+MATCH_DURATION) > now()); }
-  function searchTeam(arr, t) { if (!t.trim()) return arr; return arr.filter(m => m.team1.includes(t) || m.team2.includes(t)); }
   function filterRound(arr, r) { if (r==="all") return arr; return arr.filter(m => m.round === r); }
   function autoUpdate(fn) { setInterval(fn, 1000); }
 
@@ -418,7 +422,7 @@
   }
 
   // =============================================
-  // بيانات المباريات القادمة
+  // بيانات المباريات القادمة (دور المجموعات كاملاً)
   // =============================================
   const rawMatches = [
     { team1:"المكسيك", team2:"جنوب أفريقيا", time:"2026-06-11T22:00:00", round:"first" },
@@ -503,13 +507,13 @@
 
   function renderUpcoming() {
     let active = upcomingMatches(matches);
-    const search = document.getElementById('roundFilter') ? document.getElementById('roundFilter').value : "all";
-    active = filterRound(active, search);
+    const round = document.getElementById('roundFilter').value;
+    active = filterRound(active, round);
     active.sort((a,b) => matchTime(a.timeISO) - matchTime(b.timeISO));
     const container = document.getElementById('matchesContainer');
     const counter = document.getElementById('matchesCounter');
-    if(counter) counter.innerHTML = `🏟️ ${active.length} مباراة`;
-    if (!active.length) { container.innerHTML = `<div class="empty-state">📭 لا توجد مباريات</div>`; return; }
+    counter.innerHTML = `🏟️ ${active.length} مباراة`;
+    if (!active.length) { container.innerHTML = `<div class="empty-state">📭 لا توجد مباريات قادمة</div>`; return; }
     container.innerHTML = active.map(m => {
       const st = getMatchStatus(m);
       return `<div class="match-card ${st.live ? 'live-card' : ''}">
@@ -521,7 +525,7 @@
   }
 
   // =============================================
-  // المباريات السابقة والترجمة
+  // المباريات السابقة (API) مع ترجمة الأسماء
   // =============================================
   const translationMap = new Map([
     ["مکزیک","المكسيك"], ["Mexico","المكسيك"], ["آفریقای جنوبی","جنوب أفريقيا"], ["South Africa","جنوب أفريقيا"],
@@ -588,22 +592,17 @@
       calculateStandings();
     } catch (err) {
       console.error(err);
-      if(container) container.innerHTML = `<div class="empty-state">⚠️ فشل تحميل المباريات السابقة.</div>`;
+      container.innerHTML = `<div class="empty-state">⚠️ فشل تحميل المباريات السابقة.</div>`;
     }
   }
 
   function renderPreviousGamesFiltered() {
     let games = previousGamesData;
-    const searchText = document.getElementById('prevSearchInput') ? document.getElementById('prevSearchInput').value.trim().toLowerCase() : "";
+    const searchText = document.getElementById('prevSearchInput').value.trim().toLowerCase();
     let filtered = games;
-    if (searchText) {
-      filtered = filtered.filter(g => g.homeAr.includes(searchText) || g.awayAr.includes(searchText));
-    }
+    if (searchText) filtered = filtered.filter(g => g.homeAr.includes(searchText) || g.awayAr.includes(searchText));
     const container = document.getElementById('previousMatchesContainer');
-    if (!filtered.length) {
-      container.innerHTML = `<div class="empty-state">📋 لا توجد مباريات سابقة مطابقة.</div>`;
-      return;
-    }
+    if (!filtered.length) { container.innerHTML = `<div class="empty-state">📋 لا توجد مباريات سابقة مطابقة.</div>`; return; }
     container.innerHTML = filtered.map(g => `
       <div class="match-card">
         <div class="teams"><div class="team"><span>${getFlag(g.homeAr)}</span> ${g.homeAr}</div><span class="vs">🆚</span><div class="team"><span>${getFlag(g.awayAr)}</span> ${g.awayAr}</div></div>
@@ -621,19 +620,11 @@
     const searchContainer = document.getElementById('quickSearchResults');
     const keywordSpan = document.getElementById('searchKeyword');
     const resultsContainer = document.getElementById('quickResultsContainer');
-    
-    if (keyword === "") {
-      searchContainer.classList.remove('visible');
-      return;
-    }
+    if (keyword === "") { searchContainer.classList.remove('visible'); return; }
     searchContainer.classList.add('visible');
     keywordSpan.innerText = keyword;
-    
-    // البحث في المباريات القادمة (غير المنتهية)
     let upcomingFiltered = upcomingMatches(matches).filter(m => m.team1.includes(keyword) || m.team2.includes(keyword));
-    // البحث في المباريات السابقة
     let previousFiltered = previousGamesData.filter(g => g.homeAr.includes(keyword) || g.awayAr.includes(keyword));
-    
     let html = '';
     if (upcomingFiltered.length === 0 && previousFiltered.length === 0) {
       html = `<div class="empty-state" style="grid-column:1/-1; padding:20px;">❌ لا توجد مباريات قادمة أو سابقة تحمل اسم "${keyword}"</div>`;
@@ -642,21 +633,17 @@
         html += `<div style="grid-column:1/-1; margin:5px 0 10px 0; font-weight:bold; color:#FFE0A3;">⚡ المباريات القادمة والجارية (${upcomingFiltered.length})</div>`;
         upcomingFiltered.forEach(m => {
           const st = getMatchStatus(m);
-          html += `<div class="quick-match-card">
-            <div class="quick-match-teams"><span>${getFlag(m.team1)}</span> ${m.team1} 🆚 ${m.team2} <span>${getFlag(m.team2)}</span></div>
-            <div class="quick-result" style="background:#1e4a5f;">${st.live ? '🔴 تُلعب الآن' : (st.text.includes('h') ? '⏳ ' + st.text : '✅ انتهت')}</div>
-            <div style="font-size:0.7rem; text-align:center; margin-top:6px;">${getDay(m.timeISO)} ${getDateFmt(m.timeISO)}</div>
-          </div>`;
+          html += `<div class="quick-match-card"><div class="quick-match-teams"><span>${getFlag(m.team1)}</span> ${m.team1} 🆚 ${m.team2} <span>${getFlag(m.team2)}</span></div>
+            <div class="quick-result">${st.live ? '🔴 تُلعب الآن' : (st.text.includes('h') ? '⏳ ' + st.text : '✅ انتهت')}</div>
+            <div style="font-size:0.7rem; text-align:center;">${getDay(m.timeISO)} ${getDateFmt(m.timeISO)}</div></div>`;
         });
       }
       if (previousFiltered.length) {
         html += `<div style="grid-column:1/-1; margin:15px 0 10px 0; font-weight:bold; color:#FFE0A3;">📋 المباريات السابقة (${previousFiltered.length})</div>`;
         previousFiltered.forEach(g => {
-          html += `<div class="quick-match-card">
-            <div class="quick-match-teams"><span>${getFlag(g.homeAr)}</span> ${g.homeAr} 🆚 ${g.awayAr} <span>${getFlag(g.awayAr)}</span></div>
-            <div class="quick-result" style="background:#2c4b55;">النتيجة: ${g.homeScore} - ${g.awayScore}</div>
-            <div style="font-size:0.7rem; text-align:center;">${g.dayName} ${g.formattedDate}</div>
-          </div>`;
+          html += `<div class="quick-match-card"><div class="quick-match-teams"><span>${getFlag(g.homeAr)}</span> ${g.homeAr} 🆚 ${g.awayAr} <span>${getFlag(g.awayAr)}</span></div>
+            <div class="quick-result">النتيجة: ${g.homeScore} - ${g.awayScore}</div>
+            <div style="font-size:0.7rem; text-align:center;">${g.dayName} ${g.formattedDate}</div></div>`;
         });
       }
     }
@@ -686,43 +673,28 @@
     for (let [group, teams] of Object.entries(finalGroups)) {
       standings[group] = {};
       teams.forEach(team => {
-        standings[group][team] = {
-          played: 0, wins: 0, draws: 0, losses: 0,
-          goalsFor: 0, goalsAgainst: 0, points: 0
-        };
+        standings[group][team] = { played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, points: 0 };
       });
     }
     previousGamesData.forEach(game => {
       const { homeAr, awayAr, homeScore, awayScore } = game;
       let groupName = null;
       for (let [g, teams] of Object.entries(finalGroups)) {
-        if (teams.includes(homeAr) && teams.includes(awayAr)) {
-          groupName = g;
-          break;
-        }
+        if (teams.includes(homeAr) && teams.includes(awayAr)) { groupName = g; break; }
       }
       if (!groupName) return;
       const stats = standings[groupName];
       if (!stats[homeAr] || !stats[awayAr]) return;
-      stats[homeAr].played++;
-      stats[awayAr].played++;
-      stats[homeAr].goalsFor += homeScore;
-      stats[homeAr].goalsAgainst += awayScore;
-      stats[awayAr].goalsFor += awayScore;
-      stats[awayAr].goalsAgainst += homeScore;
+      stats[homeAr].played++; stats[awayAr].played++;
+      stats[homeAr].goalsFor += homeScore; stats[homeAr].goalsAgainst += awayScore;
+      stats[awayAr].goalsFor += awayScore; stats[awayAr].goalsAgainst += homeScore;
       if (homeScore > awayScore) {
-        stats[homeAr].wins++;
-        stats[homeAr].points += 3;
-        stats[awayAr].losses++;
+        stats[homeAr].wins++; stats[homeAr].points += 3; stats[awayAr].losses++;
       } else if (awayScore > homeScore) {
-        stats[awayAr].wins++;
-        stats[awayAr].points += 3;
-        stats[homeAr].losses++;
+        stats[awayAr].wins++; stats[awayAr].points += 3; stats[homeAr].losses++;
       } else {
-        stats[homeAr].draws++;
-        stats[awayAr].draws++;
-        stats[homeAr].points += 1;
-        stats[awayAr].points += 1;
+        stats[homeAr].draws++; stats[awayAr].draws++;
+        stats[homeAr].points += 1; stats[awayAr].points += 1;
       }
     });
     const container = document.getElementById('standingsContainer');
@@ -738,18 +710,12 @@
         if (a.goalDiff !== b.goalDiff) return b.goalDiff - a.goalDiff;
         return b.goalsFor - a.goalsFor;
       });
-      html += `<div class="group-card">
-        <div class="group-title">المجموعة ${group}</div>
-        <table class="standings-table">
-          <thead><tr><th>#</th><th>الفريق</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>فارق</th><th>نقاط</th></tr></thead>
-          <tbody>`;
+      html += `<div class="group-card"><div class="group-title">المجموعة ${group}</div>
+        <table class="standings-table"><thead><tr><th>#</th><th>الفريق</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>فارق</th><th>نقاط</th></tr></thead><tbody>`;
       tableRows.forEach((row, idx) => {
-        html += `<tr>
-          <td>${idx+1}</td>
-          <td style="text-align:right;"><div class="team-name-td"><span>${getFlag(row.team)}</span> ${row.team}</div></td>
-          <td>${row.played}</td><td>${row.wins}</td><td>${row.draws}</td><td>${row.losses}</td>
-          <td>${row.goalsFor}</td><td>${row.goalsAgainst}</td><td>${row.goalDiff}</td><td>${row.points}</td>
-        </tr>`;
+        html += `<tr><td>${idx+1}</td><td style="text-align:right;"><div class="team-name-td"><span>${getFlag(row.team)}</span> ${row.team}</div></td>
+        <td>${row.played}</td><td>${row.wins}</td><td>${row.draws}</td><td>${row.losses}</td>
+        <td>${row.goalsFor}</td><td>${row.goalsAgainst}</td><td>${row.goalDiff}</td><td>${row.points}</td></tr>`;
       });
       html += `</tbody></table></div>`;
     }
@@ -757,7 +723,7 @@
   }
 
   // =============================================
-  // علامات التبويب والتهيئة
+  // التهيئة والأحداث
   // =============================================
   function initTabs() {
     const btns = document.querySelectorAll('.tab-btn');
@@ -775,12 +741,9 @@
   }
 
   function bindEvents() {
-    const roundSelect = document.getElementById('roundFilter');
-    if(roundSelect) roundSelect.addEventListener('change', renderUpcoming);
-    const prevSearch = document.getElementById('prevSearchInput');
-    if(prevSearch) prevSearch.addEventListener('input', renderPreviousGamesFiltered);
-    const globalSearch = document.getElementById('globalSearchInput');
-    if(globalSearch) globalSearch.addEventListener('input', performGlobalSearch);
+    document.getElementById('roundFilter').addEventListener('change', renderUpcoming);
+    document.getElementById('prevSearchInput').addEventListener('input', renderPreviousGamesFiltered);
+    document.getElementById('globalSearchInput').addEventListener('input', performGlobalSearch);
   }
 
   function startAutoUpdate() {
@@ -788,7 +751,7 @@
     setInterval(() => {
       if (document.querySelector('.tab-btn[data-tab="previous"]').classList.contains('active')) loadPreviousGames();
       if (document.querySelector('.tab-btn[data-tab="standings"]').classList.contains('active')) calculateStandings();
-      performGlobalSearch(); // لتحديث نتائج البحث إذا كان مفتوحاً
+      performGlobalSearch();
     }, 60000);
   }
 
