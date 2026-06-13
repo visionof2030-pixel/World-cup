@@ -274,14 +274,14 @@
       outline: none;
       flex: 1;
     }
-    /* جداول الترتيب - لون خلفية جديد */
+    /* جداول الترتيب - لون خلفية جديد وخط غامق */
     .groups-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
       gap: 24px;
     }
     .group-card {
-      background: #1e3a4d;  /* لون خلفية جديد للبطاقات */
+      background: #2c4f5e;  /* خلفية أفتح قليلاً لتحسين التباين */
       backdrop-filter: blur(4px);
       border-radius: 32px;
       padding: 16px;
@@ -302,14 +302,17 @@
     .standings-table th, .standings-table td {
       padding: 8px 4px;
       text-align: center;
-      border-bottom: 1px solid #ffb34730;
+      border-bottom: 1px solid #ffb34760;
     }
     .standings-table th {
-      background: #0f2a33;
-      color: #FFE0A3;
+      background: #1a3a48;
+      color: #FFE6B0;
+      font-weight: bold;
     }
     .standings-table td {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: #eef4f5;  /* خلفية فاتحة جداً */
+      color: #1a2c34;             /* لون خط غامق جداً (أسود تقريباً) */
+      font-weight: 600;           /* خط عريض */
     }
     .team-name-td {
       text-align: right;
@@ -713,9 +716,12 @@
       html += `<div class="group-card"><div class="group-title">المجموعة ${group}</div>
         <table class="standings-table"><thead><tr><th>#</th><th>الفريق</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>فارق</th><th>نقاط</th></tr></thead><tbody>`;
       tableRows.forEach((row, idx) => {
-        html += `<tr><td>${idx+1}</td><td style="text-align:right;"><div class="team-name-td"><span>${getFlag(row.team)}</span> ${row.team}</div></td>
-        <td>${row.played}</td><td>${row.wins}</td><td>${row.draws}</td><td>${row.losses}</td>
-        <td>${row.goalsFor}</td><td>${row.goalsAgainst}</td><td>${row.goalDiff}</td><td>${row.points}</td></tr>`;
+        html += `<tr>
+          <td>${idx+1}</td>
+          <td style="text-align:right;"><div class="team-name-td"><span>${getFlag(row.team)}</span> ${row.team}</div></td>
+          <td>${row.played}</td><td>${row.wins}</td><td>${row.draws}</td><td>${row.losses}</td>
+          <td>${row.goalsFor}</td><td>${row.goalsAgainst}</td><td>${row.goalDiff}</td><td>${row.points}</td>
+        </tr>`;
       });
       html += `</tbody></table></div>`;
     }
