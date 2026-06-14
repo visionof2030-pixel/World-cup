@@ -222,6 +222,7 @@
       background: #0a2e38;
       padding: 6px 12px;
       border-radius: 50px;
+      flex-wrap: wrap;
     }
     .match-day, .match-full-date {
       padding: 4px 10px;
@@ -230,7 +231,8 @@
       text-align: center;
     }
     .match-day { background: #1e4a5f; color: #FFE0A3; flex:1; }
-    .match-full-date { background: #00000055; flex:2; }
+    .match-full-date { background: #00000055; flex:2; display: flex; gap: 8px; justify-content: center; align-items: baseline; }
+    .match-time { background: #000000aa; border-radius: 40px; padding: 2px 8px; font-weight: bold; font-family: monospace; }
     .info-row {
       display: flex;
       justify-content: space-between;
@@ -456,6 +458,19 @@
     const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
     return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   }
+  // استخراج الساعة والدقيقة من توقيت ISO
+  function getTimeFromISO(t) {
+    const d = new Date(t);
+    let hours = d.getHours();
+    let minutes = d.getMinutes();
+    hours = hours < 10 ? '0'+hours : hours;
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    return `${hours}:${minutes}`;
+  }
+  // دالة لعرض التاريخ والوقت معًا
+  function getDateTimeDisplay(t) {
+    return `${getDateFmt(t)} - ${getTimeFromISO(t)}`;
+  }
 
   // =============================================
   // بيانات المباريات القادمة (دور المجموعات)
@@ -552,9 +567,10 @@
     if (!active.length) { container.innerHTML = `<div class="empty-state">📭 لا توجد مباريات قادمة</div>`; return; }
     container.innerHTML = active.map(m => {
       const st = getMatchStatus(m);
+      const dateTimeDisplay = getDateTimeDisplay(m.timeISO);
       return `<div class="match-card ${st.live ? 'live-card' : ''}">
         <div class="teams"><div class="team"><span>${getFlag(m.team1)}</span> ${m.team1}</div><span class="vs">🆚</span><div class="team"><span>${getFlag(m.team2)}</span> ${m.team2}</div></div>
-        <div class="datetime-row"><div class="match-day">${getDay(m.timeISO)}</div><div class="match-full-date">${getDateFmt(m.timeISO)}</div></div>
+        <div class="datetime-row"><div class="match-day">${getDay(m.timeISO)}</div><div class="match-full-date"><span>${dateTimeDisplay}</span></div></div>
         <div class="info-row"><span class="round-tag">🏅 ${m.roundLabel}</span><div class="countdown-timer ${st.live ? 'live-status' : ''}" style="${st.live ? 'background:none;padding:0;' : ''}">${st.live ? '<span style="background:#d32f2f; padding:6px 14px; border-radius:40px; animation:pulse 1.2s infinite;">🔴 تُلعب الآن 🔴</span>' : st.text}</div></div>
       </div>`;
     }).join('');
@@ -612,7 +628,7 @@
         let homeScore = parseInt(game.home_score, 10);
         let awayScore = parseInt(game.away_score, 10);
         let dateStr = game.local_date;
-        let dayName = "", formattedDate = "";
+        let dayName = "", formattedDate = "", timeMatch = "";
         if (dateStr) {
           let parts = dateStr.split(' ');
           let dateParts = parts[0].split('/');
@@ -621,8 +637,12 @@
             dayName = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'][d.getDay()];
             formattedDate = `${d.getDate()} ${['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][d.getMonth()]} ${d.getFullYear()}`;
           } else { dayName = "تاريخ"; formattedDate = dateStr; }
+          // استخراج الوقت إن وجد (مثل 18:00)
+          if (parts.length > 1 && parts[1].match(/\d{2}:\d{2}/)) {
+            timeMatch = parts[1];
+          }
         }
-        return { homeAr, awayAr, homeScore, awayScore, dayName, formattedDate };
+        return { homeAr, awayAr, homeScore, awayScore, dayName, formattedDate, timeMatch };
       });
       renderPreviousGamesFiltered();
       calculateStandings();
@@ -639,17 +659,19 @@
     if (searchText) filtered = filtered.filter(g => g.homeAr.includes(searchText) || g.awayAr.includes(searchText));
     const container = document.getElementById('previousMatchesContainer');
     if (!filtered.length) { container.innerHTML = `<div class="empty-state">📋 لا توجد مباريات سابقة مطابقة.</div>`; return; }
-    container.innerHTML = filtered.map(g => `
+    container.innerHTML = filtered.map(g => {
+      const dateTimeDisplay = g.timeMatch ? `${g.formattedDate} - ${g.timeMatch}` : g.formattedDate;
+      return `
       <div class="match-card">
         <div class="teams"><div class="team"><span>${getFlag(g.homeAr)}</span> ${g.homeAr}</div><span class="vs">🆚</span><div class="team"><span>${getFlag(g.awayAr)}</span> ${g.awayAr}</div></div>
-        <div class="datetime-row"><div class="match-day">${g.dayName}</div><div class="match-full-date">${g.formattedDate}</div></div>
+        <div class="datetime-row"><div class="match-day">${g.dayName}</div><div class="match-full-date"><span>${dateTimeDisplay}</span></div></div>
         <div class="info-row"><span class="round-tag">🏅 النتيجة النهائية</span><div class="countdown-timer" style="background:#2c4b55;">${g.homeScore} - ${g.awayScore}</div></div>
       </div>
-    `).join('');
+    `}).join('');
   }
 
   // =============================================
-  // البحث الشامل
+  // البحث الشامل مع الوقت
   // =============================================
   function performGlobalSearch() {
     const keyword = document.getElementById('globalSearchInput').value.trim();
@@ -669,17 +691,19 @@
         html += `<div style="grid-column:1/-1; margin:5px 0 8px 0; font-weight:bold; color:#FFE0A3;">⚡ المباريات القادمة والجارية (${upcomingFiltered.length})</div>`;
         upcomingFiltered.forEach(m => {
           const st = getMatchStatus(m);
+          const dateTimeDisplay = getDateTimeDisplay(m.timeISO);
           html += `<div class="quick-match-card"><div class="quick-match-teams"><span>${getFlag(m.team1)}</span> ${m.team1} 🆚 ${m.team2} <span>${getFlag(m.team2)}</span></div>
             <div class="quick-result">${st.live ? '🔴 تُلعب الآن' : (st.text.includes('h') ? '⏳ ' + st.text : '✅ انتهت')}</div>
-            <div style="font-size:0.7rem; text-align:center;">${getDay(m.timeISO)} ${getDateFmt(m.timeISO)}</div></div>`;
+            <div style="font-size:0.7rem; text-align:center;">${getDay(m.timeISO)} ${dateTimeDisplay}</div></div>`;
         });
       }
       if (previousFiltered.length) {
         html += `<div style="grid-column:1/-1; margin:15px 0 8px 0; font-weight:bold; color:#FFE0A3;">📋 المباريات السابقة (${previousFiltered.length})</div>`;
         previousFiltered.forEach(g => {
+          const dateTimeDisplay = g.timeMatch ? `${g.formattedDate} - ${g.timeMatch}` : g.formattedDate;
           html += `<div class="quick-match-card"><div class="quick-match-teams"><span>${getFlag(g.homeAr)}</span> ${g.homeAr} 🆚 ${g.awayAr} <span>${getFlag(g.awayAr)}</span></div>
             <div class="quick-result">النتيجة: ${g.homeScore} - ${g.awayScore}</div>
-            <div style="font-size:0.7rem; text-align:center;">${g.dayName} ${g.formattedDate}</div></div>`;
+            <div style="font-size:0.7rem; text-align:center;">${g.dayName} ${dateTimeDisplay}</div></div>`;
         });
       }
     }
