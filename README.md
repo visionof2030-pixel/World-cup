@@ -13,6 +13,9 @@
     /* ===== الهيدر العلوي الكامل مع خلفية الصورة ===== */
     .main-header {
       width: 100%;
+      height: 80px;
+      min-height: 80px;
+      padding: 0;
       border-radius: 80px 89px 0 0;
       overflow: hidden;
       margin-bottom: 0;
@@ -21,7 +24,6 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      min-height: 200px;
     }
     
     /* طبقة شفافة فوق الخلفية */
@@ -42,13 +44,16 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-radius: 0 0 48px 48px;
-      padding: 14px 24px;
+      padding: 0 24px;
       margin-bottom: 16px;
       position: relative;
-      min-height: 70px;
+      height: 80px;
+      min-height: 80px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-top: none;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
     }
     .upper-bar .bar-content {
       display: flex;
@@ -56,6 +61,7 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 12px;
+      width: 100%;
     }
     .upper-bar .title-section h1 {
       font-size: 1.3rem;
@@ -308,14 +314,14 @@
       .leaderboard-item { flex-wrap: wrap; gap: 8px; }
       .leaderboard-item .player-name { margin: 0; width: 100%; }
       .news-ticker { font-size: 0.65rem; }
-      .upper-bar { padding: 12px 16px; min-height: 60px; }
+      .upper-bar { padding: 0 16px; height: 70px; min-height: 70px; }
       .upper-bar .title-section h1 { font-size: 1rem; }
       .upper-bar .bar-btn { padding: 4px 10px; font-size: 0.7rem; }
       .upper-bar .developer-credit { font-size: 0.6rem; }
       .leaderboard-section .section-title { font-size: 1.2rem; }
       .modal-content { padding: 20px; }
       .modal-teams { flex-wrap: wrap; }
-      .main-header { min-height: 120px; }
+      .main-header { height: 70px; min-height: 70px; }
     }
   </style>
 </head>
