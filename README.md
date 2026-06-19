@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>🏆 كأس العالم 2026 – متتبع المباريات + توقعات + ترتيب</title>
   <style>
-    /* ========== الأنماط (نفس ما سبق مع إضافة تنسيقات النافذة المنبثقة) ========== */
+    /* ========== الأنماط الأساسية ========== */
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { background: radial-gradient(circle at 10% 20%, #0a1f24, #030c10); font-family: 'Segoe UI', 'Cairo', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif; padding: 20px 12px; min-height: 100vh; color: #f0f9ff; font-size: 14px; }
     .app-container { max-width: 1200px; margin: 0 auto; width: 100%; }
@@ -95,7 +95,6 @@
     .quick-match-card { background: #0f3e4a; border-radius: 28px; padding: 12px; transition: 0.1s; }
     .quick-match-teams { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
 
-    /* ===== زر التوقع البارز ===== */
     .predict-trigger-btn { display: block; width: 100%; margin-top: 12px; padding: 12px 16px; background: linear-gradient(135deg, rgba(255, 180, 70, 0.15), rgba(255, 140, 26, 0.08)); border: 2px solid rgba(255, 180, 70, 0.4); border-radius: 60px; color: #FFE6B0; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; text-align: center; letter-spacing: 0.5px; box-shadow: 0 0 20px rgba(255, 180, 70, 0.05); backdrop-filter: blur(4px); }
     .predict-trigger-btn:hover { background: linear-gradient(135deg, rgba(255, 180, 70, 0.25), rgba(255, 140, 26, 0.15)); border-color: #ffb347; box-shadow: 0 0 30px rgba(255, 180, 70, 0.15); transform: scale(1.01); }
     .predict-trigger-btn:active { transform: scale(0.97); }
@@ -104,7 +103,6 @@
     .predict-trigger-btn.live-blocked { opacity: 0.5; cursor: not-allowed; border-color: rgba(255, 68, 68, 0.3); background: rgba(255, 68, 68, 0.05); }
     .predict-trigger-btn.live-blocked:hover { transform: none; box-shadow: none; }
 
-    /* ===== نافذة منبثقة ===== */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px); z-index: 9999; justify-content: center; align-items: center; animation: modalFadeIn 0.3s ease; }
     .modal-overlay.active { display: flex; }
     @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
@@ -138,7 +136,6 @@
     .modal-message.error { color: #ff5252; background: rgba(255,82,82,0.1); }
     .modal-message.warning { color: #ffb347; background: rgba(255,179,71,0.1); }
 
-    /* ===== تنسيق بطاقات التوقعات العامة ===== */
     .prediction-card { background: rgba(18, 38, 44, 0.75); backdrop-filter: blur(12px); border-radius: 32px; padding: 16px; border: 1px solid rgba(255, 180, 70, 0.3); transition: 0.2s; }
     .prediction-card:hover { transform: translateY(-2px); border-color: #ffb347aa; }
     .prediction-card .user-name { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255, 180, 70, 0.2); font-size: 0.95rem; }
@@ -179,9 +176,9 @@
 <body>
 <div class="app-container">
   
-  <!-- ===== الصورة العلوية ===== -->
+  <!-- ===== الصورة العلوية (تم استبدالها بالصورة الجديدة) ===== -->
   <div class="header-image">
-    <img src="https://i.ibb.co/XfLkgzzn/92b8e6c2-9bad-4e55-90e2-c6ffde973650.png" alt="كأس العالم 2026">
+    <img src="https://i.ibb.co/7dmWpzn2/IMG-3949.png" alt="سعيد بن العاص - FIFA WORLD CUP">
   </div>
   
   <!-- ===== شريط الأخبار المتحرك ===== -->
@@ -341,7 +338,6 @@
       return { success: false, message: "Supabase غير متصل." };
     }
 
-    // prediction هو اسم الفريق (مثل "المكسيك" أو "DRAW")
     if (!prediction || prediction === "") {
       return { success: false, message: "الرجاء اختيار توقع." };
     }
@@ -352,7 +348,7 @@
         .insert([{
           user_name: userName,
           match_id: matchId,
-          prediction: prediction  // يخزن اسم الفريق أو "DRAW"
+          prediction: prediction
         }]);
 
       if (error) {
@@ -396,7 +392,7 @@
   }
 
   // ============================================================
-  //  3) عرض كل التوقعات (يعرض اسم الفريق مع العلم)
+  //  3) عرض كل التوقعات
   // ============================================================
   async function renderAllPredictions() {
     const container = document.getElementById('allPredictions');
@@ -412,7 +408,6 @@
       let text = "";
       let className = "";
 
-      // p.prediction هو اسم الفريق أو "DRAW"
       if (p.prediction === "DRAW") {
         text = "🤝 تعادل الفريقين";
         className = "draw";
@@ -458,7 +453,7 @@
   }
 
   // ============================================================
-  //  4) Leaderboard System (معدل للتعامل مع أسماء الفرق)
+  //  4) Leaderboard System
   // ============================================================
   function calculateLeaderboard(predictions, matches) {
     const scores = {};
@@ -491,7 +486,6 @@
         result = "DRAW";
       }
 
-      // التحقق: p.prediction يحمل اسم الفريق أو "DRAW"
       if (p.prediction === result) {
         scores[p.user_name].points += 1;
         scores[p.user_name].correct += 1;
@@ -853,7 +847,7 @@
   });
 
   // ============================================================
-  //  حفظ التوقع من النافذة المنبثقة (معدل)
+  //  حفظ التوقع من النافذة المنبثقة
   // ============================================================
   document.getElementById('modalSubmitBtn').addEventListener('click', async function() {
     const userName = document.getElementById('modalUserName').value.trim();
@@ -872,7 +866,6 @@
       return;
     }
     
-    // تحديد اسم الفريق الفائز
     let predictionValue;
     if (selectedOption.value === 'HOME') {
       predictionValue = currentTeam1;
@@ -882,7 +875,6 @@
       predictionValue = 'DRAW';
     }
     
-    // التحقق من أن المباراة ليست جارية
     if (currentTimeISO && isMatchLive(currentTimeISO)) {
       messageEl.textContent = '⛔ لا يمكن التوقع على مباراة جارية!';
       messageEl.className = 'modal-message error';
