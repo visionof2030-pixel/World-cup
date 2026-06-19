@@ -10,19 +10,29 @@
     body { background: radial-gradient(circle at 10% 20%, #0a1f24, #030c10); font-family: 'Segoe UI', 'Cairo', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif; padding: 20px 12px; min-height: 100vh; color: #f0f9ff; font-size: 14px; }
     .app-container { max-width: 1200px; margin: 0 auto; width: 100%; }
     
-    /* ===== الهيدر العلوي الكامل ===== */
+    /* ===== الهيدر العلوي الكامل مع خلفية الصورة ===== */
     .main-header {
       width: 100%;
       border-radius: 48px 48px 0 0;
       overflow: hidden;
       margin-bottom: 0;
       position: relative;
-      background: linear-gradient(135deg, #0a1f24, #030c10);
+      background-image: url('https://i.ibb.co/7dmWpzn2/IMG-3949.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 200px;
     }
-    .main-header img {
-      width: 100%;
-      height: auto;
-      display: block;
+    
+    /* طبقة شفافة فوق الخلفية */
+    .main-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(10, 20, 25, 0.4);
       border-radius: 48px 48px 0 0;
     }
     
@@ -305,16 +315,15 @@
       .leaderboard-section .section-title { font-size: 1.2rem; }
       .modal-content { padding: 20px; }
       .modal-teams { flex-wrap: wrap; }
+      .main-header { min-height: 120px; }
     }
   </style>
 </head>
 <body>
 <div class="app-container">
   
-  <!-- ===== الهيدر العلوي الكامل مع الصورة ===== -->
-  <div class="main-header">
-    <img src="https://i.ibb.co/7dmWpzn2/IMG-3949.png" alt="سعيد بن العاص - FIFA WORLD CUP">
-  </div>
+  <!-- ===== الهيدر العلوي الكامل مع خلفية الصورة ===== -->
+  <div class="main-header"></div>
   
   <!-- ===== البار العلوي ===== -->
   <div class="upper-bar">
