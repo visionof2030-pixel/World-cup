@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -267,6 +267,175 @@
       background: var(--primary);
       color: var(--text-primary);
     }
+    
+    /* زر نسخ الروابط - مخفي تماماً */
+    .share-all-container {
+      display: none;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+      padding: 14px 18px;
+      background: rgba(240, 180, 41, 0.05);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-md);
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .share-all-container.visible {
+      display: flex;
+    }
+    
+    .share-all-container .share-info {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .share-all-container .share-info .count {
+      color: var(--gold-light);
+      font-weight: 800;
+      font-size: 1rem;
+    }
+    
+    .share-all-btn {
+      padding: 10px 24px;
+      border-radius: 60px;
+      border: none;
+      background: linear-gradient(135deg, var(--gold), #d49a1a);
+      color: #0a1628;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .share-all-btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 30px rgba(240, 180, 41, 0.2);
+    }
+    
+    .share-all-btn:active { transform: scale(0.97); }
+    
+    /* نافذة كلمة السر - مخفية */
+    .password-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 99999;
+      justify-content: center;
+      align-items: center;
+      animation: fadeInModal 0.3s ease;
+    }
+    
+    .password-overlay.active { display: flex; }
+    
+    .password-box {
+      background: linear-gradient(145deg, rgba(12, 28, 50, 0.98), rgba(6, 16, 30, 0.99));
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+    
+    .password-box .lock-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+    
+    .password-box .p-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+    }
+    
+    .password-box .p-sub {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    
+    .password-box input {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 60px;
+      border: 2px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-primary);
+      font-size: 1rem;
+      outline: none;
+      transition: var(--transition);
+      font-family: inherit;
+      text-align: center;
+      letter-spacing: 4px;
+      font-size: 1.2rem;
+    }
+    
+    .password-box input:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .password-box input::placeholder {
+      color: var(--text-secondary);
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+    
+    .password-box .p-btn {
+      margin-top: 16px;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 60px;
+      background: linear-gradient(135deg, var(--gold), #d49a1a);
+      color: #0a1628;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+    
+    .password-box .p-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(240, 180, 41, 0.2);
+    }
+    
+    .password-box .p-error {
+      margin-top: 12px;
+      color: var(--danger);
+      font-size: 0.85rem;
+      font-weight: 600;
+      min-height: 24px;
+    }
+    
+    .password-box .p-close {
+      margin-top: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+    
+    .password-box .p-close:hover { color: var(--text-primary); }
     
     .tabs-container {
       display: flex;
@@ -711,6 +880,7 @@
     
     .match-card:hover { transform: translateY(-3px); border-color: var(--border-gold); }
     .match-card.live { border-color: var(--danger); box-shadow: 0 0 30px rgba(231, 76, 60, 0.15); }
+    .match-card.finished-match { border-color: var(--success); opacity: 0.85; }
     
     .match-teams {
       display: flex;
@@ -747,6 +917,7 @@
     
     .match-score.live { background: linear-gradient(135deg, var(--danger), #c0392b); animation: pulseScore 1.2s infinite; color: white; }
     .match-score.finished { background: linear-gradient(135deg, var(--success), #27ae60); color: white; }
+    .match-score.upcoming { background: linear-gradient(135deg, var(--gold), #d49a1a); color: #0a1628; }
     
     @keyframes pulseScore {
       0%, 100% { transform: scale(1); }
@@ -770,6 +941,8 @@
       font-weight: 600;
       color: var(--text-secondary);
     }
+    
+    .match-meta .tag.finished-tag { color: var(--success); background: rgba(46,204,113,0.1); }
     
     .match-meta .timer {
       font-family: 'Courier New', monospace;
@@ -1124,6 +1297,13 @@
       color: var(--text-secondary);
       border-top: 1px solid rgba(255,255,255,0.04);
       padding-top: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+    
+    .footer:hover {
+      color: var(--gold-light);
     }
     
     .footer .gold-text { color: var(--gold-light); }
@@ -1140,6 +1320,8 @@
       .controls-bar { padding: 12px 14px; }
       .controls-bar .control-group { min-width: 100%; }
       .controls-bar select, .controls-bar input { font-size: 0.7rem; padding: 6px 10px; }
+      .share-all-container { flex-direction: column; text-align: center; padding: 12px; }
+      .share-all-btn { width: 100%; justify-content: center; }
       .tabs-container { flex-direction: column; align-items: stretch; }
       .tabs { justify-content: center; }
       .day-filter-tabs { justify-content: center; }
@@ -1169,6 +1351,7 @@
       .modal-teams { flex-wrap: wrap; gap: 6px; }
       .modal-teams .m-team { font-size: 0.85rem; }
       .modal-options label { padding: 10px 14px; }
+      .password-box { padding: 24px; }
     }
     
     @media (min-width: 768px) {
@@ -1259,6 +1442,17 @@
     </div>
   </div>
   
+  <!-- زر نسخ الروابط - مخفي تماماً ولا يظهر إلا بكلمة السر -->
+  <div class="share-all-container" id="shareAllContainer">
+    <div class="share-info">
+      📋 <span>روابط مباريات اليوم والغد</span>
+      <span class="count" id="shareAllCount">0</span> مباراة
+    </div>
+    <button class="share-all-btn" onclick="shareAllTodayTomorrow()">
+      📤 نسخ جميع الروابط
+    </button>
+  </div>
+  
   <div class="tabs-container">
     <div class="tabs">
       <button class="tab-btn active" data-tab="upcoming">⚡ القادمة والجارية</button>
@@ -1287,7 +1481,7 @@
   <div id="previousTab" class="tab-content">
     <div class="section-title">📋 المباريات السابقة</div>
     <div style="margin-bottom: 16px;">
-      <input type="text" id="prevSearchInput" placeholder="🔍 بحث في المباريات السابقة..." style="width:100%;padding:12px 20px;border-radius:60px;border:2px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03);color:var(--text-primary);font-size:0.85rem;outline:none;transition:var(--transition);font-family:inherit;">
+      <input type="text" id="prevSearchInput" placeholder="🔍 ابحث عن منتخب لعرض مبارياته السابقة..." style="width:100%;padding:12px 20px;border-radius:60px;border:2px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03);color:var(--text-primary);font-size:0.85rem;outline:none;transition:var(--transition);font-family:inherit;">
     </div>
     <div id="previousMatchesContainer" class="matches-grid">
       <div class="empty-state"><span class="icon">⏳</span> جاري تحميل المباريات السابقة...</div>
@@ -1308,9 +1502,22 @@
     </div>
   </div>
   
-  <footer class="footer">
+  <footer class="footer" id="footerTrigger">
     🏆 كأس العالم 2026 · غرفة معلمي سعيد بن العاص
   </footer>
+</div>
+
+<!-- نافذة إدخال كلمة السر -->
+<div class="password-overlay" id="passwordOverlay">
+  <div class="password-box">
+    <span class="lock-icon">🔒</span>
+    <div class="p-title">تأكيد الوصول</div>
+    <div class="p-sub">يرجى إدخال رمز الوصول للمتابعة</div>
+    <input type="password" id="passwordInput" placeholder="••••" maxlength="10" autofocus>
+    <button class="p-btn" id="passwordSubmitBtn">تأكيد</button>
+    <div class="p-error" id="passwordError"></div>
+    <button class="p-close" id="passwordCloseBtn">إلغاء</button>
+  </div>
 </div>
 
 <div class="modal-overlay" id="predictionModal">
@@ -1381,7 +1588,46 @@
   }
   
   // ============================================================
-  //  نظام الترجمة المتقدم (من الملف الثاني)
+  //  نظام كلمة السر
+  // ============================================================
+  const SECRET_CODE = "1406";
+  let isAuthorized = false;
+  
+  function showPasswordOverlay() {
+    document.getElementById('passwordOverlay').classList.add('active');
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordError').textContent = '';
+    setTimeout(() => {
+      document.getElementById('passwordInput').focus();
+    }, 300);
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function hidePasswordOverlay() {
+    document.getElementById('passwordOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  function checkPassword() {
+    const input = document.getElementById('passwordInput').value.trim();
+    const errorEl = document.getElementById('passwordError');
+    
+    if (input === SECRET_CODE) {
+      isAuthorized = true;
+      errorEl.textContent = '';
+      hidePasswordOverlay();
+      document.getElementById('shareAllContainer').classList.add('visible');
+      updateShareAllCount();
+      showCopyToast('✅ تم تفعيل أداة نسخ الروابط');
+    } else {
+      errorEl.textContent = '❌ رمز غير صحيح';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordInput').focus();
+    }
+  }
+  
+  // ============================================================
+  //  نظام الترجمة المتقدم
   // ============================================================
   const nameMapping = new Map([
     ["مکزیک", "المكسيك"], ["Mexico", "المكسيك"], ["مكسيك", "المكسيك"],
@@ -1644,6 +1890,14 @@
     return matchDate.getTime() === today.getTime() || matchDate.getTime() === tomorrow.getTime();
   }
   
+  function isMatchToday(timeISO) {
+    const matchDate = new Date(timeISO);
+    matchDate.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return matchDate.getTime() === today.getTime();
+  }
+  
   function getDay(t) { return ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'][new Date(t).getDay()]; }
   function getDateFmt(t) {
     const d = new Date(t);
@@ -1657,7 +1911,7 @@
   function getDateTimeDisplay(t) { return `${getDateFmt(t)} - ${getTimeFromISO(t)}`; }
   
   // ============================================================
-  //  بيانات المباريات - جميع الأسماء بالعربية مسبقاً (مترجمة)
+  //  بيانات المباريات
   // ============================================================
   const rawMatches = [
     { id: 1, team1:"المكسيك", team2:"جنوب أفريقيا", time:"2026-06-11T22:00:00", round:"first" },
@@ -1765,78 +2019,260 @@
   let currentUserName = localStorage.getItem('lastUserName') || '';
   let currentDayFilter = 'all';
   
-  function toggleDayFilter(tabId) {
-    const dayFilterTabs = document.getElementById('dayFilterTabs');
-    if (tabId === 'upcoming') {
-      dayFilterTabs.classList.add('visible');
-    } else {
-      dayFilterTabs.classList.remove('visible');
+  // ============================================================
+  //  دالة مشاركة جميع روابط اليوم والغد
+  // ============================================================
+  function shareAllTodayTomorrow() {
+    if (!isAuthorized) {
+      showPasswordOverlay();
+      return;
     }
-  }
-  
-  function copyMatchLink(matchId, team1, team2) {
-    const shareUrl = `${window.location.origin}${window.location.pathname}?m=${matchId}`;
     
-    if (navigator.share) {
-      navigator.share({
-        title: `🏆 توقع مباراة ${team1} 🆚 ${team2}`,
-        text: `🔮 توقع نتيجة مباراة ${team1} 🆚 ${team2} في كأس العالم 2026`,
-        url: shareUrl
-      }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(shareUrl).then(() => {
-        showCopyToast('✅ تم نسخ رابط المباراة!');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const activeMatches = matchesData.filter(m => (matchTime(m.timeISO) + MATCH_DURATION) > now());
+    
+    const todayTomorrowMatches = activeMatches.filter(m => {
+      const matchDate = new Date(m.timeISO);
+      matchDate.setHours(0, 0, 0, 0);
+      return matchDate.getTime() === today.getTime() || matchDate.getTime() === tomorrow.getTime();
+    });
+    
+    if (todayTomorrowMatches.length === 0) {
+      showCopyToast('⚠️ لا توجد مباريات اليوم أو غداً');
+      return;
+    }
+    
+    todayTomorrowMatches.sort((a, b) => matchTime(a.timeISO) - matchTime(b.timeISO));
+    
+    const baseUrl = window.location.origin + window.location.pathname;
+    
+    let shareText = '🏆 كأس العالم 2026 - روابط توقع مباريات اليوم والغد\n\n';
+    shareText += `📅 اليوم: ${getDateFmt(new Date().toISOString())}\n`;
+    shareText += `📅 غداً: ${getDateFmt(tomorrow.toISOString())}\n`;
+    shareText += '━'.repeat(30) + '\n\n';
+    
+    todayTomorrowMatches.forEach((m, index) => {
+      const matchDate = new Date(m.timeISO);
+      const dayLabel = isMatchToday(m.timeISO) ? '📌 اليوم' : '📌 غداً';
+      const timeStr = getTimeFromISO(m.timeISO);
+      const link = `${baseUrl}?m=${m.id}`;
+      
+      shareText += `${index + 1}. ${getFlag(m.team1)} ${m.team1} 🆚 ${getFlag(m.team2)} ${m.team2}\n`;
+      shareText += `   🕒 ${dayLabel} - ${timeStr}\n`;
+      shareText += `   🔗 <${link}>\n\n`;
+    });
+    
+    shareText += '━'.repeat(30) + '\n';
+    shareText += '✨ توقع · تنافس · اربح ✨\n';
+    shareText += '#كأس_العالم_2026 #توقعات';
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        showCopyToast(`✅ تم نسخ روابط ${todayTomorrowMatches.length} مباراة!`);
       }).catch(() => {
-        const textArea = document.createElement('textarea');
-        textArea.value = shareUrl;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        showCopyToast('✅ تم نسخ رابط المباراة!');
+        fallbackCopy(shareText);
       });
+    } else {
+      fallbackCopy(shareText);
     }
   }
   
-  function showCopyToast(message) {
-    const toast = document.getElementById('copyToast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-    }, 3000);
+  function fallbackCopy(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.top = '-9999px';
+    textArea.style.left = '-9999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      showCopyToast('✅ تم نسخ جميع الروابط!');
+    } catch (e) {
+      const result = prompt('انسخ النص التالي للمشاركة:', text);
+    }
+    document.body.removeChild(textArea);
   }
   
-  function checkUrlForMatch() {
-    const params = new URLSearchParams(window.location.search);
-    const matchId = params.get('m');
+  function updateShareAllCount() {
+    if (!isAuthorized) {
+      document.getElementById('shareAllCount').textContent = '🔒';
+      return;
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
     
-    if (matchId && !isNaN(matchId)) {
-      const match = matchesData.find(m => m.id === parseInt(matchId));
-      if (match) {
-        setTimeout(() => {
-          openPredictionModal(
-            `${match.timeISO}_${match.team1}_${match.team2}`,
-            match.team1,
-            match.team2,
-            match.timeISO
-          );
-        }, 800);
+    const activeMatches = matchesData.filter(m => (matchTime(m.timeISO) + MATCH_DURATION) > now());
+    const count = activeMatches.filter(m => {
+      const matchDate = new Date(m.timeISO);
+      matchDate.setHours(0, 0, 0, 0);
+      return matchDate.getTime() === today.getTime() || matchDate.getTime() === tomorrow.getTime();
+    }).length;
+    
+    document.getElementById('shareAllCount').textContent = count;
+  }
+  
+  // ============================================================
+  //  عرض المباريات حسب المجموعة
+  // ============================================================
+  function renderGroupMatches(groupId) {
+    if (groupId === 'all') {
+      renderUpcoming();
+      return;
+    }
+    
+    const teams = finalGroups[groupId] || [];
+    if (teams.length === 0) return;
+    
+    const groupMatches = matchesData.filter(m => 
+      teams.includes(m.team1) || teams.includes(m.team2)
+    );
+    
+    const nowTime = now();
+    const previous = groupMatches.filter(m => (matchTime(m.timeISO) + MATCH_DURATION) < nowTime);
+    const upcoming = groupMatches.filter(m => (matchTime(m.timeISO) + MATCH_DURATION) >= nowTime);
+    
+    upcoming.sort((a, b) => matchTime(a.timeISO) - matchTime(b.timeISO));
+    previous.sort((a, b) => matchTime(b.timeISO) - matchTime(a.timeISO));
+    
+    const container = document.getElementById('matchesContainer');
+    const countSpan = document.getElementById('upcomingCount');
+    countSpan.textContent = groupMatches.length;
+    
+    if (groupMatches.length === 0) {
+      container.innerHTML = `<div class="empty-state"><span class="icon">📭</span> لا توجد مباريات في هذه المجموعة</div>`;
+      return;
+    }
+    
+    let html = '';
+    
+    if (upcoming.length > 0) {
+      html += `<div style="grid-column:1/-1;margin-bottom:8px;font-weight:800;color:var(--gold-light);font-size:1.1rem;">⚡ المباريات القادمة والجارية (${upcoming.length})</div>`;
+      html += upcoming.map(m => renderMatchCard(m, true)).join('');
+    }
+    
+    if (previous.length > 0) {
+      html += `<div style="grid-column:1/-1;margin-top:20px;margin-bottom:8px;font-weight:800;color:var(--text-secondary);font-size:1.1rem;">📋 المباريات السابقة (${previous.length})</div>`;
+      html += previous.map(m => renderMatchCard(m, false)).join('');
+    }
+    
+    container.innerHTML = html;
+  }
+  
+  function renderMatchCard(m, isUpcoming) {
+    const st = getMatchStatus(m);
+    const isLive = st.live;
+    const matchId = `${m.timeISO}_${m.team1}_${m.team2}`;
+    const isLiveMatch = isMatchLive(m.timeISO);
+    const savedUserName = localStorage.getItem('lastUserName') || '';
+    const hasPredicted = savedUserName && hasUserPredicted(savedUserName, matchId);
+    
+    const showActions = isMatchTodayOrTomorrow(m.timeISO) && isUpcoming;
+    
+    let scoreDisplay = '🆚';
+    let scoreClass = 'upcoming';
+    let matchClass = '';
+    
+    if (isLive) { 
+      scoreDisplay = '🔴 LIVE'; 
+      scoreClass = 'live';
+      matchClass = 'live';
+    } else if (!isUpcoming) {
+      const previousMatch = previousGamesData.find(p => 
+        (p.homeAr === m.team1 && p.awayAr === m.team2) || 
+        (p.homeAr === m.team2 && p.awayAr === m.team1)
+      );
+      if (previousMatch) {
+        const isReversed = previousMatch.homeAr === m.team2;
+        const homeScore = isReversed ? previousMatch.awayScore : previousMatch.homeScore;
+        const awayScore = isReversed ? previousMatch.homeScore : previousMatch.awayScore;
+        scoreDisplay = `${homeScore} - ${awayScore}`;
+        scoreClass = 'finished';
+        matchClass = 'finished-match';
       } else {
-        console.warn('⚠️ مباراة غير موجودة بالرقم:', matchId);
+        scoreDisplay = '✅';
+        scoreClass = 'finished';
       }
     }
+    
+    let predictBtnHtml = `<span>📝</span> توقع الآن`;
+    let predictDisabled = false;
+    let predictBtnClass = '';
+    
+    if (!showActions || !isUpcoming) {
+      predictDisabled = true;
+      predictBtnHtml = isUpcoming ? `<span>⏳</span> قريباً` : `<span>✅</span> انتهت`;
+      predictBtnClass = 'style="opacity:0.4;cursor:default;"';
+    } else if (isLiveMatch) {
+      predictDisabled = true;
+      predictBtnHtml = `<span>⛔</span> جارية`;
+      predictBtnClass = 'style="opacity:0.5;cursor:not-allowed;"';
+    } else if (hasPredicted) {
+      const existing = getUserPrediction(savedUserName, matchId);
+      predictDisabled = true;
+      predictBtnHtml = `<span>✅</span> تم التوقع: ${existing.prediction === 'DRAW' ? 'تعادل' : existing.prediction}`;
+      predictBtnClass = 'style="border-color:#2ecc71;color:#2ecc71;cursor:default;"';
+    }
+    
+    const groupName = Object.keys(finalGroups).find(g => finalGroups[g].includes(m.team1)) || '';
+    const isToday = isMatchToday(m.timeISO);
+    const dayLabel = isToday ? '📌 اليوم' : (isMatchTodayOrTomorrow(m.timeISO) ? '📌 غداً' : '');
+    
+    return `
+      <div class="match-card ${matchClass}">
+        <div class="match-teams">
+          <div class="match-team"><span class="flag">${getFlag(m.team1)}</span> ${m.team1}</div>
+          <div class="match-score ${scoreClass}">${scoreDisplay}</div>
+          <div class="match-team"><span class="flag">${getFlag(m.team2)}</span> ${m.team2}</div>
+        </div>
+        <div class="match-meta">
+          <span class="tag">🏅 ${m.roundLabel}</span>
+          <span class="tag">${groupName ? `المجموعة ${groupName}` : ''}</span>
+          ${isUpcoming ? `<span class="timer ${isLive ? 'live' : ''}">${isLive ? '🔴 تُلعب الآن' : st.text}</span>` : `<span class="tag finished-tag">✅ انتهت</span>`}
+        </div>
+        <div class="match-meta" style="margin-top:4px;">
+          <span class="tag">${getDay(m.timeISO)}</span>
+          <span class="tag">${getDateTimeDisplay(m.timeISO)}</span>
+          ${dayLabel ? `<span class="tag" style="color:var(--gold-light);">${dayLabel}</span>` : ''}
+        </div>
+        ${isUpcoming ? `
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+            <button class="tab-btn" style="flex:1;justify-content:center;padding:10px 12px;font-size:0.75rem;background:rgba(240,180,41,0.08);border-color:rgba(240,180,41,0.2);color:var(--gold-light);" 
+                    data-matchid="${matchId}" data-team1="${m.team1}" data-team2="${m.team2}" data-timeiso="${m.timeISO}"
+                    ${predictDisabled ? 'disabled' : ''} ${predictBtnClass}>
+              ${predictBtnHtml}
+            </button>
+            <button class="tab-btn" style="flex:1;justify-content:center;padding:10px 12px;font-size:0.75rem;background:rgba(52,152,219,0.06);border-color:rgba(52,152,219,0.15);color:#5dade2;${!showActions ? 'opacity:0.4;cursor:default;' : ''}"
+                    data-matchid="${matchId}" data-team1="${m.team1}" data-team2="${m.team2}" 
+                    ${!showActions ? 'disabled' : ''}
+                    onclick="${showActions ? `openViewPredictionsModal('${matchId}','${m.team1}','${m.team2}')` : ''}">
+              <span>📋</span> استعراض التوقعات
+            </button>
+            <button class="share-link-btn" onclick="copyMatchLink('${m.id}', '${m.team1}', '${m.team2}')">
+              <span class="icon">🔗</span> مشاركة الرابط
+            </button>
+          </div>
+        ` : ''}
+      </div>
+    `;
   }
   
   function renderUpcoming() {
     try {
-      let active = upcomingMatches(matchesData);
-      
       const groupFilter = document.getElementById('groupFilter')?.value || 'all';
+      
       if (groupFilter !== 'all') {
-        const teams = finalGroups[groupFilter] || [];
-        active = active.filter(m => teams.includes(m.team1) || teams.includes(m.team2));
+        renderGroupMatches(groupFilter);
+        return;
       }
+      
+      let active = upcomingMatches(matchesData);
       
       if (currentDayFilter === 'today') {
         const today = new Date();
@@ -1887,76 +2323,7 @@
         return;
       }
       
-      container.innerHTML = active.map(m => {
-        const st = getMatchStatus(m);
-        const isLive = st.live;
-        const matchId = `${m.timeISO}_${m.team1}_${m.team2}`;
-        const isLiveMatch = isMatchLive(m.timeISO);
-        const savedUserName = localStorage.getItem('lastUserName') || '';
-        const hasPredicted = savedUserName && hasUserPredicted(savedUserName, matchId);
-        
-        const showActions = isMatchTodayOrTomorrow(m.timeISO);
-        
-        let scoreDisplay = '🆚';
-        let scoreClass = '';
-        if (isLive) { scoreDisplay = '🔴 LIVE'; scoreClass = 'live'; }
-        
-        let predictBtnHtml = `<span>📝</span> توقع الآن`;
-        let predictDisabled = false;
-        let predictBtnClass = '';
-        
-        if (!showActions) {
-          predictDisabled = true;
-          predictBtnHtml = `<span>⏳</span> قريباً`;
-          predictBtnClass = 'style="opacity:0.4;cursor:default;"';
-        } else if (isLiveMatch) {
-          predictDisabled = true;
-          predictBtnHtml = `<span>⛔</span> جارية`;
-          predictBtnClass = 'style="opacity:0.5;cursor:not-allowed;"';
-        } else if (hasPredicted) {
-          const existing = getUserPrediction(savedUserName, matchId);
-          predictDisabled = true;
-          predictBtnHtml = `<span>✅</span> تم التوقع: ${existing.prediction === 'DRAW' ? 'تعادل' : existing.prediction}`;
-          predictBtnClass = 'style="border-color:#2ecc71;color:#2ecc71;cursor:default;"';
-        }
-        
-        const groupName = Object.keys(finalGroups).find(g => finalGroups[g].includes(m.team1)) || '';
-        
-        return `
-          <div class="match-card ${isLive ? 'live' : ''}">
-            <div class="match-teams">
-              <div class="match-team"><span class="flag">${getFlag(m.team1)}</span> ${m.team1}</div>
-              <div class="match-score ${scoreClass}">${scoreDisplay}</div>
-              <div class="match-team"><span class="flag">${getFlag(m.team2)}</span> ${m.team2}</div>
-            </div>
-            <div class="match-meta">
-              <span class="tag">🏅 ${m.roundLabel}</span>
-              <span class="tag">${groupName ? `المجموعة ${groupName}` : ''}</span>
-              <span class="timer ${isLive ? 'live' : ''}">${isLive ? '🔴 تُلعب الآن' : st.text}</span>
-            </div>
-            <div class="match-meta" style="margin-top:4px;">
-              <span class="tag">${getDay(m.timeISO)}</span>
-              <span class="tag">${getDateTimeDisplay(m.timeISO)}</span>
-            </div>
-            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-              <button class="tab-btn" style="flex:1;justify-content:center;padding:10px 12px;font-size:0.75rem;background:rgba(240,180,41,0.08);border-color:rgba(240,180,41,0.2);color:var(--gold-light);" 
-                      data-matchid="${matchId}" data-team1="${m.team1}" data-team2="${m.team2}" data-timeiso="${m.timeISO}"
-                      ${predictDisabled ? 'disabled' : ''} ${predictBtnClass}>
-                ${predictBtnHtml}
-              </button>
-              <button class="tab-btn" style="flex:1;justify-content:center;padding:10px 12px;font-size:0.75rem;background:rgba(52,152,219,0.06);border-color:rgba(52,152,219,0.15);color:#5dade2;${!showActions ? 'opacity:0.4;cursor:default;' : ''}"
-                      data-matchid="${matchId}" data-team1="${m.team1}" data-team2="${m.team2}" 
-                      ${!showActions ? 'disabled' : ''}
-                      onclick="${showActions ? `openViewPredictionsModal('${matchId}','${m.team1}','${m.team2}')` : ''}">
-                <span>📋</span> استعراض التوقعات
-              </button>
-              <button class="share-link-btn" onclick="copyMatchLink('${m.id}', '${m.team1}', '${m.team2}')">
-                <span class="icon">🔗</span> مشاركة الرابط
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = active.map(m => renderMatchCard(m, true)).join('');
       
       document.querySelectorAll('[data-matchid][data-team1]').forEach(btn => {
         if (!btn.disabled && !btn.onclick) {
@@ -1966,11 +2333,17 @@
         }
       });
       
+      updateShareAllCount();
+      
     } catch (e) {
       console.error("renderUpcoming:", e);
       document.getElementById('matchesContainer').innerHTML = `<div class="empty-state"><span class="icon">⚠️</span> حدث خطأ</div>`;
     }
   }
+  
+  // ============================================================
+  //  باقي الدوال
+  // ============================================================
   
   document.querySelectorAll('.day-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -1983,6 +2356,32 @@
   
   document.getElementById('groupFilter')?.addEventListener('change', renderUpcoming);
   document.getElementById('matchSearchInput')?.addEventListener('input', renderUpcoming);
+  
+  // أحداث نافذة كلمة السر
+  document.getElementById('footerTrigger').addEventListener('click', function(e) {
+    e.preventDefault();
+    if (isAuthorized) {
+      document.getElementById('shareAllContainer').classList.toggle('visible');
+      if (document.getElementById('shareAllContainer').classList.contains('visible')) {
+        updateShareAllCount();
+        showCopyToast('🔓 تم إظهار أداة نسخ الروابط');
+      } else {
+        showCopyToast('🔒 تم إخفاء أداة نسخ الروابط');
+      }
+    } else {
+      showPasswordOverlay();
+    }
+  });
+  
+  document.getElementById('passwordSubmitBtn').addEventListener('click', checkPassword);
+  document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPassword();
+    if (e.key === 'Escape') hidePasswordOverlay();
+  });
+  document.getElementById('passwordCloseBtn').addEventListener('click', hidePasswordOverlay);
+  document.getElementById('passwordOverlay').addEventListener('click', function(e) {
+    if (e.target === this) hidePasswordOverlay();
+  });
   
   function calculateLeaderboard(predictions, matches) {
     const scores = {};
@@ -2363,6 +2762,43 @@
     }).join('');
   }
   
+  function renderPreviousGamesFiltered() {
+    const searchText = document.getElementById('prevSearchInput')?.value.trim().toLowerCase() || '';
+    let filtered = previousGamesData;
+    
+    if (searchText) {
+      filtered = filtered.filter(g => 
+        g.homeAr.toLowerCase().includes(searchText) || 
+        g.awayAr.toLowerCase().includes(searchText)
+      );
+    }
+    
+    const container = document.getElementById('previousMatchesContainer');
+    
+    if (!filtered.length) {
+      let message = '📭 لا توجد مباريات مطابقة';
+      if (previousGamesData.length === 0) message = '⏳ جاري التحميل...';
+      if (searchText && previousGamesData.length > 0) message = `🔍 لا توجد مباريات سابقة للمنتخب "${searchText}"`;
+      container.innerHTML = `<div class="empty-state"><span class="icon">${message === '⏳ جاري التحميل...' ? '⏳' : '📭'}</span> ${message}</div>`;
+      return;
+    }
+    
+    container.innerHTML = filtered.map(g => `
+      <div class="match-card finished-match">
+        <div class="match-teams">
+          <div class="match-team"><span class="flag">${getFlag(g.homeAr)}</span> ${g.homeAr}</div>
+          <div class="match-score finished">${g.homeScore} - ${g.awayScore}</div>
+          <div class="match-team"><span class="flag">${getFlag(g.awayAr)}</span> ${g.awayAr}</div>
+        </div>
+        <div class="match-meta">
+          <span class="tag">${g.dayName || 'تاريخ'}</span>
+          <span class="tag">${g.formattedDate || ''} ${g.timeMatch || ''}</span>
+          <span class="tag finished-tag">✅ انتهت</span>
+        </div>
+      </div>
+    `).join('');
+  }
+  
   document.getElementById('prevSearchInput')?.addEventListener('input', renderPreviousGamesFiltered);
   
   let isLoadingPrevious = false;
@@ -2400,7 +2836,6 @@
       
       const finished = data.games.filter(g => g.finished === "TRUE");
       const newData = finished.map(game => {
-        // استخدام الترجمة المتقدمة
         const homeAr = translateToArabic(game.home_team_name_fa || game.home_team_name_en || '');
         const awayAr = translateToArabic(game.away_team_name_fa || game.away_team_name_en || '');
         const homeScore = parseInt(game.home_score, 10);
@@ -2441,33 +2876,6 @@
     } finally {
       isLoadingPrevious = false;
     }
-  }
-  
-  function renderPreviousGamesFiltered() {
-    const searchText = document.getElementById('prevSearchInput')?.value.trim().toLowerCase() || '';
-    let filtered = previousGamesData;
-    if (searchText) filtered = filtered.filter(g => g.homeAr.includes(searchText) || g.awayAr.includes(searchText));
-    
-    const container = document.getElementById('previousMatchesContainer');
-    if (!filtered.length) {
-      container.innerHTML = `<div class="empty-state"><span class="icon">📋</span> ${previousGamesData.length ? 'لا توجد مباريات مطابقة' : 'جاري التحميل...'}</div>`;
-      return;
-    }
-    
-    container.innerHTML = filtered.map(g => `
-      <div class="match-card">
-        <div class="match-teams">
-          <div class="match-team"><span class="flag">${getFlag(g.homeAr)}</span> ${g.homeAr}</div>
-          <div class="match-score finished">${g.homeScore} - ${g.awayScore}</div>
-          <div class="match-team"><span class="flag">${getFlag(g.awayAr)}</span> ${g.awayAr}</div>
-        </div>
-        <div class="match-meta">
-          <span class="tag">${g.dayName || 'تاريخ'}</span>
-          <span class="tag">${g.formattedDate || ''} ${g.timeMatch || ''}</span>
-          <span class="tag" style="color:var(--success);">✅ انتهت</span>
-        </div>
-      </div>
-    `).join('');
   }
   
   function calculateStandings() {
@@ -2568,6 +2976,7 @@
       if (activeTab === 'standings' && previousGamesData.length) calculateStandings();
       if (activeTab === 'predictions') await renderAllPredictions();
       await renderLeaderboard();
+      updateShareAllCount();
     }, 60000);
   }
   
@@ -2606,6 +3015,69 @@
     }
   }
   
+  function copyMatchLink(matchId, team1, team2) {
+    const shareUrl = `${window.location.origin}${window.location.pathname}?m=${matchId}`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: `🏆 توقع مباراة ${team1} 🆚 ${team2}`,
+        text: `🔮 توقع نتيجة مباراة ${team1} 🆚 ${team2} في كأس العالم 2026\n\n🔗 ${shareUrl}`,
+        url: shareUrl
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        showCopyToast('✅ تم نسخ رابط المباراة!');
+      }).catch(() => {
+        const textArea = document.createElement('textarea');
+        textArea.value = shareUrl;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showCopyToast('✅ تم نسخ رابط المباراة!');
+      });
+    }
+  }
+  
+  function showCopyToast(message) {
+    const toast = document.getElementById('copyToast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+  
+  function checkUrlForMatch() {
+    const params = new URLSearchParams(window.location.search);
+    const matchId = params.get('m');
+    
+    if (matchId && !isNaN(matchId)) {
+      const match = matchesData.find(m => m.id === parseInt(matchId));
+      if (match) {
+        setTimeout(() => {
+          openPredictionModal(
+            `${match.timeISO}_${match.team1}_${match.team2}`,
+            match.team1,
+            match.team2,
+            match.timeISO
+          );
+        }, 800);
+      } else {
+        console.warn('⚠️ مباراة غير موجودة بالرقم:', matchId);
+      }
+    }
+  }
+  
+  function toggleDayFilter(tabId) {
+    const dayFilterTabs = document.getElementById('dayFilterTabs');
+    if (tabId === 'upcoming') {
+      dayFilterTabs.classList.add('visible');
+    } else {
+      dayFilterTabs.classList.remove('visible');
+    }
+  }
+  
   async function init() {
     console.log("🚀 تهيئة التطبيق...");
     initTabs();
@@ -2613,6 +3085,7 @@
     startAutoUpdate();
     
     toggleDayFilter('upcoming');
+    updateShareAllCount();
     
     if (!loadFromCache()) {
       console.log("📭 لا توجد بيانات في الكاش");
@@ -2633,6 +3106,7 @@
   window.toggleTheme = toggleTheme;
   window.shareResults = shareResults;
   window.copyMatchLink = copyMatchLink;
+  window.shareAllTodayTomorrow = shareAllTodayTomorrow;
   
   init();
 </script>
