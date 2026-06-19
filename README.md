@@ -1,5 +1,4 @@
 
-
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -7,9 +6,6 @@
   <title>🏆 كأس العالم 2026</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* ============================================================
-       الأنماط الأساسية
-       ============================================================ */
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     
     :root {
@@ -67,9 +63,6 @@
     ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
     ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
     
-    /* ============================================================
-       البار العلوي (Top Bar) - يغطي العرض بالكامل
-       ============================================================ */
     .top-bar {
       width: 100%;
       background: linear-gradient(135deg, #0f1f3a, #1a2f4a);
@@ -117,9 +110,6 @@
       color: #1a2332;
     }
     
-    /* ============================================================
-       الهيدر
-       ============================================================ */
     .sticky-header {
       position: sticky;
       top: 0;
@@ -195,9 +185,6 @@
       transform: translateY(-1px);
     }
     
-    /* ============================================================
-       شريط الأخبار
-       ============================================================ */
     .news-ticker-wrapper {
       background: rgba(240, 180, 41, 0.06);
       border: 1px solid var(--border-gold);
@@ -227,9 +214,6 @@
     
     .news-ticker-wrapper:hover .news-ticker { animation-play-state: paused; }
     
-    /* ============================================================
-       شريط التحكم
-       ============================================================ */
     .controls-bar {
       display: flex;
       flex-wrap: wrap;
@@ -284,9 +268,6 @@
       color: var(--text-primary);
     }
     
-    /* ============================================================
-       أزرار التبويب مع فلتر اليوم
-       ============================================================ */
     .tabs-container {
       display: flex;
       flex-wrap: wrap;
@@ -390,9 +371,6 @@
       font-weight: 600;
     }
     
-    /* ============================================================
-       LEADERBOARD
-       ============================================================ */
     .leaderboard-section {
       background: linear-gradient(145deg, rgba(10, 22, 40, 0.95), rgba(20, 40, 70, 0.9));
       border: 1px solid var(--border-gold);
@@ -715,9 +693,6 @@
       50% { opacity: 0.5; transform: scale(0.8); }
     }
     
-    /* ============================================================
-       المباريات
-       ============================================================ */
     .matches-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -810,9 +785,50 @@
       50% { opacity: 0.5; }
     }
     
-    /* ============================================================
-       المجموعات
-       ============================================================ */
+    .share-link-btn {
+      background: rgba(52, 152, 219, 0.1);
+      border: 1px solid rgba(52, 152, 219, 0.2);
+      color: #5dade2;
+      padding: 6px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .share-link-btn:hover {
+      background: rgba(52, 152, 219, 0.2);
+      border-color: #5dade2;
+      transform: translateY(-1px);
+    }
+    
+    .share-link-btn .icon { font-size: 0.9rem; }
+    
+    .copy-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(46, 204, 113, 0.95);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      z-index: 99999;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      animation: fadeInModal 0.3s ease;
+      backdrop-filter: blur(8px);
+      display: none;
+    }
+    
+    .copy-toast.show { display: block; }
+    
     .groups-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -873,9 +889,6 @@
     .standings-table .team-cell span:last-child { color: #000000; }
     .standings-table td:last-child { color: #000000; font-weight: 800; }
     
-    /* ============================================================
-       التوقعات
-       ============================================================ */
     .predictions-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -916,9 +929,6 @@
     .prediction-card .user .name-p { font-weight: 700; }
     .prediction-card .prediction-text { font-size: 0.85rem; color: var(--text-secondary); }
     
-    /* ============================================================
-       حالة عدم وجود بيانات
-       ============================================================ */
     .empty-state {
       text-align: center;
       padding: 40px 20px;
@@ -931,9 +941,6 @@
     
     .empty-state .icon { font-size: 2.5rem; display: block; margin-bottom: 12px; }
     
-    /* ============================================================
-       النوافذ المنبثقة
-       ============================================================ */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -1121,69 +1128,43 @@
     
     .footer .gold-text { color: var(--gold-light); }
     
-    /* ============================================================
-       استعلامات الوسائط
-       ============================================================ */
     @media (max-width: 640px) {
       .app-container { padding: 0 8px 30px; }
-      
       .top-bar { padding: 6px 12px; }
       .top-bar .top-bar-title { font-size: 0.9rem; }
       .top-bar .top-bar-sub { font-size: 0.6rem; }
-      
-      .sticky-header {
-        padding: 10px 14px;
-        margin: 0 -8px 16px;
-        border-radius: 0 0 24px 24px;
-      }
-      
+      .sticky-header { padding: 10px 14px; margin: 0 -8px 16px; border-radius: 0 0 24px 24px; }
       .sticky-header .brand h1 { font-size: 1rem; }
       .sticky-header .brand .sub { font-size: 0.5rem; }
       .sticky-header .header-btn { padding: 6px 10px; font-size: 0.6rem; }
-      
       .controls-bar { padding: 12px 14px; }
       .controls-bar .control-group { min-width: 100%; }
       .controls-bar select, .controls-bar input { font-size: 0.7rem; padding: 6px 10px; }
-      
       .tabs-container { flex-direction: column; align-items: stretch; }
       .tabs { justify-content: center; }
       .day-filter-tabs { justify-content: center; }
-      
       .leaderboard-section { padding: 16px; margin: 0 0 20px 0; }
       .leaderboard-section .lb-header .title { font-size: 1.1rem; }
       .leaderboard-section .lb-header .lb-stats { font-size: 0.65rem; gap: 8px; flex-wrap: wrap; }
-      
-      .champion-card {
-        padding: 18px;
-        flex-direction: column;
-        text-align: center;
-        gap: 12px;
-      }
-      
+      .champion-card { padding: 18px; flex-direction: column; text-align: center; gap: 12px; }
       .champion-card .rank-badge { font-size: 2.2rem; min-width: auto; }
       .champion-card .avatar { width: 60px; height: 60px; font-size: 1.4rem; }
       .champion-card .info .name { font-size: 1.1rem; justify-content: center; }
       .champion-card .info .stats-row { justify-content: center; gap: 12px; }
-      
       .players-list { grid-template-columns: 1fr; gap: 8px; }
       .player-card { padding: 12px 14px; }
       .player-card .info-sm .name-sm { font-size: 0.8rem; }
       .player-card .points-sm { font-size: 0.75rem; padding: 2px 10px; }
       .player-card .progress-mini { width: 40px; }
-      
       .tab-btn { padding: 8px 14px; font-size: 0.7rem; }
       .day-filter-tabs .day-btn { padding: 4px 10px; font-size: 0.65rem; }
-      
       .matches-grid { grid-template-columns: 1fr; gap: 14px; }
       .match-team { font-size: 0.75rem; }
       .match-team .flag { font-size: 1.1rem; }
-      
       .groups-container { grid-template-columns: 1fr; }
       .standings-table { font-size: 0.6rem; }
       .standings-table th, .standings-table td { padding: 4px 2px; }
-      
       .predictions-grid { grid-template-columns: 1fr; }
-      
       .modal-content { padding: 20px; }
       .modal-teams { flex-wrap: wrap; gap: 6px; }
       .modal-teams .m-team { font-size: 0.85rem; }
@@ -1202,9 +1183,6 @@
 </head>
 <body>
 
-<!-- ============================================================
-     البار العلوي (Top Bar) - يغطي العرض بالكامل
-     ============================================================ -->
 <div class="top-bar">
   <div class="top-bar-content">
     <div class="top-bar-title">
@@ -1219,7 +1197,6 @@
 
 <div class="app-container">
   
-  <!-- ===== الهيدر الثابت ===== -->
   <header class="sticky-header">
     <div class="brand">
       <div>
@@ -1228,19 +1205,12 @@
       </div>
     </div>
     <div class="header-actions">
-      <button class="header-btn" id="themeToggleBtn" onclick="toggleTheme()">
-        🌙 الوضع المظلم
-      </button>
-      <button class="header-btn" onclick="shareResults()">
-        📤 مشاركة
-      </button>
-      <button class="header-btn" onclick="location.reload()">
-        🔄 تحديث
-      </button>
+      <button class="header-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 الوضع المظلم</button>
+      <button class="header-btn" onclick="shareResults()">📤 مشاركة</button>
+      <button class="header-btn" onclick="location.reload()">🔄 تحديث</button>
     </div>
   </header>
   
-  <!-- ===== شريط الأخبار ===== -->
   <div class="news-ticker-wrapper">
     <div class="news-ticker">
       <span>🏆 كأس العالم 2026 — تابع المباريات وتوقع النتائج</span>
@@ -1253,9 +1223,6 @@
     </div>
   </div>
   
-  <!-- ============================================================
-       🏆 LEADERBOARD
-       ============================================================ -->
   <div class="leaderboard-section" id="leaderboardSection">
     <div class="lb-header">
       <div class="title">
@@ -1273,26 +1240,17 @@
     </div>
   </div>
   
-  <!-- ============================================================
-       شريط التحكم
-       ============================================================ -->
   <div class="controls-bar">
     <div class="control-group">
       <label>🏷️ المجموعة</label>
       <select id="groupFilter">
         <option value="all">جميع المجموعات</option>
-        <option value="A">المجموعة A</option>
-        <option value="B">المجموعة B</option>
-        <option value="C">المجموعة C</option>
-        <option value="D">المجموعة D</option>
-        <option value="E">المجموعة E</option>
-        <option value="F">المجموعة F</option>
-        <option value="G">المجموعة G</option>
-        <option value="H">المجموعة H</option>
-        <option value="I">المجموعة I</option>
-        <option value="J">المجموعة J</option>
-        <option value="K">المجموعة K</option>
-        <option value="L">المجموعة L</option>
+        <option value="A">المجموعة A</option><option value="B">المجموعة B</option>
+        <option value="C">المجموعة C</option><option value="D">المجموعة D</option>
+        <option value="E">المجموعة E</option><option value="F">المجموعة F</option>
+        <option value="G">المجموعة G</option><option value="H">المجموعة H</option>
+        <option value="I">المجموعة I</option><option value="J">المجموعة J</option>
+        <option value="K">المجموعة K</option><option value="L">المجموعة L</option>
       </select>
     </div>
     <div class="control-group">
@@ -1301,9 +1259,6 @@
     </div>
   </div>
   
-  <!-- ============================================================
-       التبويبات مع فلتر اليوم
-       ============================================================ -->
   <div class="tabs-container">
     <div class="tabs">
       <button class="tab-btn active" data-tab="upcoming">⚡ القادمة والجارية</button>
@@ -1311,8 +1266,6 @@
       <button class="tab-btn" data-tab="standings">📊 ترتيب المجموعات</button>
       <button class="tab-btn" data-tab="predictions">🗳️ جميع التوقعات</button>
     </div>
-    
-    <!-- فلتر اليوم - يظهر فقط عند اختيار تبويب "القادمة والجارية" -->
     <div class="day-filter-tabs visible" id="dayFilterTabs">
       <button class="day-btn active" data-day="all">📅 الكل</button>
       <button class="day-btn" data-day="today">📌 اليوم</button>
@@ -1321,7 +1274,6 @@
     </div>
   </div>
   
-  <!-- ===== تبويب المباريات القادمة ===== -->
   <div id="upcomingTab" class="tab-content active">
     <div class="section-title">
       ⚡ المباريات القادمة والجارية
@@ -1332,29 +1284,16 @@
     </div>
   </div>
   
-  <!-- ===== تبويب المباريات السابقة ===== -->
   <div id="previousTab" class="tab-content">
     <div class="section-title">📋 المباريات السابقة</div>
     <div style="margin-bottom: 16px;">
-      <input type="text" id="prevSearchInput" placeholder="🔍 بحث في المباريات السابقة..." style="
-        width: 100%;
-        padding: 12px 20px;
-        border-radius: 60px;
-        border: 2px solid rgba(255,255,255,0.06);
-        background: rgba(255,255,255,0.03);
-        color: var(--text-primary);
-        font-size: 0.85rem;
-        outline: none;
-        transition: var(--transition);
-        font-family: inherit;
-      ">
+      <input type="text" id="prevSearchInput" placeholder="🔍 بحث في المباريات السابقة..." style="width:100%;padding:12px 20px;border-radius:60px;border:2px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03);color:var(--text-primary);font-size:0.85rem;outline:none;transition:var(--transition);font-family:inherit;">
     </div>
     <div id="previousMatchesContainer" class="matches-grid">
       <div class="empty-state"><span class="icon">⏳</span> جاري تحميل المباريات السابقة...</div>
     </div>
   </div>
   
-  <!-- ===== تبويب ترتيب المجموعات ===== -->
   <div id="standingsTab" class="tab-content">
     <div class="section-title">📊 ترتيب المجموعات</div>
     <div id="standingsContainer" class="groups-container">
@@ -1362,7 +1301,6 @@
     </div>
   </div>
   
-  <!-- ===== تبويب جميع التوقعات ===== -->
   <div id="predictionsTab" class="tab-content">
     <div class="section-title">🗳️ جميع التوقعات <span class="badge-count" id="predictionsCount">0</span></div>
     <div id="allPredictions" class="predictions-grid">
@@ -1375,59 +1313,39 @@
   </footer>
 </div>
 
-<!-- ===== نافذة التوقع ===== -->
 <div class="modal-overlay" id="predictionModal">
   <div class="modal-content">
     <button class="modal-close" id="modalCloseBtn">✕</button>
     <div class="modal-title">📝 توقع نتيجة المباراة</div>
-    
     <div class="modal-teams" id="modalTeams">
       <div class="m-team"><span class="flag" id="modalFlag1">🏁</span> <span id="modalTeam1">الفريق الأول</span></div>
       <div class="m-vs">🆚</div>
       <div class="m-team"><span class="flag" id="modalFlag2">🏁</span> <span id="modalTeam2">الفريق الثاني</span></div>
     </div>
-    
-    <div style="text-align:center; font-size:0.75rem; color:var(--text-secondary); margin-bottom:14px;" id="modalDateTime">📅 التاريخ والوقت</div>
-    
+    <div style="text-align:center;font-size:0.75rem;color:var(--text-secondary);margin-bottom:14px;" id="modalDateTime">📅 التاريخ والوقت</div>
     <div class="modal-options" id="modalOptions">
-      <label>
-        <input type="radio" name="prediction" value="HOME">
-        <span class="opt-label">🏆 <span id="optTeam1">الفريق الأول</span></span>
-        <span class="opt-sub">فوز</span>
-      </label>
-      <label>
-        <input type="radio" name="prediction" value="AWAY">
-        <span class="opt-label">🏆 <span id="optTeam2">الفريق الثاني</span></span>
-        <span class="opt-sub">فوز</span>
-      </label>
-      <label>
-        <input type="radio" name="prediction" value="DRAW">
-        <span class="opt-label">🤝 تعادل</span>
-        <span class="opt-sub">النتيجة متساوية</span>
-      </label>
+      <label><input type="radio" name="prediction" value="HOME"><span class="opt-label">🏆 <span id="optTeam1">الفريق الأول</span></span><span class="opt-sub">فوز</span></label>
+      <label><input type="radio" name="prediction" value="AWAY"><span class="opt-label">🏆 <span id="optTeam2">الفريق الثاني</span></span><span class="opt-sub">فوز</span></label>
+      <label><input type="radio" name="prediction" value="DRAW"><span class="opt-label">🤝 تعادل</span><span class="opt-sub">النتيجة متساوية</span></label>
     </div>
-    
     <div class="modal-input">
       <input type="text" id="modalUserName" placeholder="👤 أدخل اسمك" maxlength="30">
     </div>
-    
     <button class="modal-submit" id="modalSubmitBtn">💾 حفظ التوقع</button>
     <div class="modal-message" id="modalMessage"></div>
   </div>
 </div>
 
-<!-- ===== نافذة استعراض توقعات اللاعب ===== -->
 <div class="modal-overlay" id="playerPredictionsModal">
   <div class="modal-content">
     <button class="modal-close" id="playerModalCloseBtn">✕</button>
     <div class="modal-title">📋 توقعات <span id="playerModalName"></span></div>
-    <div id="playerPredictionsList" class="predictions-grid" style="max-height:400px; overflow-y:auto;">
+    <div id="playerPredictionsList" class="predictions-grid" style="max-height:400px;overflow-y:auto;">
       <div class="empty-state"><span class="icon">📭</span> لا توجد توقعات لهذا اللاعب</div>
     </div>
   </div>
 </div>
 
-<!-- ===== نافذة استعراض توقعات المباراة ===== -->
 <div class="modal-overlay" id="viewPredictionsModal">
   <div class="modal-content">
     <button class="modal-close" id="viewModalCloseBtn">✕</button>
@@ -1437,20 +1355,19 @@
       <div class="m-vs">🆚</div>
       <div class="m-team"><span class="flag" id="viewFlag2">🏁</span> <span id="viewTeam2">الفريق الثاني</span></div>
     </div>
-    <div style="text-align:center; font-size:0.8rem; color:var(--text-secondary); margin:8px 0 14px;">
-      عدد التوقعات: <span id="viewPredictionsCount" style="color:var(--gold-light); font-weight:800;">0</span>
+    <div style="text-align:center;font-size:0.8rem;color:var(--text-secondary);margin:8px 0 14px;">
+      عدد التوقعات: <span id="viewPredictionsCount" style="color:var(--gold-light);font-weight:800;">0</span>
     </div>
-    <div id="viewPredictionsList" style="max-height:400px; overflow-y:auto;">
+    <div id="viewPredictionsList" style="max-height:400px;overflow-y:auto;">
       <div class="empty-state"><span class="icon">📭</span> لا توجد توقعات لهذه المباراة</div>
     </div>
   </div>
 </div>
 
+<div class="copy-toast" id="copyToast">✅ تم نسخ الرابط!</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ============================================================
-  //  Supabase الاتصال
-  // ============================================================
   const SUPABASE_URL = "https://szjxwhsmefqpfcebtvei.supabase.co";
   const SUPABASE_KEY = "sb_publishable_0um28lgPMHcjDOThT0UgDA_K-Y7Wmx3";
   
@@ -1463,9 +1380,6 @@
     supabaseClient = null;
   }
   
-  // ============================================================
-  //  التخزين المحلي
-  // ============================================================
   function getLocalPredictions() {
     try {
       const data = localStorage.getItem('predictions');
@@ -1492,9 +1406,6 @@
     return getLocalPredictions()[`${userName}_${matchId}`] || null;
   }
   
-  // ============================================================
-  //  دوال API مع تخزين مؤقت
-  // ============================================================
   const CACHE_KEY = 'worldcup_data';
   const CACHE_DURATION = 5 * 60 * 1000;
   
@@ -1523,16 +1434,9 @@
   async function getAllPredictions() {
     if (!supabaseClient) return [];
     const cached = getCachedData('predictions');
-    if (cached) {
-      console.log("📦 جلب التوقعات من cache");
-      return cached;
-    }
+    if (cached) return cached;
     try {
-      const { data, error } = await supabaseClient
-        .from("predictions")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(100);
+      const { data, error } = await supabaseClient.from("predictions").select("*").order("created_at", { ascending: false }).limit(100);
       if (error) throw error;
       const result = data || [];
       setCachedData('predictions', result);
@@ -1546,12 +1450,7 @@
   async function getPredictionsForMatch(matchId) {
     if (!supabaseClient) return [];
     try {
-      const { data, error } = await supabaseClient
-        .from("predictions")
-        .select("*")
-        .eq("match_id", matchId)
-        .order("created_at", { ascending: false })
-        .limit(20);
+      const { data, error } = await supabaseClient.from("predictions").select("*").eq("match_id", matchId).order("created_at", { ascending: false }).limit(20);
       if (error) throw error;
       return data || [];
     } catch (e) {
@@ -1563,12 +1462,7 @@
   async function getPredictionsForUser(userName) {
     if (!supabaseClient || !userName) return [];
     try {
-      const { data, error } = await supabaseClient
-        .from("predictions")
-        .select("*")
-        .eq("user_name", userName)
-        .order("created_at", { ascending: false })
-        .limit(20);
+      const { data, error } = await supabaseClient.from("predictions").select("*").eq("user_name", userName).order("created_at", { ascending: false }).limit(20);
       if (error) throw error;
       return data || [];
     } catch (e) {
@@ -1584,9 +1478,7 @@
       return { success: false, message: `⚠️ توقعت مسبقاً: ${existing.prediction === 'DRAW' ? 'تعادل' : existing.prediction}`, duplicate: true };
     }
     try {
-      const { error } = await supabaseClient
-        .from("predictions")
-        .insert([{ user_name: userName, match_id: matchId, prediction }]);
+      const { error } = await supabaseClient.from("predictions").insert([{ user_name: userName, match_id: matchId, prediction }]);
       if (error) throw error;
       saveLocalPrediction(userName, matchId, prediction);
       localStorage.removeItem(`${CACHE_KEY}_predictions`);
@@ -1596,9 +1488,6 @@
     }
   }
   
-  // ============================================================
-  //  دوال الوقت والمباريات
-  // ============================================================
   function now() { return Date.now(); }
   function matchTime(t) { return new Date(t).getTime(); }
   const MATCH_DURATION = 105 * 60 * 1000;
@@ -1630,9 +1519,6 @@
     return arr.filter(m => (matchTime(m.timeISO) + MATCH_DURATION) > now());
   }
   
-  // ============================================================
-  //  التحقق من أيام المباريات (اليوم وغداً)
-  // ============================================================
   function isMatchTodayOrTomorrow(timeISO) {
     const matchDate = new Date(timeISO);
     matchDate.setHours(0, 0, 0, 0);
@@ -1640,13 +1526,9 @@
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
     return matchDate.getTime() === today.getTime() || matchDate.getTime() === tomorrow.getTime();
   }
   
-  // ============================================================
-  //  ترجمة الأسماء والأعلام
-  // ============================================================
   const nameMapping = new Map([
     ["مکزیک", "المكسيك"], ["Mexico", "المكسيك"],
     ["آفریقای جنوبی", "جنوب أفريقيا"], ["South Africa", "جنوب أفريقيا"],
@@ -1729,46 +1611,82 @@
   function getDateTimeDisplay(t) { return `${getDateFmt(t)} - ${getTimeFromISO(t)}`; }
   
   // ============================================================
-  //  بيانات المباريات القادمة
+  //  بيانات المباريات مع أرقام فريدة
   // ============================================================
   const rawMatches = [
-    { team1:"المكسيك", team2:"جنوب أفريقيا", time:"2026-06-11T22:00:00", round:"first" },{ team1:"الأرجنتين", team2:"الجزائر", time:"2026-06-11T04:00:00", round:"first" },
-    { team1:"النمسا", team2:"الأردن", time:"2026-06-11T07:00:00", round:"first" },{ team1:"البرتغال", team2:"الكونغو الديمقراطية", time:"2026-06-11T20:00:00", round:"first" },
-    { team1:"كوريا الجنوبية", team2:"التشيك", time:"2026-06-12T05:00:00", round:"first" },{ team1:"كندا", team2:"البوسنة والهرسك", time:"2026-06-12T22:00:00", round:"first" },
-    { team1:"أمريكا", team2:"العراق", time:"2026-06-13T04:00:00", round:"first" },{ team1:"سويسرا", team2:"قطر", time:"2026-06-13T22:00:00", round:"first" },
-    { team1:"البرازيل", team2:"المغرب", time:"2026-06-14T01:00:00", round:"first" },{ team1:"هايتي", team2:"إسكتلندا", time:"2026-06-14T04:00:00", round:"first" },
-    { team1:"أستراليا", team2:"تركيا", time:"2026-06-14T07:00:00", round:"first" },{ team1:"ألمانيا", team2:"كوراساو", time:"2026-06-14T20:00:00", round:"first" },
-    { team1:"اليابان", team2:"هولندا", time:"2026-06-14T23:00:00", round:"first" },{ team1:"الإكوادور", team2:"ساحل العاج", time:"2026-06-15T02:00:00", round:"first" },
-    { team1:"السويد", team2:"تونس", time:"2026-06-15T05:00:00", round:"first" },{ team1:"إسبانيا", team2:"الرأس الأخضر", time:"2026-06-15T19:00:00", round:"first" },
-    { team1:"مصر", team2:"بلجيكا", time:"2026-06-15T22:00:00", round:"first" },{ team1:"السعودية", team2:"أوروغواي", time:"2026-06-16T01:00:00", round:"first" },
-    { team1:"إيران", team2:"نيوزيلندا", time:"2026-06-16T04:00:00", round:"first" },{ team1:"السنغال", team2:"فرنسا", time:"2026-06-16T22:00:00", round:"first" },
-    { team1:"النرويج", team2:"العراق", time:"2026-06-17T01:00:00", round:"first" },{ team1:"الجزائر", team2:"الأرجنتين", time:"2026-06-17T04:00:00", round:"first" },
-    { team1:"الأردن", team2:"النمسا", time:"2026-06-17T07:00:00", round:"first" },{ team1:"البرتغال", team2:"كرواتيا", time:"2026-06-17T20:00:00", round:"first" },
-    { team1:"إنجلترا", team2:"كرواتيا", time:"2026-06-17T23:00:00", round:"first" },{ team1:"جنوب أفريقيا", team2:"التشيك", time:"2026-06-18T19:00:00", round:"second" },
-    { team1:"سويسرا", team2:"البوسنة والهرسك", time:"2026-06-18T22:00:00", round:"second" },{ team1:"قطر", team2:"كندا", time:"2026-06-19T01:00:00", round:"second" },
-    { team1:"المكسيك", team2:"كوريا الجنوبية", time:"2026-06-19T04:00:00", round:"second" },{ team1:"أستراليا", team2:"أمريكا", time:"2026-06-19T22:00:00", round:"second" },
-    { team1:"المغرب", team2:"إسكتلندا", time:"2026-06-20T01:00:00", round:"second" },{ team1:"البرازيل", team2:"هايتي", time:"2026-06-20T03:30:00", round:"second" },
-    { team1:"تركيا", team2:"باراغواي", time:"2026-06-20T06:00:00", round:"second" },{ team1:"السويد", team2:"هولندا", time:"2026-06-20T20:00:00", round:"second" },
-    { team1:"ساحل العاج", team2:"ألمانيا", time:"2026-06-20T23:00:00", round:"second" },{ team1:"الإكوادور", team2:"كوراساو", time:"2026-06-21T03:00:00", round:"second" },
-    { team1:"اليابان", team2:"تونس", time:"2026-06-21T07:00:00", round:"second" },{ team1:"إسبانيا", team2:"السعودية", time:"2026-06-21T19:00:00", round:"second" },
-    { team1:"بلجيكا", team2:"إيران", time:"2026-06-21T22:00:00", round:"second" },{ team1:"أوروغواي", team2:"الرأس الأخضر", time:"2026-06-22T01:00:00", round:"second" },
-    { team1:"مصر", team2:"نيوزيلندا", time:"2026-06-22T04:00:00", round:"second" },{ team1:"الأرجنتين", team2:"النمسا", time:"2026-06-22T20:00:00", round:"second" },
-    { team1:"العراق", team2:"فرنسا", time:"2026-06-23T00:00:00", round:"second" },{ team1:"النرويج", team2:"السنغال", time:"2026-06-23T03:00:00", round:"second" },
-    { team1:"الأردن", team2:"الجزائر", time:"2026-06-23T06:00:00", round:"second" },{ team1:"البرتغال", team2:"أوزبكستان", time:"2026-06-23T20:00:00", round:"second" },
-    { team1:"إنجلترا", team2:"غانا", time:"2026-06-23T23:00:00", round:"second" },{ team1:"بنما", team2:"كرواتيا", time:"2026-06-24T02:00:00", round:"second" },
-    { team1:"كولومبيا", team2:"الكونغو الديمقراطية", time:"2026-06-24T05:00:00", round:"second" },{ team1:"كندا", team2:"سويسرا", time:"2026-06-24T22:00:00", round:"third" },
-    { team1:"قطر", team2:"البوسنة والهرسك", time:"2026-06-24T22:00:00", round:"third" },{ team1:"المغرب", team2:"هايتي", time:"2026-06-25T01:00:00", round:"third" },
-    { team1:"إسكتلندا", team2:"البرازيل", time:"2026-06-25T01:00:00", round:"third" },{ team1:"جنوب أفريقيا", team2:"كوريا الجنوبية", time:"2026-06-25T04:00:00", round:"third" },
-    { team1:"المكسيك", team2:"التشيك", time:"2026-06-25T04:00:00", round:"third" },{ team1:"كوراساو", team2:"ساحل العاج", time:"2026-06-25T23:00:00", round:"third" },
-    { team1:"ألمانيا", team2:"الإكوادور", time:"2026-06-25T23:00:00", round:"third" },{ team1:"هولندا", team2:"تونس", time:"2026-06-26T02:00:00", round:"third" },
-    { team1:"اليابان", team2:"السويد", time:"2026-06-26T02:00:00", round:"third" },{ team1:"أمريكا", team2:"تركيا", time:"2026-06-26T05:00:00", round:"third" },
-    { team1:"أستراليا", team2:"باراغواي", time:"2026-06-26T05:00:00", round:"third" },{ team1:"فرنسا", team2:"النرويج", time:"2026-06-26T22:00:00", round:"third" },
-    { team1:"السنغال", team2:"العراق", time:"2026-06-26T22:00:00", round:"third" },{ team1:"السعودية", team2:"الرأس الأخضر", time:"2026-06-27T03:00:00", round:"third" },
-    { team1:"إسبانيا", team2:"أوروغواي", time:"2026-06-27T03:00:00", round:"third" },{ team1:"إيران", team2:"مصر", time:"2026-06-27T06:00:00", round:"third" },
-    { team1:"نيوزيلندا", team2:"بلجيكا", time:"2026-06-27T06:00:00", round:"third" },{ team1:"إنجلترا", team2:"بنما", time:"2026-06-28T00:00:00", round:"third" },
-    { team1:"كرواتيا", team2:"غانا", time:"2026-06-28T00:00:00", round:"third" },{ team1:"البرتغال", team2:"كولومبيا", time:"2026-06-28T02:30:00", round:"third" },
-    { team1:"الكونغو الديمقراطية", team2:"أوزبكستان", time:"2026-06-28T02:30:00", round:"third" },{ team1:"الجزائر", team2:"النمسا", time:"2026-06-28T05:00:00", round:"third" },
-    { team1:"الأردن", team2:"الأرجنتين", time:"2026-06-28T05:00:00", round:"third" }
+    { id: 1, team1:"المكسيك", team2:"جنوب أفريقيا", time:"2026-06-11T22:00:00", round:"first" },
+    { id: 2, team1:"الأرجنتين", team2:"الجزائر", time:"2026-06-11T04:00:00", round:"first" },
+    { id: 3, team1:"النمسا", team2:"الأردن", time:"2026-06-11T07:00:00", round:"first" },
+    { id: 4, team1:"البرتغال", team2:"الكونغو الديمقراطية", time:"2026-06-11T20:00:00", round:"first" },
+    { id: 5, team1:"كوريا الجنوبية", team2:"التشيك", time:"2026-06-12T05:00:00", round:"first" },
+    { id: 6, team1:"كندا", team2:"البوسنة والهرسك", time:"2026-06-12T22:00:00", round:"first" },
+    { id: 7, team1:"أمريكا", team2:"العراق", time:"2026-06-13T04:00:00", round:"first" },
+    { id: 8, team1:"سويسرا", team2:"قطر", time:"2026-06-13T22:00:00", round:"first" },
+    { id: 9, team1:"البرازيل", team2:"المغرب", time:"2026-06-14T01:00:00", round:"first" },
+    { id: 10, team1:"هايتي", team2:"إسكتلندا", time:"2026-06-14T04:00:00", round:"first" },
+    { id: 11, team1:"أستراليا", team2:"تركيا", time:"2026-06-14T07:00:00", round:"first" },
+    { id: 12, team1:"ألمانيا", team2:"كوراساو", time:"2026-06-14T20:00:00", round:"first" },
+    { id: 13, team1:"اليابان", team2:"هولندا", time:"2026-06-14T23:00:00", round:"first" },
+    { id: 14, team1:"الإكوادور", team2:"ساحل العاج", time:"2026-06-15T02:00:00", round:"first" },
+    { id: 15, team1:"السويد", team2:"تونس", time:"2026-06-15T05:00:00", round:"first" },
+    { id: 16, team1:"إسبانيا", team2:"الرأس الأخضر", time:"2026-06-15T19:00:00", round:"first" },
+    { id: 17, team1:"مصر", team2:"بلجيكا", time:"2026-06-15T22:00:00", round:"first" },
+    { id: 18, team1:"السعودية", team2:"أوروغواي", time:"2026-06-16T01:00:00", round:"first" },
+    { id: 19, team1:"إيران", team2:"نيوزيلندا", time:"2026-06-16T04:00:00", round:"first" },
+    { id: 20, team1:"السنغال", team2:"فرنسا", time:"2026-06-16T22:00:00", round:"first" },
+    { id: 21, team1:"النرويج", team2:"العراق", time:"2026-06-17T01:00:00", round:"first" },
+    { id: 22, team1:"الجزائر", team2:"الأرجنتين", time:"2026-06-17T04:00:00", round:"first" },
+    { id: 23, team1:"الأردن", team2:"النمسا", time:"2026-06-17T07:00:00", round:"first" },
+    { id: 24, team1:"البرتغال", team2:"كرواتيا", time:"2026-06-17T20:00:00", round:"first" },
+    { id: 25, team1:"إنجلترا", team2:"كرواتيا", time:"2026-06-17T23:00:00", round:"first" },
+    { id: 26, team1:"جنوب أفريقيا", team2:"التشيك", time:"2026-06-18T19:00:00", round:"second" },
+    { id: 27, team1:"سويسرا", team2:"البوسنة والهرسك", time:"2026-06-18T22:00:00", round:"second" },
+    { id: 28, team1:"قطر", team2:"كندا", time:"2026-06-19T01:00:00", round:"second" },
+    { id: 29, team1:"المكسيك", team2:"كوريا الجنوبية", time:"2026-06-19T04:00:00", round:"second" },
+    { id: 30, team1:"أستراليا", team2:"أمريكا", time:"2026-06-19T22:00:00", round:"second" },
+    { id: 31, team1:"المغرب", team2:"إسكتلندا", time:"2026-06-20T01:00:00", round:"second" },
+    { id: 32, team1:"البرازيل", team2:"هايتي", time:"2026-06-20T03:30:00", round:"second" },
+    { id: 33, team1:"تركيا", team2:"باراغواي", time:"2026-06-20T06:00:00", round:"second" },
+    { id: 34, team1:"السويد", team2:"هولندا", time:"2026-06-20T20:00:00", round:"second" },
+    { id: 35, team1:"ساحل العاج", team2:"ألمانيا", time:"2026-06-20T23:00:00", round:"second" },
+    { id: 36, team1:"الإكوادور", team2:"كوراساو", time:"2026-06-21T03:00:00", round:"second" },
+    { id: 37, team1:"اليابان", team2:"تونس", time:"2026-06-21T07:00:00", round:"second" },
+    { id: 38, team1:"إسبانيا", team2:"السعودية", time:"2026-06-21T19:00:00", round:"second" },
+    { id: 39, team1:"بلجيكا", team2:"إيران", time:"2026-06-21T22:00:00", round:"second" },
+    { id: 40, team1:"أوروغواي", team2:"الرأس الأخضر", time:"2026-06-22T01:00:00", round:"second" },
+    { id: 41, team1:"مصر", team2:"نيوزيلندا", time:"2026-06-22T04:00:00", round:"second" },
+    { id: 42, team1:"الأرجنتين", team2:"النمسا", time:"2026-06-22T20:00:00", round:"second" },
+    { id: 43, team1:"العراق", team2:"فرنسا", time:"2026-06-23T00:00:00", round:"second" },
+    { id: 44, team1:"النرويج", team2:"السنغال", time:"2026-06-23T03:00:00", round:"second" },
+    { id: 45, team1:"الأردن", team2:"الجزائر", time:"2026-06-23T06:00:00", round:"second" },
+    { id: 46, team1:"البرتغال", team2:"أوزبكستان", time:"2026-06-23T20:00:00", round:"second" },
+    { id: 47, team1:"إنجلترا", team2:"غانا", time:"2026-06-23T23:00:00", round:"second" },
+    { id: 48, team1:"بنما", team2:"كرواتيا", time:"2026-06-24T02:00:00", round:"second" },
+    { id: 49, team1:"كولومبيا", team2:"الكونغو الديمقراطية", time:"2026-06-24T05:00:00", round:"second" },
+    { id: 50, team1:"كندا", team2:"سويسرا", time:"2026-06-24T22:00:00", round:"third" },
+    { id: 51, team1:"قطر", team2:"البوسنة والهرسك", time:"2026-06-24T22:00:00", round:"third" },
+    { id: 52, team1:"المغرب", team2:"هايتي", time:"2026-06-25T01:00:00", round:"third" },
+    { id: 53, team1:"إسكتلندا", team2:"البرازيل", time:"2026-06-25T01:00:00", round:"third" },
+    { id: 54, team1:"جنوب أفريقيا", team2:"كوريا الجنوبية", time:"2026-06-25T04:00:00", round:"third" },
+    { id: 55, team1:"المكسيك", team2:"التشيك", time:"2026-06-25T04:00:00", round:"third" },
+    { id: 56, team1:"كوراساو", team2:"ساحل العاج", time:"2026-06-25T23:00:00", round:"third" },
+    { id: 57, team1:"ألمانيا", team2:"الإكوادور", time:"2026-06-25T23:00:00", round:"third" },
+    { id: 58, team1:"هولندا", team2:"تونس", time:"2026-06-26T02:00:00", round:"third" },
+    { id: 59, team1:"اليابان", team2:"السويد", time:"2026-06-26T02:00:00", round:"third" },
+    { id: 60, team1:"أمريكا", team2:"تركيا", time:"2026-06-26T05:00:00", round:"third" },
+    { id: 61, team1:"أستراليا", team2:"باراغواي", time:"2026-06-26T05:00:00", round:"third" },
+    { id: 62, team1:"فرنسا", team2:"النرويج", time:"2026-06-26T22:00:00", round:"third" },
+    { id: 63, team1:"السنغال", team2:"العراق", time:"2026-06-26T22:00:00", round:"third" },
+    { id: 64, team1:"السعودية", team2:"الرأس الأخضر", time:"2026-06-27T03:00:00", round:"third" },
+    { id: 65, team1:"إسبانيا", team2:"أوروغواي", time:"2026-06-27T03:00:00", round:"third" },
+    { id: 66, team1:"إيران", team2:"مصر", time:"2026-06-27T06:00:00", round:"third" },
+    { id: 67, team1:"نيوزيلندا", team2:"بلجيكا", time:"2026-06-27T06:00:00", round:"third" },
+    { id: 68, team1:"إنجلترا", team2:"بنما", time:"2026-06-28T00:00:00", round:"third" },
+    { id: 69, team1:"كرواتيا", team2:"غانا", time:"2026-06-28T00:00:00", round:"third" },
+    { id: 70, team1:"البرتغال", team2:"كولومبيا", time:"2026-06-28T02:30:00", round:"third" },
+    { id: 71, team1:"الكونغو الديمقراطية", team2:"أوزبكستان", time:"2026-06-28T02:30:00", round:"third" },
+    { id: 72, team1:"الجزائر", team2:"النمسا", time:"2026-06-28T05:00:00", round:"third" },
+    { id: 73, team1:"الأردن", team2:"الأرجنتين", time:"2026-06-28T05:00:00", round:"third" }
   ];
   
   const matchesData = rawMatches.map(m => ({
@@ -1777,9 +1695,6 @@
     roundLabel: m.round === 'first' ? 'الجولة الأولى' : (m.round === 'second' ? 'الجولة الثانية' : 'الجولة الثالثة')
   }));
   
-  // ============================================================
-  //  المجموعات
-  // ============================================================
   const finalGroups = {
     "A": ["المكسيك","جنوب أفريقيا","كوريا الجنوبية","التشيك"],
     "B": ["كندا","البوسنة والهرسك","قطر","سويسرا"],
@@ -1795,9 +1710,6 @@
     "L": ["إنجلترا","كرواتيا","غانا","بنما"]
   };
   
-  // ============================================================
-  //  المتغيرات العامة
-  // ============================================================
   let previousGamesData = [];
   let allPredictionsCache = [];
   let currentMatchId = null;
@@ -1807,9 +1719,6 @@
   let currentUserName = localStorage.getItem('lastUserName') || '';
   let currentDayFilter = 'all';
   
-  // ============================================================
-  //  إظهار/إخفاء فلتر اليوم حسب التبويب النشط
-  // ============================================================
   function toggleDayFilter(tabId) {
     const dayFilterTabs = document.getElementById('dayFilterTabs');
     if (tabId === 'upcoming') {
@@ -1820,20 +1729,78 @@
   }
   
   // ============================================================
+  //  دوال مشاركة الرابط - نسخة قصيرة جداً (رقم المباراة فقط)
+  // ============================================================
+  function copyMatchLink(matchId, team1, team2) {
+    const shareUrl = `${window.location.origin}${window.location.pathname}?m=${matchId}`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: `🏆 توقع مباراة ${team1} 🆚 ${team2}`,
+        text: `🔮 توقع نتيجة مباراة ${team1} 🆚 ${team2} في كأس العالم 2026`,
+        url: shareUrl
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        showCopyToast('✅ تم نسخ رابط المباراة!');
+      }).catch(() => {
+        const textArea = document.createElement('textarea');
+        textArea.value = shareUrl;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showCopyToast('✅ تم نسخ رابط المباراة!');
+      });
+    }
+  }
+  
+  function showCopyToast(message) {
+    const toast = document.getElementById('copyToast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+  
+  // ============================================================
+  //  فحص الرابط عند التحميل - باستخدام رقم المباراة
+  // ============================================================
+  function checkUrlForMatch() {
+    const params = new URLSearchParams(window.location.search);
+    const matchId = params.get('m');
+    
+    if (matchId && !isNaN(matchId)) {
+      const match = matchesData.find(m => m.id === parseInt(matchId));
+      if (match) {
+        setTimeout(() => {
+          openPredictionModal(
+            `${match.timeISO}_${match.team1}_${match.team2}`,
+            match.team1,
+            match.team2,
+            match.timeISO
+          );
+        }, 800);
+      } else {
+        console.warn('⚠️ مباراة غير موجودة بالرقم:', matchId);
+      }
+    }
+  }
+  
+  // ============================================================
   //  عرض المباريات القادمة
   // ============================================================
   function renderUpcoming() {
     try {
       let active = upcomingMatches(matchesData);
       
-      // فلتر المجموعة
       const groupFilter = document.getElementById('groupFilter')?.value || 'all';
       if (groupFilter !== 'all') {
         const teams = finalGroups[groupFilter] || [];
         active = active.filter(m => teams.includes(m.team1) || teams.includes(m.team2));
       }
       
-      // فلتر اليوم
       if (currentDayFilter === 'today') {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -1863,10 +1830,8 @@
         });
       }
       
-      // ترتيب حسب الوقت
       active.sort((a,b) => matchTime(a.timeISO) - matchTime(b.timeISO));
       
-      // بحث
       const searchQuery = document.getElementById('matchSearchInput')?.value || '';
       if (searchQuery) {
         const q = searchQuery.toLowerCase();
@@ -1893,7 +1858,6 @@
         const savedUserName = localStorage.getItem('lastUserName') || '';
         const hasPredicted = savedUserName && hasUserPredicted(savedUserName, matchId);
         
-        // التحقق إذا كانت المباراة اليوم أو غداً
         const showActions = isMatchTodayOrTomorrow(m.timeISO);
         
         let scoreDisplay = '🆚';
@@ -1949,12 +1913,14 @@
                       onclick="${showActions ? `openViewPredictionsModal('${matchId}','${m.team1}','${m.team2}')` : ''}">
                 <span>📋</span> استعراض التوقعات
               </button>
+              <button class="share-link-btn" onclick="copyMatchLink('${m.id}', '${m.team1}', '${m.team2}')">
+                <span class="icon">🔗</span> مشاركة الرابط
+              </button>
             </div>
           </div>
         `;
       }).join('');
       
-      // ربط أزرار التوقع
       document.querySelectorAll('[data-matchid][data-team1]').forEach(btn => {
         if (!btn.disabled && !btn.onclick) {
           btn.addEventListener('click', function() {
@@ -1969,9 +1935,6 @@
     }
   }
   
-  // ============================================================
-  //  أحداث فلتر اليوم
-  // ============================================================
   document.querySelectorAll('.day-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -1981,15 +1944,9 @@
     });
   });
   
-  // ============================================================
-  //  ربط أحداث الفلاتر الأخرى
-  // ============================================================
   document.getElementById('groupFilter')?.addEventListener('change', renderUpcoming);
   document.getElementById('matchSearchInput')?.addEventListener('input', renderUpcoming);
   
-  // ============================================================
-  //  🏆 LEADERBOARD
-  // ============================================================
   function calculateLeaderboard(predictions, matches) {
     const scores = {};
     predictions.forEach(p => {
@@ -2142,9 +2099,6 @@
     container.innerHTML = html;
   }
   
-  // ============================================================
-  //  النوافذ المنبثقة
-  // ============================================================
   function openPredictionModal(matchId, team1, team2, timeISO) {
     currentMatchId = matchId;
     currentTeam1 = team1;
@@ -2244,9 +2198,6 @@
     document.body.style.overflow = 'hidden';
   }
   
-  // ============================================================
-  //  إغلاق النوافذ
-  // ============================================================
   function closePredictionModal() {
     document.getElementById('predictionModal').classList.remove('active');
     document.body.style.overflow = '';
@@ -2262,9 +2213,6 @@
     document.body.style.overflow = '';
   }
   
-  // ============================================================
-  //  حفظ التوقع
-  // ============================================================
   document.getElementById('modalSubmitBtn').addEventListener('click', async function() {
     const userName = document.getElementById('modalUserName').value.trim();
     const selected = document.querySelector('input[name="prediction"]:checked');
@@ -2324,9 +2272,28 @@
     }
   });
   
-  // ============================================================
-  //  عرض جميع التوقعات
-  // ============================================================
+  document.getElementById('modalCloseBtn').addEventListener('click', closePredictionModal);
+  document.getElementById('viewModalCloseBtn').addEventListener('click', closeViewPredictionsModal);
+  document.getElementById('playerModalCloseBtn').addEventListener('click', closePlayerPredictionsModal);
+  
+  document.getElementById('predictionModal').addEventListener('click', function(e) {
+    if (e.target === this) closePredictionModal();
+  });
+  document.getElementById('viewPredictionsModal').addEventListener('click', function(e) {
+    if (e.target === this) closeViewPredictionsModal();
+  });
+  document.getElementById('playerPredictionsModal').addEventListener('click', function(e) {
+    if (e.target === this) closePlayerPredictionsModal();
+  });
+  
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closePredictionModal();
+      closeViewPredictionsModal();
+      closePlayerPredictionsModal();
+    }
+  });
+  
   async function renderAllPredictions() {
     const container = document.getElementById('allPredictions');
     const countSpan = document.getElementById('predictionsCount');
@@ -2359,12 +2326,9 @@
     }).join('');
   }
   
-  // ============================================================
-  //  المباريات السابقة
-  // ============================================================
+  document.getElementById('prevSearchInput')?.addEventListener('input', renderPreviousGamesFiltered);
+  
   let isLoadingPrevious = false;
-  let retryCount = 0;
-  const MAX_RETRIES = 2;
   
   function loadFromCache() {
     try {
@@ -2422,7 +2386,6 @@
       
       previousGamesData = newData;
       saveToCache(newData);
-      retryCount = 0;
       renderPreviousGamesFiltered();
       calculateStandings();
       await renderLeaderboard();
@@ -2469,9 +2432,6 @@
     `).join('');
   }
   
-  // ============================================================
-  //  ترتيب المجموعات
-  // ============================================================
   function calculateStandings() {
     try {
       const standings = {};
@@ -2542,9 +2502,6 @@
     }
   }
   
-  // ============================================================
-  //  إدارة التبويبات
-  // ============================================================
   function initTabs() {
     const btns = document.querySelectorAll('.tab-btn[data-tab]');
     btns.forEach(btn => {
@@ -2555,7 +2512,6 @@
         btns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
-        // إظهار/إخفاء فلتر اليوم
         toggleDayFilter(id);
         
         if (id === 'previous' && !previousGamesData.length) loadPreviousGames();
@@ -2566,39 +2522,6 @@
     });
   }
   
-  // ============================================================
-  //  أحداث النوافذ
-  // ============================================================
-  document.getElementById('modalCloseBtn').addEventListener('click', closePredictionModal);
-  document.getElementById('viewModalCloseBtn').addEventListener('click', closeViewPredictionsModal);
-  document.getElementById('playerModalCloseBtn').addEventListener('click', closePlayerPredictionsModal);
-  
-  document.getElementById('predictionModal').addEventListener('click', function(e) {
-    if (e.target === this) closePredictionModal();
-  });
-  document.getElementById('viewPredictionsModal').addEventListener('click', function(e) {
-    if (e.target === this) closeViewPredictionsModal();
-  });
-  document.getElementById('playerPredictionsModal').addEventListener('click', function(e) {
-    if (e.target === this) closePlayerPredictionsModal();
-  });
-  
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closePredictionModal();
-      closeViewPredictionsModal();
-      closePlayerPredictionsModal();
-    }
-  });
-  
-  // ============================================================
-  //  البحث السريع
-  // ============================================================
-  document.getElementById('prevSearchInput')?.addEventListener('input', renderPreviousGamesFiltered);
-  
-  // ============================================================
-  //  التحديث التلقائي
-  // ============================================================
   function startAutoUpdate() {
     setInterval(renderUpcoming, 1000);
     setInterval(async () => {
@@ -2610,9 +2533,6 @@
     }, 60000);
   }
   
-  // ============================================================
-  //  الوضع المظلم/الفاتح
-  // ============================================================
   function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -2626,9 +2546,6 @@
     document.getElementById('themeToggleBtn').textContent = '☀️ الوضع الفاتح';
   }
   
-  // ============================================================
-  //  مشاركة النتائج
-  // ============================================================
   function shareResults() {
     const currentUser = localStorage.getItem('lastUserName') || 'لاعب';
     const userScore = document.querySelector('.champion-card .info .stats-row .item:first-child strong')?.textContent || '0';
@@ -2651,16 +2568,12 @@
     }
   }
   
-  // ============================================================
-  //  التهيئة
-  // ============================================================
   async function init() {
     console.log("🚀 تهيئة التطبيق...");
     initTabs();
     renderUpcoming();
     startAutoUpdate();
     
-    // التأكد من ظهور فلتر اليوم للتبويب النشط افتراضياً
     toggleDayFilter('upcoming');
     
     if (!loadFromCache()) {
@@ -2670,6 +2583,10 @@
     setTimeout(loadPreviousGames, 500);
     await renderAllPredictions();
     await renderLeaderboard();
+    
+    // فحص الرابط عند التحميل - الآن باستخدام رقم المباراة
+    checkUrlForMatch();
+    
     console.log("✅ التطبيق جاهز");
   }
   
@@ -2678,6 +2595,7 @@
   window.loadPreviousGames = loadPreviousGames;
   window.toggleTheme = toggleTheme;
   window.shareResults = shareResults;
+  window.copyMatchLink = copyMatchLink;
   
   init();
 </script>
