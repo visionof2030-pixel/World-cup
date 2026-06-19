@@ -10,23 +10,7 @@
     body { background: radial-gradient(circle at 10% 20%, #0a1f24, #030c10); font-family: 'Segoe UI', 'Cairo', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif; padding: 20px 12px; min-height: 100vh; color: #f0f9ff; font-size: 14px; }
     .app-container { max-width: 1200px; margin: 0 auto; width: 100%; }
     
-    /* ===== البار العلوي الجديد (مثل نظام الاختبارات) ===== */
-    .header-image {
-      width: 100%;
-      border-radius: 48px 48px 0 0;
-      overflow: hidden;
-      margin-bottom: 0;
-      background: linear-gradient(135deg, #0a1f24, #030c10);
-      padding: 0;
-    }
-    .header-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 48px 48px 0 0;
-    }
-    
-    /* البار العلوي مع خلفية الصورة */
+    /* ===== البار العلوي ===== */
     .upper-bar {
       background: url('https://i.ibb.co/7dmWpzn2/IMG-3949.png') center/cover no-repeat;
       border-radius: 0 0 48px 48px;
@@ -37,10 +21,7 @@
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(2px);
     }
-    
-    /* طبقة شفافة فوق الخلفية */
     .upper-bar::before {
       content: "";
       position: absolute;
@@ -54,7 +35,6 @@
       border-radius: 0 0 48px 48px;
       z-index: 1;
     }
-    
     .upper-bar .bar-content {
       position: relative;
       z-index: 2;
@@ -64,7 +44,6 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    
     .upper-bar .title-section h1 {
       font-size: 1.3rem;
       font-weight: 800;
@@ -73,7 +52,6 @@
       letter-spacing: -0.5px;
       margin: 0;
     }
-    
     .upper-bar .developer-credit {
       font-size: 0.7rem;
       color: rgba(255, 230, 176, 0.8);
@@ -83,13 +61,11 @@
       letter-spacing: 0.5px;
       text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
     }
-    
     .upper-bar .header-actions {
       display: flex;
       gap: 8px;
       align-items: center;
     }
-    
     .upper-bar .bar-btn {
       background: rgba(255, 255, 255, 0.08);
       color: #FFE6B0;
@@ -106,7 +82,6 @@
       font-size: 0.8rem;
       text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
     }
-    
     .upper-bar .bar-btn:hover {
       background: rgba(255, 255, 255, 0.15);
       transform: translateY(-2px);
@@ -241,6 +216,20 @@
     .predict-trigger-btn .arrow { font-size: 0.8rem; margin-right: 8px; opacity: 0.7; }
     .predict-trigger-btn.live-blocked { opacity: 0.5; cursor: not-allowed; border-color: rgba(255, 68, 68, 0.3); background: rgba(255, 68, 68, 0.05); }
     .predict-trigger-btn.live-blocked:hover { transform: none; box-shadow: none; }
+    .predict-trigger-btn.already-predicted { 
+      opacity: 0.7; 
+      border-color: #4CAF50; 
+      background: rgba(76, 175, 80, 0.1);
+      cursor: default;
+    }
+    .predict-trigger-btn.already-predicted:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    .predict-trigger-btn .already-icon {
+      color: #4CAF50;
+      margin-left: 6px;
+    }
 
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px); z-index: 9999; justify-content: center; align-items: center; animation: modalFadeIn 0.3s ease; }
     .modal-overlay.active { display: flex; }
@@ -318,7 +307,7 @@
 <body>
 <div class="app-container">
   
-  <!-- ===== البار العلوي الجديد (مثل نظام الاختبارات) ===== -->
+  <!-- ===== البار العلوي ===== -->
   <div class="upper-bar">
     <div class="bar-content">
       <div class="title-section">
@@ -476,6 +465,51 @@
   }
 
   // ============================================================
+  //  دوال localStorage للتوقعات (منع التكرار)
+  // ============================================================
+  function getLocalPredictions() {
+    try {
+      const data = localStorage.getItem('predictions');
+      return data ? JSON.parse(data) : {};
+    } catch (e) {
+      console.warn("⚠️ فشل تحميل التوقعات من localStorage:", e);
+      return {};
+    }
+  }
+
+  function saveLocalPrediction(userName, matchId, prediction) {
+    try {
+      const predictions = getLocalPredictions();
+      const key = `${userName}_${matchId}`;
+      predictions[key] = {
+        userName: userName,
+        matchId: matchId,
+        prediction: prediction,
+        timestamp: new Date().toISOString()
+      };
+      localStorage.setItem('predictions', JSON.stringify(predictions));
+      return true;
+    } catch (e) {
+      console.warn("⚠️ فشل حفظ التوقع في localStorage:", e);
+      return false;
+    }
+  }
+
+  function hasUserPredicted(userName, matchId) {
+    if (!userName) return false;
+    const predictions = getLocalPredictions();
+    const key = `${userName}_${matchId}`;
+    return !!predictions[key];
+  }
+
+  function getUserPrediction(userName, matchId) {
+    if (!userName) return null;
+    const predictions = getLocalPredictions();
+    const key = `${userName}_${matchId}`;
+    return predictions[key] || null;
+  }
+
+  // ============================================================
   //  متغيرات النافذة المنبثقة
   // ============================================================
   let currentMatchId = null;
@@ -484,11 +518,21 @@
   let currentTimeISO = '';
 
   // ============================================================
-  //  1) حفظ التوقع
+  //  1) حفظ التوقع (مع منع التكرار)
   // ============================================================
   async function savePrediction(userName, matchId, prediction) {
     if (!supabaseClient) {
       return { success: false, message: "Supabase غير متصل." };
+    }
+
+    // التحقق من التكرار في localStorage أولاً
+    if (hasUserPredicted(userName, matchId)) {
+      const existing = getUserPrediction(userName, matchId);
+      return { 
+        success: false, 
+        message: `⚠️ لقد توقعت مسبقاً على هذه المباراة! توقعك السابق: ${existing.prediction === 'DRAW' ? 'تعادل' : existing.prediction}`,
+        duplicate: true
+      };
     }
 
     if (!prediction || prediction === "") {
@@ -496,6 +540,7 @@
     }
 
     try {
+      // حفظ في Supabase
       const { data, error } = await supabaseClient
         .from("predictions")
         .insert([{
@@ -508,6 +553,9 @@
         console.error("❌ خطأ Supabase:", error.message);
         return { success: false, message: error.message };
       }
+
+      // حفظ في localStorage بعد نجاح الحفظ في Supabase
+      saveLocalPrediction(userName, matchId, prediction);
 
       console.log("✅ تم حفظ التوقع:", data);
       return { success: true, data };
@@ -909,6 +957,9 @@
         const matchId = `${m.timeISO}_${m.team1}_${m.team2}`;
         const isLiveMatch = isMatchLive(m.timeISO);
         
+        // التحقق من وجود توقع سابق لهذه المباراة (بدون اسم مستخدم محدد، سنتحقق في الـ modal)
+        // لكننا نضيف كلاس مختلف إذا كانت المباراة جارية
+        
         return `<div class="match-card ${isLive ? 'live-card' : ''}">
           <div class="teams-score">
             <div class="team"><span>${getFlag(m.team1)}</span> ${m.team1}</div>
@@ -932,12 +983,23 @@
         </div>`;
       }).join('');
       
+      // ربط الأحداث مع التحقق من التكرار
       document.querySelectorAll('.predict-trigger-btn:not(.live-blocked)').forEach(btn => {
         btn.addEventListener('click', function() {
           const matchId = this.dataset.matchid;
           const team1 = this.dataset.team1;
           const team2 = this.dataset.team2;
           const timeISO = this.dataset.timeiso;
+          
+          // التحقق من وجود اسم مستخدم في localStorage
+          const savedUserName = localStorage.getItem('lastUserName') || '';
+          if (savedUserName && hasUserPredicted(savedUserName, matchId)) {
+            const existing = getUserPrediction(savedUserName, matchId);
+            const predText = existing.prediction === 'DRAW' ? 'تعادل' : existing.prediction;
+            showPredictionMessage(`⚠️ أنت (${savedUserName}) توقعت مسبقاً على هذه المباراة! توقعك السابق: ${predText}`, 'warning');
+            return;
+          }
+          
           openPredictionModal(matchId, team1, team2, timeISO);
         });
       });
@@ -957,6 +1019,23 @@
     currentTeam2 = team2;
     currentTimeISO = timeISO;
     
+    // جلب اسم المستخدم المحفوظ
+    const savedUserName = localStorage.getItem('lastUserName') || '';
+    document.getElementById('modalUserName').value = savedUserName;
+    
+    // التحقق من وجود توقع سابق
+    if (savedUserName && hasUserPredicted(savedUserName, matchId)) {
+      const existing = getUserPrediction(savedUserName, matchId);
+      const predText = existing.prediction === 'DRAW' ? 'تعادل' : existing.prediction;
+      document.getElementById('modalMessage').textContent = `⚠️ لقد توقعت مسبقاً على هذه المباراة! توقعك السابق: ${predText}`;
+      document.getElementById('modalMessage').className = 'modal-message warning';
+      document.getElementById('modalSubmitBtn').disabled = true;
+    } else {
+      document.getElementById('modalMessage').textContent = '';
+      document.getElementById('modalMessage').className = 'modal-message';
+      document.getElementById('modalSubmitBtn').disabled = false;
+    }
+    
     document.getElementById('modalTeam1').textContent = team1;
     document.getElementById('modalTeam2').textContent = team2;
     document.getElementById('optTeam1').textContent = team1;
@@ -969,10 +1048,6 @@
     document.querySelector('#modalTeams .m-team:last-child span:first-child').textContent = team2Flag;
     
     document.querySelectorAll('input[name="prediction"]').forEach(el => el.checked = false);
-    document.getElementById('modalUserName').value = '';
-    document.getElementById('modalMessage').textContent = '';
-    document.getElementById('modalMessage').className = 'modal-message';
-    document.getElementById('modalSubmitBtn').disabled = false;
     
     document.getElementById('predictionModal').classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -1000,7 +1075,19 @@
   });
 
   // ============================================================
-  //  حفظ التوقع من النافذة المنبثقة
+  //  عرض رسائل التوقع
+  // ============================================================
+  function showPredictionMessage(msg, type = "success") {
+    const el = document.getElementById("predictionMessage");
+    if (el) {
+      el.innerHTML = msg;
+      el.style.color = type === "success" ? "#8bc34a" : type === "error" ? "#ff5252" : "#ffb347";
+      el.style.background = type === "success" ? "rgba(139,195,74,0.15)" : type === "error" ? "rgba(255,82,82,0.15)" : "rgba(255,179,71,0.15)";
+    }
+  }
+
+  // ============================================================
+  //  حفظ التوقع من النافذة المنبثقة (مع منع التكرار)
   // ============================================================
   document.getElementById('modalSubmitBtn').addEventListener('click', async function() {
     const userName = document.getElementById('modalUserName').value.trim();
@@ -1012,6 +1099,9 @@
       messageEl.className = 'modal-message warning';
       return;
     }
+    
+    // حفظ اسم المستخدم في localStorage
+    localStorage.setItem('lastUserName', userName);
     
     if (!selectedOption) {
       messageEl.textContent = '⚠️ الرجاء اختيار توقعك.';
@@ -1034,6 +1124,16 @@
       return;
     }
     
+    // التحقق من التكرار مرة أخرى
+    if (hasUserPredicted(userName, currentMatchId)) {
+      const existing = getUserPrediction(userName, currentMatchId);
+      const predText = existing.prediction === 'DRAW' ? 'تعادل' : existing.prediction;
+      messageEl.textContent = `⚠️ لقد توقعت مسبقاً على هذه المباراة! توقعك السابق: ${predText}`;
+      messageEl.className = 'modal-message warning';
+      this.disabled = true;
+      return;
+    }
+    
     this.disabled = true;
     messageEl.textContent = '⏳ جاري الحفظ...';
     messageEl.className = 'modal-message';
@@ -1048,13 +1148,32 @@
       await renderAllPredictions();
       await renderLeaderboard();
       
+      // تحديث زر التوقع في البطاقة
+      document.querySelectorAll('.predict-trigger-btn').forEach(btn => {
+        if (btn.dataset.matchid === currentMatchId) {
+          btn.innerHTML = `
+            <span class="icon">✅</span>
+            تم التوقع مسبقاً
+            <span class="already-icon">✔️</span>
+          `;
+          btn.classList.add('already-predicted');
+          btn.disabled = true;
+        }
+      });
+      
       setTimeout(() => {
         closePredictionModal();
       }, 1500);
     } else {
-      messageEl.textContent = `❌ فشل الحفظ: ${result.message}`;
-      messageEl.className = 'modal-message error';
-      this.disabled = false;
+      if (result.duplicate) {
+        messageEl.textContent = result.message;
+        messageEl.className = 'modal-message warning';
+        this.disabled = true;
+      } else {
+        messageEl.textContent = `❌ فشل الحفظ: ${result.message}`;
+        messageEl.className = 'modal-message error';
+        this.disabled = false;
+      }
     }
   });
 
@@ -1466,6 +1585,12 @@
       
       if (!loadFromCache()) {
         console.log("📭 لا توجد بيانات في الكاش، جاري التحميل من API...");
+      }
+      
+      // تحميل اسم المستخدم المحفوظ
+      const savedUserName = localStorage.getItem('lastUserName') || '';
+      if (savedUserName) {
+        document.getElementById('modalUserName').value = savedUserName;
       }
       
       setTimeout(() => {
