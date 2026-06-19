@@ -13,7 +13,7 @@
     /* ===== الهيدر العلوي الكامل مع خلفية الصورة ===== */
     .main-header {
       width: 100%;
-      border-radius: 48px 48px 0 0;
+      border-radius: 80px 89px 0 0;
       overflow: hidden;
       margin-bottom: 0;
       position: relative;
