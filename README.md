@@ -10,34 +10,37 @@
     body { background: radial-gradient(circle at 10% 20%, #0a1f24, #030c10); font-family: 'Segoe UI', 'Cairo', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif; padding: 20px 12px; min-height: 100vh; color: #f0f9ff; font-size: 14px; }
     .app-container { max-width: 1200px; margin: 0 auto; width: 100%; }
     
+    /* ===== الهيدر العلوي الكامل ===== */
+    .main-header {
+      width: 100%;
+      border-radius: 48px 48px 0 0;
+      overflow: hidden;
+      margin-bottom: 0;
+      position: relative;
+      background: linear-gradient(135deg, #0a1f24, #030c10);
+    }
+    .main-header img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 48px 48px 0 0;
+    }
+    
     /* ===== البار العلوي ===== */
     .upper-bar {
-      background: url('https://i.ibb.co/7dmWpzn2/IMG-3949.png') center/cover no-repeat;
+      background: rgba(10, 20, 25, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-radius: 0 0 48px 48px;
-      padding: 18px 24px;
+      padding: 14px 24px;
       margin-bottom: 16px;
       position: relative;
-      min-height: 80px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .upper-bar::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(10, 20, 25, 0.65);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border-radius: 0 0 48px 48px;
-      z-index: 1;
+      min-height: 70px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: none;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
     .upper-bar .bar-content {
-      position: relative;
-      z-index: 2;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -210,17 +213,18 @@
     .quick-match-teams { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
 
     .predict-trigger-btn { display: block; width: 100%; margin-top: 12px; padding: 12px 16px; background: linear-gradient(135deg, rgba(255, 180, 70, 0.15), rgba(255, 140, 26, 0.08)); border: 2px solid rgba(255, 180, 70, 0.4); border-radius: 60px; color: #FFE6B0; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; text-align: center; letter-spacing: 0.5px; box-shadow: 0 0 20px rgba(255, 180, 70, 0.05); backdrop-filter: blur(4px); }
-    .predict-trigger-btn:hover { background: linear-gradient(135deg, rgba(255, 180, 70, 0.25), rgba(255, 140, 26, 0.15)); border-color: #ffb347; box-shadow: 0 0 30px rgba(255, 180, 70, 0.15); transform: scale(1.01); }
+    .predict-trigger-btn:hover:not(.already-predicted):not(.live-blocked) { background: linear-gradient(135deg, rgba(255, 180, 70, 0.25), rgba(255, 140, 26, 0.15)); border-color: #ffb347; box-shadow: 0 0 30px rgba(255, 180, 70, 0.15); transform: scale(1.01); }
     .predict-trigger-btn:active { transform: scale(0.97); }
     .predict-trigger-btn .icon { font-size: 1.1rem; margin-left: 8px; }
     .predict-trigger-btn .arrow { font-size: 0.8rem; margin-right: 8px; opacity: 0.7; }
     .predict-trigger-btn.live-blocked { opacity: 0.5; cursor: not-allowed; border-color: rgba(255, 68, 68, 0.3); background: rgba(255, 68, 68, 0.05); }
     .predict-trigger-btn.live-blocked:hover { transform: none; box-shadow: none; }
     .predict-trigger-btn.already-predicted { 
-      opacity: 0.7; 
+      opacity: 0.8; 
       border-color: #4CAF50; 
-      background: rgba(76, 175, 80, 0.1);
+      background: rgba(76, 175, 80, 0.15);
       cursor: default;
+      color: #8bc34a;
     }
     .predict-trigger-btn.already-predicted:hover {
       transform: none;
@@ -306,6 +310,11 @@
 </head>
 <body>
 <div class="app-container">
+  
+  <!-- ===== الهيدر العلوي الكامل مع الصورة ===== -->
+  <div class="main-header">
+    <img src="https://i.ibb.co/7dmWpzn2/IMG-3949.png" alt="سعيد بن العاص - FIFA WORLD CUP">
+  </div>
   
   <!-- ===== البار العلوي ===== -->
   <div class="upper-bar">
@@ -957,8 +966,36 @@
         const matchId = `${m.timeISO}_${m.team1}_${m.team2}`;
         const isLiveMatch = isMatchLive(m.timeISO);
         
-        // التحقق من وجود توقع سابق لهذه المباراة (بدون اسم مستخدم محدد، سنتحقق في الـ modal)
-        // لكننا نضيف كلاس مختلف إذا كانت المباراة جارية
+        // التحقق من وجود توقع سابق للمستخدم الحالي
+        const savedUserName = localStorage.getItem('lastUserName') || '';
+        const hasPredicted = savedUserName && hasUserPredicted(savedUserName, matchId);
+        let buttonClass = 'predict-trigger-btn';
+        let buttonHtml = '';
+        
+        if (isLiveMatch) {
+          buttonClass += ' live-blocked';
+          buttonHtml = `
+            <span class="icon">📝</span>
+            توقع نتيجة المباراة الآن
+            <span class="arrow">➜</span>
+            ⛔ جارية
+          `;
+        } else if (hasPredicted) {
+          const existing = getUserPrediction(savedUserName, matchId);
+          const predText = existing.prediction === 'DRAW' ? 'تعادل' : existing.prediction;
+          buttonClass += ' already-predicted';
+          buttonHtml = `
+            <span class="icon">✅</span>
+            تم التوقع: ${predText}
+            <span class="already-icon">✔️</span>
+          `;
+        } else {
+          buttonHtml = `
+            <span class="icon">📝</span>
+            توقع نتيجة المباراة الآن
+            <span class="arrow">➜</span>
+          `;
+        }
         
         return `<div class="match-card ${isLive ? 'live-card' : ''}">
           <div class="teams-score">
@@ -969,37 +1006,24 @@
           <div class="datetime-row"><div class="match-day">${getDay(m.timeISO)}</div><div class="match-full-date"><span>${dateTimeDisplay}</span></div></div>
           <div class="info-row"><span class="round-tag">🏅 ${m.roundLabel}</span><div class="countdown-timer ${isLive ? 'live-status' : ''}">${isLive ? '🔴 تُلعب الآن 🔴' : st.text}</div></div>
           
-          <button class="predict-trigger-btn ${isLiveMatch ? 'live-blocked' : ''}" 
+          <button class="${buttonClass}" 
                   data-matchid="${matchId}"
                   data-team1="${m.team1}"
                   data-team2="${m.team2}"
                   data-timeiso="${m.timeISO}"
-                  ${isLiveMatch ? 'disabled' : ''}>
-            <span class="icon">📝</span>
-            توقع نتيجة المباراة الآن
-            <span class="arrow">➜</span>
-            ${isLiveMatch ? ' ⛔ جارية' : ''}
+                  ${isLiveMatch || hasPredicted ? 'disabled' : ''}>
+            ${buttonHtml}
           </button>
         </div>`;
       }).join('');
       
-      // ربط الأحداث مع التحقق من التكرار
-      document.querySelectorAll('.predict-trigger-btn:not(.live-blocked)').forEach(btn => {
+      // ربط الأحداث
+      document.querySelectorAll('.predict-trigger-btn:not(.live-blocked):not(.already-predicted)').forEach(btn => {
         btn.addEventListener('click', function() {
           const matchId = this.dataset.matchid;
           const team1 = this.dataset.team1;
           const team2 = this.dataset.team2;
           const timeISO = this.dataset.timeiso;
-          
-          // التحقق من وجود اسم مستخدم في localStorage
-          const savedUserName = localStorage.getItem('lastUserName') || '';
-          if (savedUserName && hasUserPredicted(savedUserName, matchId)) {
-            const existing = getUserPrediction(savedUserName, matchId);
-            const predText = existing.prediction === 'DRAW' ? 'تعادل' : existing.prediction;
-            showPredictionMessage(`⚠️ أنت (${savedUserName}) توقعت مسبقاً على هذه المباراة! توقعك السابق: ${predText}`, 'warning');
-            return;
-          }
-          
           openPredictionModal(matchId, team1, team2, timeISO);
         });
       });
@@ -1019,7 +1043,6 @@
     currentTeam2 = team2;
     currentTimeISO = timeISO;
     
-    // جلب اسم المستخدم المحفوظ
     const savedUserName = localStorage.getItem('lastUserName') || '';
     document.getElementById('modalUserName').value = savedUserName;
     
@@ -1148,18 +1171,10 @@
       await renderAllPredictions();
       await renderLeaderboard();
       
-      // تحديث زر التوقع في البطاقة
-      document.querySelectorAll('.predict-trigger-btn').forEach(btn => {
-        if (btn.dataset.matchid === currentMatchId) {
-          btn.innerHTML = `
-            <span class="icon">✅</span>
-            تم التوقع مسبقاً
-            <span class="already-icon">✔️</span>
-          `;
-          btn.classList.add('already-predicted');
-          btn.disabled = true;
-        }
-      });
+      // تحديث واجهة البطاقة - إعادة تحميل المباريات لتحديث زر التوقع
+      setTimeout(() => {
+        renderUpcoming();
+      }, 500);
       
       setTimeout(() => {
         closePredictionModal();
@@ -1587,7 +1602,6 @@
         console.log("📭 لا توجد بيانات في الكاش، جاري التحميل من API...");
       }
       
-      // تحميل اسم المستخدم المحفوظ
       const savedUserName = localStorage.getItem('lastUserName') || '';
       if (savedUserName) {
         document.getElementById('modalUserName').value = savedUserName;
