@@ -10,17 +10,156 @@
     body { background: radial-gradient(circle at 10% 20%, #0a1f24, #030c10); font-family: 'Segoe UI', 'Cairo', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif; padding: 20px 12px; min-height: 100vh; color: #f0f9ff; font-size: 14px; }
     .app-container { max-width: 1200px; margin: 0 auto; width: 100%; }
     
-    .header-image { width: 100%; border-radius: 48px 48px 0 0; overflow: hidden; margin-bottom: 0; background: linear-gradient(135deg, #0a1f24, #030c10); }
-    .header-image img { width: 100%; height: auto; display: block; border-radius: 48px 48px 0 0; }
+    /* ===== البار العلوي الجديد (مثل نظام الاختبارات) ===== */
+    .header-image {
+      width: 100%;
+      border-radius: 48px 48px 0 0;
+      overflow: hidden;
+      margin-bottom: 0;
+      background: linear-gradient(135deg, #0a1f24, #030c10);
+      padding: 0;
+    }
+    .header-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 48px 48px 0 0;
+    }
     
-    .upper-bar { background: linear-gradient(90deg, #1a2f2f, #2a414b, #1a2f2f); border: 1px solid rgba(255, 180, 70, 0.3); border-radius: 0 0 60px 60px; padding: 8px 16px; margin-bottom: 16px; overflow: hidden; position: relative; box-shadow: 0 0 20px rgba(255, 180, 70, 0.1); }
-    .news-ticker { display: inline-block; white-space: nowrap; animation: tickerScroll 42s linear infinite; font-size: 0.85rem; color: #FFE6B0; font-weight: 500; letter-spacing: 0.3px; }
-    .news-ticker span { display: inline-block; padding: 0 20px; }
-    .news-ticker .separator { color: #ffb34780; }
-    @keyframes tickerScroll { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-    .upper-bar:hover .news-ticker { animation-play-state: paused; }
+    /* البار العلوي مع خلفية الصورة */
+    .upper-bar {
+      background: url('https://i.ibb.co/7dmWpzn2/IMG-3949.png') center/cover no-repeat;
+      border-radius: 0 0 48px 48px;
+      padding: 18px 24px;
+      margin-bottom: 16px;
+      position: relative;
+      min-height: 80px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(2px);
+    }
     
-    .hero { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border-radius: 48px; padding: 20px; margin-bottom: 28px; text-align: center; border: 1px solid rgba(255, 200, 100, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+    /* طبقة شفافة فوق الخلفية */
+    .upper-bar::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(10, 20, 25, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 0 0 48px 48px;
+      z-index: 1;
+    }
+    
+    .upper-bar .bar-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .upper-bar .title-section h1 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #FFE6B0;
+      text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+      letter-spacing: -0.5px;
+      margin: 0;
+    }
+    
+    .upper-bar .developer-credit {
+      font-size: 0.7rem;
+      color: rgba(255, 230, 176, 0.8);
+      text-align: center;
+      margin-top: 2px;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .upper-bar .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    
+    .upper-bar .bar-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFE6B0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(10px);
+      font-size: 0.8rem;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .upper-bar .bar-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(255, 180, 70, 0.2);
+      border-color: rgba(255, 180, 70, 0.3);
+    }
+    
+    /* ===== شريط الأخبار المتحرك ===== */
+    .news-ticker-wrapper {
+      background: linear-gradient(90deg, rgba(26, 47, 47, 0.9), rgba(42, 65, 75, 0.9), rgba(26, 47, 47, 0.9));
+      border: 1px solid rgba(255, 180, 70, 0.2);
+      border-radius: 60px;
+      padding: 6px 16px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 20px rgba(255, 180, 70, 0.05);
+      backdrop-filter: blur(10px);
+    }
+    .news-ticker {
+      display: inline-block;
+      white-space: nowrap;
+      animation: tickerScroll 42s linear infinite;
+      font-size: 0.8rem;
+      color: #FFE6B0;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .news-ticker span {
+      display: inline-block;
+      padding: 0 16px;
+    }
+    .news-ticker .separator {
+      color: #ffb34760;
+    }
+    @keyframes tickerScroll {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .news-ticker-wrapper:hover .news-ticker {
+      animation-play-state: paused;
+    }
+    
+    .hero {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 48px;
+      padding: 20px;
+      margin-bottom: 28px;
+      text-align: center;
+      border: 1px solid rgba(255, 200, 100, 0.3);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
     .hero h1 { font-size: 1.8rem; background: linear-gradient(135deg, #FFE6B0, #FFA559, #FF6A3D); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 8px; letter-spacing: -0.5px; }
     .school-badge { background: rgba(30, 74, 95, 0.7); backdrop-filter: blur(4px); display: inline-block; padding: 6px 20px; border-radius: 60px; font-size: 0.75rem; font-weight: 500; border: 1px solid #ffb34760; }
     
@@ -165,8 +304,11 @@
       .prediction-card .pred-detail { flex-direction: column; gap: 8px; align-items: flex-start; }
       .leaderboard-item { flex-wrap: wrap; gap: 8px; }
       .leaderboard-item .player-name { margin: 0; width: 100%; }
-      .news-ticker { font-size: 0.7rem; }
-      .upper-bar { padding: 6px 12px; }
+      .news-ticker { font-size: 0.65rem; }
+      .upper-bar { padding: 12px 16px; min-height: 60px; }
+      .upper-bar .title-section h1 { font-size: 1rem; }
+      .upper-bar .bar-btn { padding: 4px 10px; font-size: 0.7rem; }
+      .upper-bar .developer-credit { font-size: 0.6rem; }
       .leaderboard-section .section-title { font-size: 1.2rem; }
       .modal-content { padding: 20px; }
       .modal-teams { flex-wrap: wrap; }
@@ -176,13 +318,24 @@
 <body>
 <div class="app-container">
   
-  <!-- ===== الصورة العلوية (تم استبدالها بالصورة الجديدة) ===== -->
-  <div class="header-image">
-    <img src="https://i.ibb.co/7dmWpzn2/IMG-3949.png" alt="سعيد بن العاص - FIFA WORLD CUP">
+  <!-- ===== البار العلوي الجديد (مثل نظام الاختبارات) ===== -->
+  <div class="upper-bar">
+    <div class="bar-content">
+      <div class="title-section">
+        <h1>🏆 كأس العالم 2026</h1>
+        <div class="developer-credit">⚡ غرفة معلمي سعيد بن العاص</div>
+      </div>
+      <div class="header-actions">
+        <button class="bar-btn" onclick="location.reload()">
+          <i class="fas fa-sync-alt"></i>
+          <span style="display: none;">تحديث</span>
+        </button>
+      </div>
+    </div>
   </div>
   
   <!-- ===== شريط الأخبار المتحرك ===== -->
-  <div class="upper-bar">
+  <div class="news-ticker-wrapper">
     <div class="news-ticker">
       <span>🗳️ طريقة التوقع: اختر المباراة → اختر (فوز الفريق الأول / فوز الفريق الثاني / تعادل) → اكتب اسمك → اضغط حفظ التوقع ✨</span>
       <span class="separator">|</span>
@@ -331,7 +484,7 @@
   let currentTimeISO = '';
 
   // ============================================================
-  //  1) حفظ التوقع (يخزن اسم الفريق مباشرة)
+  //  1) حفظ التوقع
   // ============================================================
   async function savePrediction(userName, matchId, prediction) {
     if (!supabaseClient) {
