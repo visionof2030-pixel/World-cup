@@ -1056,7 +1056,6 @@
             background: rgba(240, 180, 41, 0.15);
             color: var(--gold-light);
         }
-        /* زر تحليلات متقدمة - لون مختلف */
         .lb-period-tabs .analytics-trigger {
             background: rgba(52, 152, 219, 0.15);
             border: 1px solid rgba(52, 152, 219, 0.3);
@@ -1772,7 +1771,6 @@
             color: var(--success);
             min-width: 60px;
             display: none;
-            /* مخفي افتراضياً، يظهر فقط في وضع الإدارة */
         }
         .predict-btn-wrap .edit-btn.visible {
             display: inline-flex;
@@ -3231,6 +3229,8 @@
         }
         .win-probability .prob-bar .segment.draw {
             background: #f1c40f;
+            display: none;
+            /* تم إخفاؤه لأننا أزلنا التعادل */;
         }
         .win-probability .prob-bar .segment.away {
             background: #e74c3c;
@@ -3257,6 +3257,7 @@
         }
         .win-probability .prob-labels .dot.draw {
             background: #f1c40f;
+            display: none;
         }
         .win-probability .prob-labels .dot.away {
             background: #e74c3c;
@@ -3355,7 +3356,7 @@
             <div class="news-ticker" id="newsTicker">
                 <span>🏆 كأس العالم 2026 — تابع المباريات وتوقع النتائج</span>
                 <span class="sep">|</span>
-                <span>🗳️ طريقة التوقع: اختر المباراة → أدخل اسمك → اختر الفائز أو التعادل</span>
+                <span>🗳️ طريقة التوقع: اختر المباراة → أدخل اسمك → اختر الفائز (لا يوجد تعادل)</span>
                 <span class="sep">|</span>
                 <span>⏰ يمكنك التوقع حتى 5 دقائق قبل بداية المباراة (بتوقيت السعودية)</span>
                 <span class="sep">|</span>
@@ -3421,7 +3422,7 @@
             <!-- مسار البطولة داخل الإدارة -->
             <div class="bracket-wrapper" id="bracketWrapper">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
-                    <span style="font-size:0.85rem;font-weight:800;color:var(--gold-light);">🏆 مسار البطولة</span>
+                    <span style="font-size:0.85rem;font-weight:800;color:var(--gold-light);">🏆 مسار البطولة (بدون مباريات مكررة)</span>
                     <button class="admin-btn secondary" style="padding:4px 14px;font-size:0.65rem;" onclick="document.getElementById('bracketWrapper').classList.remove('visible')">✕ إخفاء</button>
                 </div>
                 <div id="bracketContainer"><div class="empty-state"><span class="icon">⏳</span> جاري تحميل المخطط...</div></div>
@@ -3440,7 +3441,6 @@
                 <button class="tab-btn" data-tab="standings">📊 ترتيب المجموعات</button>
                 <button class="tab-btn" data-tab="scorers">🏅 الهدافين</button>
                 <button class="tab-btn" data-tab="stats">📊 إحصائيات الفرق</button>
-                <!-- تم إخفاء تبويب مسار البطولة من هنا -->
                 <button class="tab-btn" data-tab="predictions">🗳️ جميع التوقعات</button>
             </div>
             <div class="day-filter-tabs visible" id="dayFilterTabs">
@@ -3559,7 +3559,7 @@
             <div class="modal-options" id="modalOptions">
                 <label><input type="radio" name="prediction" value="HOME" /><span class="opt-label">🏆 <span id="optTeam1">الفريق الأول</span></span><span class="opt-sub">فوز</span></label>
                 <label><input type="radio" name="prediction" value="AWAY" /><span class="opt-label">🏆 <span id="optTeam2">الفريق الثاني</span></span><span class="opt-sub">فوز</span></label>
-                <label><input type="radio" name="prediction" value="DRAW" /><span class="opt-label">🤝 تعادل</span><span class="opt-sub">النتيجة متساوية</span></label>
+                <!-- تم إزالة خيار التعادل بناءً على طلب المستخدم -->
             </div>
             <button class="modal-submit" id="modalSubmitBtn">💾 حفظ التوقع</button>
             <div class="modal-message" id="modalMessage"></div>
@@ -3594,17 +3594,15 @@
             <div style="text-align:center;font-size:0.8rem;color:var(--text-secondary);margin:8px 0 14px;">
                 عدد التوقعات: <span id="viewPredictionsCount" style="color:var(--gold-light);font-weight:800;">0</span>
             </div>
-            <!-- نسبة الفوز -->
+            <!-- نسبة الفوز (تم إزالة التعادل) -->
             <div class="win-probability" id="winProbabilityContainer">
                 <div class="prob-title">📊 نسبة التوقعات (حسب نتائج المستخدمين)</div>
                 <div class="prob-bar" id="probBar">
                     <div class="segment home" style="width:0%;">0%</div>
-                    <div class="segment draw" style="width:0%;">0%</div>
                     <div class="segment away" style="width:0%;">0%</div>
                 </div>
                 <div class="prob-labels">
                     <span class="label"><span class="dot home"></span> فوز <span id="probTeam1">الفريق الأول</span>: <span class="percent" id="probHomePercent">0%</span></span>
-                    <span class="label"><span class="dot draw"></span> تعادل: <span class="percent" id="probDrawPercent">0%</span></span>
                     <span class="label"><span class="dot away"></span> فوز <span id="probTeam2">الفريق الثاني</span>: <span class="percent" id="probAwayPercent">0%</span></span>
                 </div>
             </div>
@@ -4720,7 +4718,6 @@
         //  دوال عرض المباريات
         // ============================================================
         function getGroundForMatch(team1, team2, timeISO) {
-            // أولاً نبحث في match data المباشر (لدور الـ 32)
             const directMatch = matchesData.find(m => (m.team1 === team1 && m.team2 === team2) || (m.team1 === team2 && m
                 .team2 === team1));
             if (directMatch && directMatch.stadium) return directMatch.stadium;
@@ -5065,7 +5062,7 @@
         }
 
         // ============================================================
-        //  نافذة التوقع (الخطوة الثانية)
+        //  نافذة التوقع (الخطوة الثانية) - تم إزالة التعادل
         // ============================================================
         function openPredictionModal(matchId, team1, team2, timeISO, userName) {
             if (isMatchFinished(timeISO)) { showCopyToast('⛔ هذه المباراة انتهت، لا يمكن التوقع.'); return; }
@@ -5304,7 +5301,7 @@
         }
 
         // ============================================================
-        //  مسار البطولة (شجرة محسّنة) - تُستدعى من الإدارة
+        //  مسار البطولة (شجرة محسّنة مع إزالة المباريات المكررة)
         // ============================================================
         function renderBracket() {
             const container = document.getElementById('bracketContainer');
@@ -5371,6 +5368,9 @@
             const rounds = {};
             roundOrder.forEach(r => rounds[r] = []);
 
+            // استخدم Set لتتبع المباريات المكررة (مفتاح فريد)
+            const seenMatches = new Set();
+
             for (let match of allMatches) {
                 let roundKey = null;
                 if (match.round) roundKey = roundMapping[match.round] || null;
@@ -5394,11 +5394,22 @@
                 if (!roundKey && match._id && match._id.toString().startsWith('r32_')) {
                     roundKey = 'R32';
                 }
+
                 if (roundKey && rounds[roundKey]) {
-                    rounds[roundKey].push(match);
+                    // إنشاء مفتاح فريد للمباراة بناءً على الفريقين والجولة
+                    const homeName = match.team1 || match.home_team_name_fa || match.home_team_name_en || match.home_team_label || '?';
+                    const awayName = match.team2 || match.away_team_name_fa || match.away_team_name_en || match.away_team_label || '?';
+                    const matchKey = `${roundKey}|${homeName}|${awayName}`;
+
+                    // تحقق من عدم وجود هذه المباراة بالفعل
+                    if (!seenMatches.has(matchKey)) {
+                        seenMatches.add(matchKey);
+                        rounds[roundKey].push(match);
+                    }
                 }
             }
 
+            // التأكد من وجود دور الـ 32 إذا كان فارغاً
             if (!rounds['R32'] || rounds['R32'].length === 0) {
                 const first32 = matchesData.slice(0, 32).map(m => ({
                     team1: m.team1,
@@ -5411,7 +5422,14 @@
                     finished: false,
                     _id: `r32_${m.id}`
                 }));
-                rounds['R32'] = first32;
+                // إضافة فقط المباريات غير المكررة
+                for (let m of first32) {
+                    const matchKey = `R32|${m.team1}|${m.team2}`;
+                    if (!seenMatches.has(matchKey)) {
+                        seenMatches.add(matchKey);
+                        rounds['R32'].push(m);
+                    }
+                }
             }
 
             let hasMatches = false;
@@ -7383,7 +7401,6 @@
                 if (document.getElementById('matchPredictionsModal').classList.contains('active')) { document
                         .getElementById('modalCompactBtn').classList.add('visible'); }
                 updateShareAllCount();
-                // إظهار أزرار التعديل في المباريات
                 document.querySelectorAll('.edit-btn').forEach(el => el.classList.add('visible'));
                 showCopyToast('✅ تم تفعيل لوحة الإدارة');
             } else {
@@ -7409,7 +7426,7 @@
             } else {
                 wrapper.classList.add('visible');
                 renderBracket();
-                showCopyToast('🏆 تم عرض مسار البطولة');
+                showCopyToast('🏆 تم عرض مسار البطولة (بدون مباريات مكررة)');
             }
         }
 
@@ -7580,7 +7597,7 @@
                 const val = el.value;
                 if (val === 'HOME' && currentPrediction === team1) el.checked = true;
                 else if (val === 'AWAY' && currentPrediction === team2) el.checked = true;
-                else if (val === 'DRAW' && currentPrediction === 'DRAW') el.checked = true;
+                // تم إزالة التعادل
             });
 
             const msgEl = document.getElementById('modalMessage');
@@ -7727,7 +7744,7 @@
         });
 
         // ============================================================
-        //  نافذة استعراض التوقعات (مع نسبة الفوز)
+        //  نافذة استعراض التوقعات (مع نسبة الفوز - تم إزالة التعادل)
         // ============================================================
         async function openViewPredictionsModal(matchId, team1, team2) {
             document.getElementById('viewTeam1').textContent = team1;
@@ -7744,37 +7761,34 @@
             const predictions = await getPredictionsForMatchFull(matchId);
             countSpan.textContent = predictions.length;
 
-            // حساب نسبة الفوز
+            // حساب نسبة الفوز (بدون تعادل)
             let homeCount = 0,
-                awayCount = 0,
-                drawCount = 0;
+                awayCount = 0;
             for (let p of predictions) {
                 if (p.prediction === team1) homeCount++;
                 else if (p.prediction === team2) awayCount++;
-                else if (p.prediction === 'DRAW') drawCount++;
+                // تم تجاهل DRAW
             }
             const totalPreds = predictions.length;
             const homePercent = totalPreds > 0 ? (homeCount / totalPreds) * 100 : 0;
             const awayPercent = totalPreds > 0 ? (awayCount / totalPreds) * 100 : 0;
-            const drawPercent = totalPreds > 0 ? (drawCount / totalPreds) * 100 : 0;
 
             document.getElementById('probHomePercent').textContent = homePercent.toFixed(1) + '%';
             document.getElementById('probAwayPercent').textContent = awayPercent.toFixed(1) + '%';
-            document.getElementById('probDrawPercent').textContent = drawPercent.toFixed(1) + '%';
 
             document.querySelector('#probBar .segment.home').style.width = homePercent + '%';
             document.querySelector('#probBar .segment.home').textContent = homePercent.toFixed(0) + '%';
-            document.querySelector('#probBar .segment.draw').style.width = drawPercent + '%';
-            document.querySelector('#probBar .segment.draw').textContent = drawPercent.toFixed(0) + '%';
             document.querySelector('#probBar .segment.away').style.width = awayPercent + '%';
             document.querySelector('#probBar .segment.away').textContent = awayPercent.toFixed(0) + '%';
 
+            // إخفاء segment.draw نهائياً
+            const drawSegment = document.querySelector('#probBar .segment.draw');
+            if (drawSegment) drawSegment.style.display = 'none';
+
             if (totalPreds === 0) {
-                document.querySelector('#probBar .segment.home').style.width = '33.33%';
+                document.querySelector('#probBar .segment.home').style.width = '50%';
                 document.querySelector('#probBar .segment.home').textContent = '0%';
-                document.querySelector('#probBar .segment.draw').style.width = '33.33%';
-                document.querySelector('#probBar .segment.draw').textContent = '0%';
-                document.querySelector('#probBar .segment.away').style.width = '33.33%';
+                document.querySelector('#probBar .segment.away').style.width = '50%';
                 document.querySelector('#probBar .segment.away').textContent = '0%';
             }
 
