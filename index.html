@@ -421,6 +421,13 @@
         .admin-btn.success:hover {
             box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
         }
+        .admin-btn.bracket-btn {
+            background: linear-gradient(135deg, #8e44ad, #6c3483);
+            color: white;
+        }
+        .admin-btn.bracket-btn:hover {
+            box-shadow: 0 0 20px rgba(142, 68, 173, 0.3);
+        }
 
         /* ===== قسم الأرشيف ===== */
         .archive-section {
@@ -1764,6 +1771,11 @@
             background: rgba(46, 204, 113, 0.08);
             color: var(--success);
             min-width: 60px;
+            display: none;
+            /* مخفي افتراضياً، يظهر فقط في وضع الإدارة */
+        }
+        .predict-btn-wrap .edit-btn.visible {
+            display: inline-flex;
         }
         .predict-btn-wrap .edit-btn:hover:not(:disabled) {
             background: rgba(46, 204, 113, 0.18);
@@ -1949,7 +1961,19 @@
             border-bottom: none;
         }
 
-        /* ===== شجرة البطولة (المحسّنة) ===== */
+        /* ===== شجرة البطولة (المحسّنة) - مخفية افتراضياً ===== */
+        .bracket-wrapper {
+            display: none;
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-gold);
+        }
+        .bracket-wrapper.visible {
+            display: block;
+        }
         .bracket-tree {
             display: flex;
             flex-direction: row;
@@ -3384,6 +3408,7 @@
                 <button class="admin-btn secondary" onclick="loadDuplicates()">🔍 التوقعات المكررة</button>
                 <button class="admin-btn" onclick="toggleArchive()">📦 الأرشيف</button>
                 <button class="admin-btn secondary" onclick="runTests()">🧪 اختبارات</button>
+                <button class="admin-btn bracket-btn" onclick="toggleBracketAdmin()">🏆 مسار البطولة</button>
             </div>
             <div class="duplicates-section" id="duplicatesSection">
                 <div class="dup-title">⚠️ التوقعات المكررة <span class="count-badge" id="dupCountBadge">0</span></div>
@@ -3392,6 +3417,14 @@
             <div class="archive-section" id="archiveSection">
                 <div class="archive-title">📦 أرشيف المباريات المنتهية <span class="count-badge" id="archiveCount">0</span></div>
                 <div id="archiveContainer"><div class="duplicates-empty">⏳ جاري التحميل...</div></div>
+            </div>
+            <!-- مسار البطولة داخل الإدارة -->
+            <div class="bracket-wrapper" id="bracketWrapper">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
+                    <span style="font-size:0.85rem;font-weight:800;color:var(--gold-light);">🏆 مسار البطولة</span>
+                    <button class="admin-btn secondary" style="padding:4px 14px;font-size:0.65rem;" onclick="document.getElementById('bracketWrapper').classList.remove('visible')">✕ إخفاء</button>
+                </div>
+                <div id="bracketContainer"><div class="empty-state"><span class="icon">⏳</span> جاري تحميل المخطط...</div></div>
             </div>
         </div>
 
@@ -3407,7 +3440,7 @@
                 <button class="tab-btn" data-tab="standings">📊 ترتيب المجموعات</button>
                 <button class="tab-btn" data-tab="scorers">🏅 الهدافين</button>
                 <button class="tab-btn" data-tab="stats">📊 إحصائيات الفرق</button>
-                <button class="tab-btn" data-tab="bracket">🏆 مسار البطولة</button>
+                <!-- تم إخفاء تبويب مسار البطولة من هنا -->
                 <button class="tab-btn" data-tab="predictions">🗳️ جميع التوقعات</button>
             </div>
             <div class="day-filter-tabs visible" id="dayFilterTabs">
@@ -3447,12 +3480,6 @@
         <div id="statsTab" class="tab-content">
             <div class="section-title">📊 إحصائيات الفرق (الهجوم والدفاع)</div>
             <div id="teamStatsContainer"><div class="empty-state"><span class="icon">⏳</span> جاري حساب الإحصائيات...</div></div>
-        </div>
-
-        <!-- المخطط (شجرة البطولة) -->
-        <div id="bracketTab" class="tab-content">
-            <div class="section-title">🏆 مسار البطولة</div>
-            <div id="bracketContainer"><div class="empty-state"><span class="icon">⏳</span> جاري تحميل المخطط...</div></div>
         </div>
 
         <!-- جميع التوقعات -->
@@ -3603,7 +3630,7 @@
         </div>
     </div>
 
-    <!-- ===== نافذة التحليلات المتقدمة (مضاف إليها تحليلات اللاعب والمباريات) ===== -->
+    <!-- ===== نافذة التحليلات المتقدمة ===== -->
     <div class="modal-overlay" id="analyticsModal">
         <div class="modal-content" style="max-width:900px;">
             <button class="modal-close" id="analyticsCloseBtn">✕</button>
@@ -4007,7 +4034,7 @@
         }
 
         // ============================================================
-        //  الترجمة والأعلام (نفس الكود السابق)
+        //  الترجمة والأعلام
         // ============================================================
         const nameMapping = new Map([
             ["مکزیک", "المكسيك"],
@@ -4270,7 +4297,16 @@
             ["كولومبيا", "كولومبيا"],
             ["أوزبكستان", "أوزبكستان"],
             ["غانا", "غانا"],
-            ["باراغواي", "باراغواي"]
+            ["باراغواي", "باراغواي"],
+            ["جمهورية الكونغو الديمقراطية", "الكونغو الديمقراطية"],
+            ["جمهورية الكونغو", "الكونغو الديمقراطية"],
+            ["الكونغو الديمقراطية", "الكونغو الديمقراطية"],
+            ["البوسنة والهرسك", "البوسنة والهرسك"],
+            ["الرأس الأخضر", "الرأس الأخضر"],
+            ["باراجواي", "باراغواي"],
+            ["باراغواي", "باراغواي"],
+            ["السنغال", "السنغال"],
+            ["جمهورية الكونغو الديمقراطية", "الكونغو الديمقراطية"]
         ]);
 
         const groupLetters = {
@@ -4400,85 +4436,109 @@
         }
 
         // ============================================================
-        //  بيانات المباريات الثابتة
+        //  بيانات المباريات الثابتة + دور الـ 32
         // ============================================================
         const rawMatches = [
-            { id: 1, team1: "المكسيك", team2: "جنوب أفريقيا", time: "2026-06-11T22:00:00", round: "first" },
-            { id: 2, team1: "الأرجنتين", team2: "الجزائر", time: "2026-06-11T04:00:00", round: "first" },
-            { id: 3, team1: "النمسا", team2: "الأردن", time: "2026-06-11T07:00:00", round: "first" },
-            { id: 4, team1: "البرتغال", team2: "الكونغو الديمقراطية", time: "2026-06-11T20:00:00", round: "first" },
-            { id: 5, team1: "كوريا الجنوبية", team2: "التشيك", time: "2026-06-12T05:00:00", round: "first" },
-            { id: 6, team1: "كندا", team2: "البوسنة والهرسك", time: "2026-06-12T22:00:00", round: "first" },
-            { id: 7, team1: "أمريكا", team2: "العراق", time: "2026-06-13T04:00:00", round: "first" },
-            { id: 8, team1: "سويسرا", team2: "قطر", time: "2026-06-13T22:00:00", round: "first" },
-            { id: 9, team1: "البرازيل", team2: "المغرب", time: "2026-06-14T01:00:00", round: "first" },
-            { id: 10, team1: "هايتي", team2: "إسكتلندا", time: "2026-06-14T04:00:00", round: "first" },
-            { id: 11, team1: "أستراليا", team2: "تركيا", time: "2026-06-14T07:00:00", round: "first" },
-            { id: 12, team1: "ألمانيا", team2: "كوراساو", time: "2026-06-14T20:00:00", round: "first" },
-            { id: 13, team1: "اليابان", team2: "هولندا", time: "2026-06-14T23:00:00", round: "first" },
-            { id: 14, team1: "الإكوادور", team2: "ساحل العاج", time: "2026-06-15T02:00:00", round: "first" },
-            { id: 15, team1: "السويد", team2: "تونس", time: "2026-06-15T05:00:00", round: "first" },
-            { id: 16, team1: "إسبانيا", team2: "الرأس الأخضر", time: "2026-06-15T19:00:00", round: "first" },
-            { id: 17, team1: "مصر", team2: "بلجيكا", time: "2026-06-15T22:00:00", round: "first" },
-            { id: 18, team1: "السعودية", team2: "أوروغواي", time: "2026-06-16T01:00:00", round: "first" },
-            { id: 19, team1: "إيران", team2: "نيوزيلندا", time: "2026-06-16T04:00:00", round: "first" },
-            { id: 20, team1: "السنغال", team2: "فرنسا", time: "2026-06-16T22:00:00", round: "first" },
-            { id: 21, team1: "النرويج", team2: "العراق", time: "2026-06-17T01:00:00", round: "first" },
-            { id: 22, team1: "الجزائر", team2: "الأرجنتين", time: "2026-06-17T04:00:00", round: "first" },
-            { id: 23, team1: "الأردن", team2: "النمسا", time: "2026-06-17T07:00:00", round: "first" },
-            { id: 24, team1: "البرتغال", team2: "كرواتيا", time: "2026-06-17T20:00:00", round: "first" },
-            { id: 25, team1: "إنجلترا", team2: "كرواتيا", time: "2026-06-17T23:00:00", round: "first" },
-            { id: 26, team1: "جنوب أفريقيا", team2: "التشيك", time: "2026-06-18T19:00:00", round: "second" },
-            { id: 27, team1: "سويسرا", team2: "البوسنة والهرسك", time: "2026-06-18T22:00:00", round: "second" },
-            { id: 28, team1: "قطر", team2: "كندا", time: "2026-06-19T01:00:00", round: "second" },
-            { id: 29, team1: "المكسيك", team2: "كوريا الجنوبية", time: "2026-06-19T04:00:00", round: "second" },
-            { id: 30, team1: "أستراليا", team2: "أمريكا", time: "2026-06-19T22:00:00", round: "second" },
-            { id: 31, team1: "المغرب", team2: "إسكتلندا", time: "2026-06-20T01:00:00", round: "second" },
-            { id: 32, team1: "البرازيل", team2: "هايتي", time: "2026-06-20T03:30:00", round: "second" },
-            { id: 33, team1: "تركيا", team2: "باراغواي", time: "2026-06-20T06:00:00", round: "second" },
-            { id: 34, team1: "السويد", team2: "هولندا", time: "2026-06-20T20:00:00", round: "second" },
-            { id: 35, team1: "ساحل العاج", team2: "ألمانيا", time: "2026-06-20T23:00:00", round: "second" },
-            { id: 36, team1: "الإكوادور", team2: "كوراساو", time: "2026-06-21T03:00:00", round: "second" },
-            { id: 37, team1: "اليابان", team2: "تونس", time: "2026-06-21T07:00:00", round: "second" },
-            { id: 38, team1: "إسبانيا", team2: "السعودية", time: "2026-06-21T19:00:00", round: "second" },
-            { id: 39, team1: "بلجيكا", team2: "إيران", time: "2026-06-21T22:00:00", round: "second" },
-            { id: 40, team1: "أوروغواي", team2: "الرأس الأخضر", time: "2026-06-22T01:00:00", round: "second" },
-            { id: 41, team1: "مصر", team2: "نيوزيلندا", time: "2026-06-22T04:00:00", round: "second" },
-            { id: 42, team1: "الأرجنتين", team2: "النمسا", time: "2026-06-22T20:00:00", round: "second" },
-            { id: 43, team1: "العراق", team2: "فرنسا", time: "2026-06-23T00:00:00", round: "second" },
-            { id: 44, team1: "النرويج", team2: "السنغال", time: "2026-06-23T03:00:00", round: "second" },
-            { id: 45, team1: "الأردن", team2: "الجزائر", time: "2026-06-23T06:00:00", round: "second" },
-            { id: 46, team1: "البرتغال", team2: "أوزبكستان", time: "2026-06-23T20:00:00", round: "second" },
-            { id: 47, team1: "إنجلترا", team2: "غانا", time: "2026-06-23T23:00:00", round: "second" },
-            { id: 48, team1: "بنما", team2: "كرواتيا", time: "2026-06-24T02:00:00", round: "second" },
-            { id: 49, team1: "كولومبيا", team2: "الكونغو الديمقراطية", time: "2026-06-24T05:00:00", round: "second" },
-            { id: 50, team1: "كندا", team2: "سويسرا", time: "2026-06-24T22:00:00", round: "third" },
-            { id: 51, team1: "قطر", team2: "البوسنة والهرسك", time: "2026-06-24T22:00:00", round: "third" },
-            { id: 52, team1: "المغرب", team2: "هايتي", time: "2026-06-25T01:00:00", round: "third" },
-            { id: 53, team1: "إسكتلندا", team2: "البرازيل", time: "2026-06-25T01:00:00", round: "third" },
-            { id: 54, team1: "جنوب أفريقيا", team2: "كوريا الجنوبية", time: "2026-06-25T04:00:00", round: "third" },
-            { id: 55, team1: "المكسيك", team2: "التشيك", time: "2026-06-25T04:00:00", round: "third" },
-            { id: 56, team1: "كوراساو", team2: "ساحل العاج", time: "2026-06-25T23:00:00", round: "third" },
-            { id: 57, team1: "ألمانيا", team2: "الإكوادور", time: "2026-06-25T23:00:00", round: "third" },
-            { id: 58, team1: "هولندا", team2: "تونس", time: "2026-06-26T02:00:00", round: "third" },
-            { id: 59, team1: "اليابان", team2: "السويد", time: "2026-06-26T02:00:00", round: "third" },
-            { id: 60, team1: "أمريكا", team2: "تركيا", time: "2026-06-26T05:00:00", round: "third" },
-            { id: 61, team1: "أستراليا", team2: "باراغواي", time: "2026-06-26T05:00:00", round: "third" },
-            { id: 62, team1: "فرنسا", team2: "النرويج", time: "2026-06-26T22:00:00", round: "third" },
-            { id: 63, team1: "السنغال", team2: "العراق", time: "2026-06-26T22:00:00", round: "third" },
-            { id: 64, team1: "السعودية", team2: "الرأس الأخضر", time: "2026-06-27T03:00:00", round: "third" },
-            { id: 65, team1: "إسبانيا", team2: "أوروغواي", time: "2026-06-27T03:00:00", round: "third" },
-            { id: 66, team1: "إيران", team2: "مصر", time: "2026-06-27T06:00:00", round: "third" },
-            { id: 67, team1: "نيوزيلندا", team2: "بلجيكا", time: "2026-06-27T06:00:00", round: "third" },
-            { id: 68, team1: "إنجلترا", team2: "بنما", time: "2026-06-28T00:00:00", round: "third" },
-            { id: 69, team1: "كرواتيا", team2: "غانا", time: "2026-06-28T00:00:00", round: "third" },
-            { id: 70, team1: "البرتغال", team2: "كولومبيا", time: "2026-06-28T02:30:00", round: "third" },
-            { id: 71, team1: "الكونغو الديمقراطية", team2: "أوزبكستان", time: "2026-06-28T02:30:00", round: "third" },
-            { id: 72, team1: "الجزائر", team2: "النمسا", time: "2026-06-28T05:00:00", round: "third" },
-            { id: 73, team1: "الأردن", team2: "الأرجنتين", time: "2026-06-28T05:00:00", round: "third" }
+            // الجولات الثلاث الأولى (الكود السابق)
+            { id: 1, team1: "المكسيك", team2: "جنوب أفريقيا", time: "2026-06-11T22:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 2, team1: "الأرجنتين", team2: "الجزائر", time: "2026-06-11T04:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 3, team1: "النمسا", team2: "الأردن", time: "2026-06-11T07:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 4, team1: "البرتغال", team2: "الكونغو الديمقراطية", time: "2026-06-11T20:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 5, team1: "كوريا الجنوبية", team2: "التشيك", time: "2026-06-12T05:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 6, team1: "كندا", team2: "البوسنة والهرسك", time: "2026-06-12T22:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 7, team1: "أمريكا", team2: "العراق", time: "2026-06-13T04:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 8, team1: "سويسرا", team2: "قطر", time: "2026-06-13T22:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 9, team1: "البرازيل", team2: "المغرب", time: "2026-06-14T01:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 10, team1: "هايتي", team2: "إسكتلندا", time: "2026-06-14T04:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 11, team1: "أستراليا", team2: "تركيا", time: "2026-06-14T07:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 12, team1: "ألمانيا", team2: "كوراساو", time: "2026-06-14T20:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 13, team1: "اليابان", team2: "هولندا", time: "2026-06-14T23:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 14, team1: "الإكوادور", team2: "ساحل العاج", time: "2026-06-15T02:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 15, team1: "السويد", team2: "تونس", time: "2026-06-15T05:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 16, team1: "إسبانيا", team2: "الرأس الأخضر", time: "2026-06-15T19:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 17, team1: "مصر", team2: "بلجيكا", time: "2026-06-15T22:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 18, team1: "السعودية", team2: "أوروغواي", time: "2026-06-16T01:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 19, team1: "إيران", team2: "نيوزيلندا", time: "2026-06-16T04:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 20, team1: "السنغال", team2: "فرنسا", time: "2026-06-16T22:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 21, team1: "النرويج", team2: "العراق", time: "2026-06-17T01:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 22, team1: "الجزائر", team2: "الأرجنتين", time: "2026-06-17T04:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 23, team1: "الأردن", team2: "النمسا", time: "2026-06-17T07:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 24, team1: "البرتغال", team2: "كرواتيا", time: "2026-06-17T20:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 25, team1: "إنجلترا", team2: "كرواتيا", time: "2026-06-17T23:00:00+03:00", round: "first", roundLabel: "الجولة الأولى" },
+            { id: 26, team1: "جنوب أفريقيا", team2: "التشيك", time: "2026-06-18T19:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 27, team1: "سويسرا", team2: "البوسنة والهرسك", time: "2026-06-18T22:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 28, team1: "قطر", team2: "كندا", time: "2026-06-19T01:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 29, team1: "المكسيك", team2: "كوريا الجنوبية", time: "2026-06-19T04:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 30, team1: "أستراليا", team2: "أمريكا", time: "2026-06-19T22:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 31, team1: "المغرب", team2: "إسكتلندا", time: "2026-06-20T01:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 32, team1: "البرازيل", team2: "هايتي", time: "2026-06-20T03:30:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 33, team1: "تركيا", team2: "باراغواي", time: "2026-06-20T06:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 34, team1: "السويد", team2: "هولندا", time: "2026-06-20T20:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 35, team1: "ساحل العاج", team2: "ألمانيا", time: "2026-06-20T23:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 36, team1: "الإكوادور", team2: "كوراساو", time: "2026-06-21T03:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 37, team1: "اليابان", team2: "تونس", time: "2026-06-21T07:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 38, team1: "إسبانيا", team2: "السعودية", time: "2026-06-21T19:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 39, team1: "بلجيكا", team2: "إيران", time: "2026-06-21T22:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 40, team1: "أوروغواي", team2: "الرأس الأخضر", time: "2026-06-22T01:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 41, team1: "مصر", team2: "نيوزيلندا", time: "2026-06-22T04:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 42, team1: "الأرجنتين", team2: "النمسا", time: "2026-06-22T20:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 43, team1: "العراق", team2: "فرنسا", time: "2026-06-23T00:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 44, team1: "النرويج", team2: "السنغال", time: "2026-06-23T03:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 45, team1: "الأردن", team2: "الجزائر", time: "2026-06-23T06:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 46, team1: "البرتغال", team2: "أوزبكستان", time: "2026-06-23T20:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 47, team1: "إنجلترا", team2: "غانا", time: "2026-06-23T23:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 48, team1: "بنما", team2: "كرواتيا", time: "2026-06-24T02:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 49, team1: "كولومبيا", team2: "الكونغو الديمقراطية", time: "2026-06-24T05:00:00+03:00", round: "second", roundLabel: "الجولة الثانية" },
+            { id: 50, team1: "كندا", team2: "سويسرا", time: "2026-06-24T22:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 51, team1: "قطر", team2: "البوسنة والهرسك", time: "2026-06-24T22:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 52, team1: "المغرب", team2: "هايتي", time: "2026-06-25T01:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 53, team1: "إسكتلندا", team2: "البرازيل", time: "2026-06-25T01:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 54, team1: "جنوب أفريقيا", team2: "كوريا الجنوبية", time: "2026-06-25T04:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 55, team1: "المكسيك", team2: "التشيك", time: "2026-06-25T04:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 56, team1: "كوراساو", team2: "ساحل العاج", time: "2026-06-25T23:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 57, team1: "ألمانيا", team2: "الإكوادور", time: "2026-06-25T23:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 58, team1: "هولندا", team2: "تونس", time: "2026-06-26T02:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 59, team1: "اليابان", team2: "السويد", time: "2026-06-26T02:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 60, team1: "أمريكا", team2: "تركيا", time: "2026-06-26T05:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 61, team1: "أستراليا", team2: "باراغواي", time: "2026-06-26T05:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 62, team1: "فرنسا", team2: "النرويج", time: "2026-06-26T22:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 63, team1: "السنغال", team2: "العراق", time: "2026-06-26T22:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 64, team1: "السعودية", team2: "الرأس الأخضر", time: "2026-06-27T03:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 65, team1: "إسبانيا", team2: "أوروغواي", time: "2026-06-27T03:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 66, team1: "إيران", team2: "مصر", time: "2026-06-27T06:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 67, team1: "نيوزيلندا", team2: "بلجيكا", time: "2026-06-27T06:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 68, team1: "إنجلترا", team2: "بنما", time: "2026-06-28T00:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 69, team1: "كرواتيا", team2: "غانا", time: "2026-06-28T00:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 70, team1: "البرتغال", team2: "كولومبيا", time: "2026-06-28T02:30:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 71, team1: "الكونغو الديمقراطية", team2: "أوزبكستان", time: "2026-06-28T02:30:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 72, team1: "الجزائر", team2: "النمسا", time: "2026-06-28T05:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+            { id: 73, team1: "الأردن", team2: "الأرجنتين", time: "2026-06-28T05:00:00+03:00", round: "third", roundLabel: "الجولة الثالثة" },
+
+            // ===== دور الـ 32 (16 مباراة) =====
+            { id: 101, team1: "جنوب أفريقيا", team2: "كندا", time: "2026-06-28T22:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب سوفي - إنجلوود" },
+            { id: 102, team1: "البرازيل", team2: "اليابان", time: "2026-06-29T20:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب إن آر جي - هيوستن" },
+            { id: 103, team1: "ألمانيا", team2: "باراغواي", time: "2026-06-29T23:30:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب جيليت - فوكسبورو" },
+            { id: 104, team1: "هولندا", team2: "المغرب", time: "2026-06-30T04:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب بي بي في إيه - غوادالوبي" },
+            { id: 105, team1: "ساحل العاج", team2: "النرويج", time: "2026-06-30T20:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب آيه تي آند تي - أرلينغتون" },
+            { id: 106, team1: "فرنسا", team2: "السويد", time: "2026-07-01T00:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب متلايف - إيست رذرفورد" },
+            { id: 107, team1: "المكسيك", team2: "الإكوادور", time: "2026-07-01T04:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب أزتيكا - مكسيكو سيتي" },
+            { id: 108, team1: "إنجلترا", team2: "الكونغو الديمقراطية", time: "2026-07-01T19:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب مرسيدس بنز - أتلانتا" },
+            { id: 109, team1: "بلجيكا", team2: "السنغال", time: "2026-07-01T23:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب لومن فيلد - سياتل" },
+            { id: 110, team1: "أمريكا", team2: "البوسنة والهرسك", time: "2026-07-02T03:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب ليفاي - سانتا كلارا" },
+            { id: 111, team1: "إسبانيا", team2: "النمسا", time: "2026-07-02T22:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب سوفي - إنجلوود" },
+            { id: 112, team1: "البرتغال", team2: "كرواتيا", time: "2026-07-03T02:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب بي إم أو فيلد - تورونتو" },
+            { id: 113, team1: "سويسرا", team2: "الجزائر", time: "2026-07-03T06:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب بي سي بليس - فانكوفر" },
+            { id: 114, team1: "أستراليا", team2: "مصر", time: "2026-07-03T21:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب آيه تي آند تي - أرلينغتون" },
+            { id: 115, team1: "الأرجنتين", team2: "الرأس الأخضر", time: "2026-07-04T01:00:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب هارد روك - ميامي غاردنز" },
+            { id: 116, team1: "كولومبيا", team2: "غانا", time: "2026-07-04T04:30:00+03:00", round: "round32", roundLabel: "دور الـ 32", stadium: "ملعب أروهيد - كانساس سيتي" }
         ];
-        const matchesData = rawMatches.map(m => ({ ...m, timeISO: m.time + "+03:00", roundLabel: m.round === 'first' ?
-                'الجولة الأولى' : (m.round === 'second' ? 'الجولة الثانية' : 'الجولة الثالثة') }));
+
+        const matchesData = rawMatches.map(m => ({
+            ...m,
+            timeISO: m.time,
+            roundLabel: m.roundLabel || (m.round === 'first' ? 'الجولة الأولى' : (m.round === 'second' ? 'الجولة الثانية' : (m.round === 'third' ? 'الجولة الثالثة' : 'دور الـ 32')))
+        }));
+
         const finalGroups = {
             "A": ["المكسيك", "جنوب أفريقيا", "كوريا الجنوبية", "التشيك"],
             "B": ["كندا", "البوسنة والهرسك", "قطر", "سويسرا"],
@@ -4660,6 +4720,11 @@
         //  دوال عرض المباريات
         // ============================================================
         function getGroundForMatch(team1, team2, timeISO) {
+            // أولاً نبحث في match data المباشر (لدور الـ 32)
+            const directMatch = matchesData.find(m => (m.team1 === team1 && m.team2 === team2) || (m.team1 === team2 && m
+                .team2 === team1));
+            if (directMatch && directMatch.stadium) return directMatch.stadium;
+
             if (!state.openfootballMatches || !state.openfootballMatches.length) return null;
             const t1 = translateToArabic(team1);
             const t2 = translateToArabic(team2);
@@ -4721,6 +4786,7 @@
             let editBtnHtml = 'تعديل';
             let editDisabled = true;
             let editBtnExtra = '';
+            let editBtnClass = 'edit-btn';
 
             if (userHasPrediction) {
                 predictDisabled = true;
@@ -4728,9 +4794,10 @@
                 predictBtnClass += ' submitted';
                 predictBtnExtra = 'disabled';
 
-                if (canPredictNow) {
+                if (canPredictNow && isAuthorized) {
                     editDisabled = false;
                     editBtnExtra = `onclick="openEditPredictionModal('${matchId}','${m.team1}','${m.team2}','${m.timeISO}')"`;
+                    editBtnClass += ' visible';
                 } else {
                     editDisabled = true;
                     editBtnExtra = 'disabled';
@@ -4743,6 +4810,7 @@
                     } else {
                         editBtnHtml = '⏳ غير متاح';
                     }
+                    if (isAuthorized) editBtnClass += ' visible';
                 }
             } else if (submitted) {
                 predictDisabled = true;
@@ -4750,9 +4818,10 @@
                 predictBtnClass += ' submitted';
                 predictBtnExtra = 'disabled';
 
-                if (canPredictNow) {
+                if (canPredictNow && isAuthorized) {
                     editDisabled = false;
                     editBtnExtra = `onclick="openEditPredictionModal('${matchId}','${m.team1}','${m.team2}','${m.timeISO}')"`;
+                    editBtnClass += ' visible';
                 } else {
                     editDisabled = true;
                     editBtnExtra = 'disabled';
@@ -4765,6 +4834,7 @@
                     } else {
                         editBtnHtml = '⏳ غير متاح';
                     }
+                    if (isAuthorized) editBtnClass += ' visible';
                 }
             } else if (!canPredictNow) {
                 predictDisabled = true;
@@ -4808,7 +4878,7 @@
                 `onclick="openMatchPredictions('${matchId}', '${m.team1}', '${m.team2}', ${homeScore}, ${awayScore})"` :
                 '';
 
-            const showEdit = (userHasPrediction || submitted) && canPredictNow;
+            const showEdit = (userHasPrediction || submitted) && canPredictNow && isAuthorized;
 
             return `
             <div class="match-card ${matchClass}" ${onclickAttr}>
@@ -4834,7 +4904,7 @@
                     <button class="${predictBtnClass}" ${predictBtnExtra} data-matchid="${matchId}">
                       ${predictBtnHtml}
                     </button>
-                    ${showEdit ? `<button class="edit-btn" ${editBtnExtra} data-matchid="${matchId}">✏️ ${editBtnHtml}</button>` : ''}
+                    ${showEdit ? `<button class="${editBtnClass}" ${editBtnExtra} data-matchid="${matchId}">✏️ ${editBtnHtml}</button>` : (isAuthorized ? `<button class="${editBtnClass}" ${editBtnExtra} data-matchid="${matchId}" style="display:none;">✏️ ${editBtnHtml}</button>` : '')}
                   </div>
                   <button class="view-btn" onclick="openViewPredictionsModal('${matchId}','${m.team1}','${m.team2}')">
                     📋 استعراض التوقعات
@@ -5234,7 +5304,7 @@
         }
 
         // ============================================================
-        //  مسار البطولة (شجرة محسّنة)
+        //  مسار البطولة (شجرة محسّنة) - تُستدعى من الإدارة
         // ============================================================
         function renderBracket() {
             const container = document.getElementById('bracketContainer');
@@ -6214,7 +6284,7 @@
                 closeCompareModal(); });
 
         // ============================================================
-        //  دوال التحليلات المتقدمة (مع تحليلات اللاعب والمباريات)
+        //  دوال التحليلات المتقدمة
         // ============================================================
         let chartInstancesLocal = {};
 
@@ -6223,14 +6293,11 @@
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
 
-            // تحديث قائمة اللاعبين في التحليلات
             populatePlayerAnalyticsSelect();
-            // تحديث تحليلات المباريات
             renderMatchAnalytics();
 
             setTimeout(() => {
                 generateAnalyticsCharts();
-                // إذا كان هناك لاعب محدد، قم بتحديث تحليلاته
                 const select = document.getElementById('playerAnalyticsSelect');
                 if (select.value) {
                     updatePlayerAnalytics();
@@ -6246,7 +6313,6 @@
             players.forEach(p => {
                 select.innerHTML += `<option value="${p}">${p}</option>`;
             });
-            // تحديد اللاعب الحالي إذا كان مسجلاً
             const currentUser = localStorage.getItem('lastUserName') || '';
             if (players.includes(currentUser)) {
                 select.value = currentUser;
@@ -6266,7 +6332,6 @@
             const predictions = state.predictions || [];
             const games = state.previousGamesData || [];
 
-            // جلب توقعات اللاعب
             const playerPreds = predictions.filter(p => p.user_name === playerName);
             if (playerPreds.length === 0) {
                 detailsDiv.innerHTML = `<div class="empty-state"><span class="icon">📭</span> لا توجد توقعات لهذا اللاعب</div>`;
@@ -6274,7 +6339,6 @@
                 return;
             }
 
-            // حساب الإحصائيات
             let total = playerPreds.length;
             let correct = 0,
                 wrong = 0,
@@ -6289,7 +6353,6 @@
                     points++; } else if (status.status === 'wrong') { wrong++; }
             }
 
-            // حساب اتجاه اللاعب (آخر 5 توقعات)
             const recent = sortedPreds.slice(-5);
             let recentCorrect = 0;
             for (let p of recent) {
@@ -6299,17 +6362,12 @@
             const recentAcc = recent.length > 0 ? (recentCorrect / recent.length) * 100 : 0;
             const overallAcc = total > 0 ? (correct / total) * 100 : 0;
 
-            // --- توقع الترتيب المستقبلي الديناميكي ---
             const allStats = getAllPlayersStats();
             const totalPlayers = Object.keys(allStats).length;
-            // حساب المباريات المتبقية (تقريباً)
             const remainingMatches = matchesData.filter(m => (matchTime(m.timeISO) + MATCH_DURATION) > now()).length;
-            // متوسط نقاط اللاعب لكل توقع
             const avgPointsPerPred = total > 0 ? points / total : 0;
-            // النقاط المستقبلية المتوقعة للاعب الحالي
             const futurePoints = points + (avgPointsPerPred * remainingMatches);
 
-            // حساب النقاط المستقبلية لجميع اللاعبين
             const futureRanks = Object.values(allStats).map(p => {
                 const pAvg = p.total > 0 ? p.points / p.total : 0;
                 const pFuture = p.points + (pAvg * remainingMatches);
@@ -6320,7 +6378,6 @@
             const currentRank = Object.values(allStats).sort((a, b) => b.points - a.points).findIndex(p => p.name ===
                 playerName) + 1;
 
-            // عرض التفاصيل
             detailsDiv.innerHTML = `
             <div class="stat-item"><span class="label">👤 اللاعب</span><span class="value gold">${playerName}</span></div>
             <div class="stat-item"><span class="label">🏆 الترتيب الحالي</span><span class="value gold">#${currentRank}</span></div>
@@ -6340,9 +6397,6 @@
             detailsDiv.style.display = 'block';
         }
 
-        // ============================================================
-        //  تحليلات المباريات (أكثر صحيح/خاطئ)
-        // ============================================================
         async function renderMatchAnalytics() {
             const grid = document.getElementById('matchAnalyticsGrid');
             const predictions = state.predictions || [];
@@ -6353,7 +6407,6 @@
                 return;
             }
 
-            // حساب عدد التوقعات الصحيحة والخاطئة لكل مباراة
             const matchStats = {};
             for (let p of predictions) {
                 const parts = p.match_id.split('_');
@@ -6369,7 +6422,6 @@
                 else if (status.status === 'wrong') matchStats[key].wrong++;
             }
 
-            // ترتيب المباريات حسب الصحيح والخاطئ
             const sortedCorrect = Object.entries(matchStats).sort((a, b) => b[1].correct - a[1].correct).slice(0, 5);
             const sortedWrong = Object.entries(matchStats).sort((a, b) => b[1].wrong - a[1].wrong).slice(0, 5);
 
@@ -6398,9 +6450,6 @@
 
             grid.innerHTML = html;
         }
-
-        // استدعاء populatePlayerAnalyticsSelect بعد تحميل البيانات
-        // سيتم استدعاؤها في openAnalytics
 
         function generateAnalyticsCharts() {
             const predictions = state.predictions || [];
@@ -6679,7 +6728,6 @@
             </div>
           `;
 
-            // إعادة رسم المخططات بعد إعادة إنشاء DOM
             setTimeout(() => {
                 const ctx1b = document.getElementById('chartPlayerDistribution').getContext('2d');
                 const ctx2b = document.getElementById('chartPoints').getContext('2d');
@@ -6818,11 +6866,8 @@
                     }
                 });
 
-                // تحديث قائمة اللاعبين في التحليلات
                 populatePlayerAnalyticsSelect();
-                // تحديث تحليلات المباريات
                 renderMatchAnalytics();
-                // إذا كان هناك لاعب محدد، قم بتحديث تحليلاته
                 const select = document.getElementById('playerAnalyticsSelect');
                 if (select.value) {
                     updatePlayerAnalytics();
@@ -7338,6 +7383,8 @@
                 if (document.getElementById('matchPredictionsModal').classList.contains('active')) { document
                         .getElementById('modalCompactBtn').classList.add('visible'); }
                 updateShareAllCount();
+                // إظهار أزرار التعديل في المباريات
+                document.querySelectorAll('.edit-btn').forEach(el => el.classList.add('visible'));
                 showCopyToast('✅ تم تفعيل لوحة الإدارة');
             } else {
                 errorEl.textContent = '❌ رمز غير صحيح';
@@ -7351,6 +7398,20 @@
         document.getElementById('passwordCloseBtn').addEventListener('click', hidePasswordOverlay);
         document.getElementById('passwordOverlay').addEventListener('click', function(e) { if (e.target === this)
                 hidePasswordOverlay(); });
+
+        // ============================================================
+        //  إظهار/إخفاء مسار البطولة في الإدارة
+        // ============================================================
+        function toggleBracketAdmin() {
+            const wrapper = document.getElementById('bracketWrapper');
+            if (wrapper.classList.contains('visible')) {
+                wrapper.classList.remove('visible');
+            } else {
+                wrapper.classList.add('visible');
+                renderBracket();
+                showCopyToast('🏆 تم عرض مسار البطولة');
+            }
+        }
 
         // ============================================================
         //  التبويبات
@@ -7374,7 +7435,6 @@
                     if (id === 'standings' && state.previousGamesData.length) calculateStandings();
                     if (id === 'scorers') renderScorers();
                     if (id === 'stats') renderTeamStats();
-                    if (id === 'bracket') renderBracket();
                     if (id === 'predictions') renderAllPredictions();
                 });
             });
@@ -7399,7 +7459,6 @@
                 if (activeTab === 'standings' && state.previousGamesData.length) calculateStandings();
                 if (activeTab === 'scorers') renderScorers();
                 if (activeTab === 'stats') renderTeamStats();
-                if (activeTab === 'bracket') renderBracket();
                 if (activeTab === 'predictions') await renderAllPredictions();
                 renderLeaderboard(currentLeaderboardPeriod);
                 updateShareAllCount();
@@ -7475,6 +7534,7 @@
         window.updatePlayerAnalytics = updatePlayerAnalytics;
         window.populatePlayerAnalyticsSelect = populatePlayerAnalyticsSelect;
         window.renderMatchAnalytics = renderMatchAnalytics;
+        window.toggleBracketAdmin = toggleBracketAdmin;
 
         // ============================================================
         //  دالة فتح نافذة تعديل التوقع
