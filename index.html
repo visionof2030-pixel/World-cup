@@ -4790,7 +4790,23 @@
             { id: 115, team1: "الأرجنتين", team2: "الرأس الأخضر", time: "2026-07-04T01:00:00+03:00", round: "round32",
                 roundLabel: "دور الـ 32", stadium: "ملعب هارد روك - ميامي غاردنز" },
             { id: 116, team1: "كولومبيا", team2: "غانا", time: "2026-07-04T04:30:00+03:00", round: "round32",
-                roundLabel: "دور الـ 32", stadium: "ملعب أروهيد - كانساس سيتي" }
+                roundLabel: "دور الـ 32", stadium: "ملعب أروهيد - كانساس سيتي" },
+
+            // ===== المباريات الإضافية المطلوبة =====
+            { id: 201, team1: "كندا", team2: "المغرب", time: "2026-07-04T20:00:00+03:00", round: "round16",
+                roundLabel: "دور الـ 16", stadium: "هيوستن" },
+            { id: 202, team1: "البرازيل", team2: "النرويج", time: "2026-07-05T23:00:00+03:00", round: "round16",
+                roundLabel: "دور الـ 16", stadium: "نيويورك/نيوجيرسي" },
+            { id: 203, team1: "المكسيك", team2: "إنجلترا", time: "2026-07-06T03:00:00+03:00", round: "round16",
+                roundLabel: "دور الـ 16", stadium: "مدينة المكسيك" },
+            { id: 204, team1: "البرتغال", team2: "إسبانيا", time: "2026-07-06T22:00:00+03:00", round: "round16",
+                roundLabel: "دور الـ 16", stadium: "دالاس" },
+            { id: 205, team1: "أمريكا", team2: "بلجيكا", time: "2026-07-07T03:00:00+03:00", round: "round16",
+                roundLabel: "دور الـ 16", stadium: "سياتل" },
+            { id: 206, team1: "الأرجنتين", team2: "مصر", time: "2026-07-07T19:00:00+03:00", round: "round16",
+                roundLabel: "دور الـ 16", stadium: "أتلانتا" },
+            { id: 207, team1: "سويسرا", team2: "كولومبيا", time: "2026-07-07T23:00:00+03:00", round: "round16",
+                roundLabel: "دور الـ 16", stadium: "فانكوفر" }
         ];
 
         const matchesData = rawMatches.map(m => ({
@@ -6421,7 +6437,7 @@
 
             if (!predictions || predictions.length === 0) {
                 listContainer.innerHTML =
-                `<div class="empty-state"><span class="icon">📭</span> لا توجد توقعات لهذا اللاعب</div>`;
+                    `<div class="empty-state"><span class="icon">📭</span> لا توجد توقعات لهذا اللاعب</div>`;
                 document.getElementById('playerPredictionsModal').classList.add('active');
                 document.body.style.overflow = 'hidden';
                 return;
