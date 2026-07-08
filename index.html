@@ -1054,13 +1054,13 @@
         }
 
         /* ============================================================
-           لوحة المتصدرين — محسّنة وجمالية
+           لوحة المتصدرين — iframe (تم تحديث الرابط)
            ============================================================ */
-        .leaderboard-section {
+        .leaderboard-iframe-section {
             background: var(--bg-card);
             border: 1px solid var(--border-gold);
             border-radius: var(--radius-lg);
-            padding: 28px 28px 20px;
+            padding: 12px;
             margin: 0 0 28px 0;
             box-shadow: var(--shadow-card), var(--shadow-glow);
             transition: var(--transition);
@@ -1068,658 +1068,17 @@
             position: relative;
             overflow: hidden;
         }
-        .leaderboard-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
-            pointer-events: none;
-            border-radius: 50%;
-        }
-        .leaderboard-section .lb-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-        .leaderboard-section .lb-header .title {
-            font-size: 1.3rem;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .leaderboard-section .lb-header .title .trophy {
-            font-size: 1.8rem;
-        }
-        .leaderboard-section .lb-header .title span {
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .leaderboard-section .lb-header .lb-stats {
-            display: flex;
-            gap: 18px;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .leaderboard-section .lb-header .lb-stats .stat {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .leaderboard-section .lb-header .lb-stats .stat .num {
-            color: var(--gold-light);
-            font-weight: 800;
-        }
-        .leaderboard-section .lb-header .lb-stats .share-btn {
-            background: var(--gold-glow);
-            border: 1px solid var(--border-gold);
-            color: var(--gold-light);
-            padding: 4px 18px;
-            border-radius: 40px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-        }
-        .leaderboard-section .lb-header .lb-stats .share-btn:hover {
-            background: rgba(212, 167, 69, 0.20);
-            border-color: var(--gold);
-        }
-
-        .lb-period-tabs {
-            display: flex;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 4px;
-            border-radius: 40px;
-            border: 1px solid var(--border-subtle);
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        .lb-period-tabs .period-btn {
-            padding: 6px 18px;
-            border-radius: 30px;
+        .leaderboard-iframe-section iframe {
+            width: 100%;
+            height: 650px;
             border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 0.65rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-        }
-        .lb-period-tabs .period-btn:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .lb-period-tabs .period-btn.active {
-            background: var(--gold-glow);
-            color: var(--gold-light);
-        }
-        .lb-period-tabs .analytics-trigger {
-            background: rgba(74, 158, 255, 0.08);
-            border: 1px solid rgba(74, 158, 255, 0.15);
-            color: var(--info);
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            margin-right: 4px;
-        }
-        .lb-period-tabs .analytics-trigger:hover {
-            background: rgba(74, 158, 255, 0.16);
-            border-color: rgba(74, 158, 255, 0.30);
-            transform: translateY(-1px);
-        }
-
-        /* بطاقة البطل */
-        .champion-card {
-            background: linear-gradient(145deg, rgba(212, 167, 69, 0.08), rgba(212, 167, 69, 0.01));
-            border: 1px solid var(--gold);
-            border-radius: var(--radius-lg);
-            padding: 24px 28px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            flex-wrap: wrap;
-            position: relative;
-            overflow: hidden;
-            transition: var(--transition);
-            box-shadow: 0 0 60px rgba(212, 167, 69, 0.04);
-            cursor: pointer;
-        }
-        .champion-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 80px rgba(212, 167, 69, 0.08);
-        }
-        .champion-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(212, 167, 69, 0.08), transparent 70%);
-            pointer-events: none;
-            border-radius: 50%;
-        }
-        .champion-card .rank-badge {
-            font-size: 2.8rem;
-            min-width: 64px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-        .champion-card .avatar {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: var(--gold-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #0a0e1a;
-            box-shadow: 0 0 40px rgba(212, 167, 69, 0.25);
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-        }
-        .champion-card .info {
-            flex: 1;
-            min-width: 180px;
-            position: relative;
-            z-index: 1;
-        }
-        .champion-card .info .name {
-            font-size: 1.25rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            cursor: pointer;
-        }
-        .champion-card .info .name .badge {
-            font-size: 0.5rem;
-            padding: 2px 14px;
-            border-radius: 40px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .champion-card .info .name .badge.gold {
-            background: var(--gold-glow);
-            color: var(--gold-light);
-            border: 1px solid var(--border-gold);
-        }
-        .champion-card .info .name .badge.precision {
-            background: var(--success-bg);
-            color: var(--success);
-            border: 1px solid rgba(46, 204, 113, 0.15);
-        }
-        .champion-card .info .name .badge.speed {
-            background: var(--info-bg);
-            color: var(--info);
-            border: 1px solid rgba(74, 158, 255, 0.15);
-        }
-        .champion-card .info .stats-row {
-            display: flex;
-            gap: 22px;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
-        .champion-card .info .stats-row .item {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .champion-card .info .stats-row .item strong {
-            color: var(--text-primary);
-            font-weight: 700;
-        }
-        .champion-card .info .stats-row .item .highlight {
-            color: var(--gold-light);
-        }
-        .champion-card .info .stats-row .item .arrow-up {
-            color: var(--success);
-            font-weight: 900;
-        }
-        .champion-card .info .stats-row .item .arrow-down {
-            color: var(--danger);
-            font-weight: 900;
-        }
-        .champion-card .info .stats-row .item .arrow-unchanged {
-            color: var(--text-secondary);
-        }
-        .champion-card .progress-wrapper {
-            width: 100%;
-            margin-top: 12px;
-        }
-        .champion-card .progress-wrapper .progress-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-        }
-        .champion-card .progress-bar {
-            width: 100%;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .champion-card .progress-bar .fill {
-            height: 100%;
-            background: var(--gold-gradient);
-            border-radius: 10px;
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 0%;
-        }
-        .champion-card .compare-btn {
-            background: rgba(74, 158, 255, 0.06);
-            border: 1px solid rgba(74, 158, 255, 0.12);
-            color: var(--info);
-            padding: 4px 14px;
-            border-radius: 40px;
-            font-size: 0.6rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .champion-card .compare-btn:hover {
-            background: rgba(74, 158, 255, 0.12);
-            border-color: var(--info);
-            transform: translateY(-1px);
-        }
-
-        /* قائمة اللاعبين */
-        .players-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
-            transition: all 0.3s ease;
-        }
-        .players-list.compact-mode {
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 6px;
-        }
-        .players-list.compact-mode .player-card {
-            padding: 8px 10px;
-            gap: 8px;
-            border-radius: var(--radius-sm);
-        }
-        .players-list.compact-mode .player-card .rank {
-            font-size: 0.8rem;
-            min-width: 20px;
-        }
-        .players-list.compact-mode .player-card .avatar-sm {
-            width: 28px;
-            height: 28px;
-            font-size: 0.6rem;
-        }
-        .players-list.compact-mode .player-card .info-sm .name-sm {
-            font-size: 0.7rem;
-        }
-        .players-list.compact-mode .player-card .info-sm .sub-sm {
-            font-size: 0.5rem;
-            gap: 6px;
-        }
-        .players-list.compact-mode .player-card .points-sm {
-            font-size: 0.65rem;
-            padding: 1px 8px;
-            min-width: 28px;
-        }
-        .players-list.compact-mode .player-card .progress-mini {
-            width: 30px;
-            height: 3px;
-        }
-        .players-list.compact-mode .player-card .info-sm .name-sm .mini-badge {
-            font-size: 0.35rem;
-            padding: 0px 5px;
-        }
-        .players-list.compact-mode .champion-card {
-            padding: 12px;
-            gap: 12px;
-        }
-        .players-list.compact-mode .champion-card .rank-badge {
-            font-size: 1.8rem;
-            min-width: 40px;
-        }
-        .players-list.compact-mode .champion-card .avatar {
-            width: 44px;
-            height: 44px;
-            font-size: 1.2rem;
-        }
-        .players-list.compact-mode .champion-card .info .name {
-            font-size: 0.9rem;
-        }
-        .players-list.compact-mode .champion-card .info .stats-row .item {
-            font-size: 0.6rem;
-        }
-        .players-list.compact-mode .champion-card .progress-wrapper .progress-label {
-            font-size: 0.55rem;
-        }
-        .players-list.compact-mode .champion-card .progress-bar {
-            height: 4px;
-        }
-
-        .player-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-subtle);
             border-radius: var(--radius-md);
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            backdrop-filter: blur(4px);
+            background: #0a0e17;
         }
-        .player-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--border-gold);
-            transform: translateX(-4px);
-        }
-        .player-card .rank {
-            font-size: 1rem;
-            font-weight: 800;
-            min-width: 34px;
-            color: var(--text-secondary);
-        }
-        .player-card .rank.gold {
-            color: #FFD700;
-        }
-        .player-card .rank.silver {
-            color: #C0C0C0;
-        }
-        .player-card .rank.bronze {
-            color: #CD7F32;
-        }
-        .player-card .rank.tie {
-            color: var(--gold-light);
-            font-size: 0.8rem;
-        }
-        .player-card .avatar-sm {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(212, 167, 69, 0.15), rgba(212, 167, 69, 0.03));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-            flex-shrink: 0;
-            border: 2px solid transparent;
-            transition: var(--transition);
-        }
-        .player-card .avatar-sm.gold-border {
-            border-color: #FFD700;
-        }
-        .player-card .avatar-sm.silver-border {
-            border-color: #C0C0C0;
-        }
-        .player-card .avatar-sm.bronze-border {
-            border-color: #CD7F32;
-        }
-        .player-card .info-sm {
-            flex: 1;
-            min-width: 0;
-        }
-        .player-card .info-sm .name-sm {
-            font-weight: 700;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .player-card .info-sm .name-sm .mini-badge {
-            font-size: 0.4rem;
-            padding: 1px 10px;
-            border-radius: 40px;
-            font-weight: 700;
-        }
-        .player-card .info-sm .name-sm .mini-badge.gold {
-            background: var(--gold-glow);
-            color: var(--gold-light);
-        }
-        .player-card .info-sm .name-sm .mini-badge.green {
-            background: var(--success-bg);
-            color: var(--success);
-        }
-        .player-card .info-sm .name-sm .mini-badge.blue {
-            background: var(--info-bg);
-            color: var(--info);
-        }
-        .player-card .info-sm .sub-sm {
-            font-size: 0.6rem;
-            color: var(--text-secondary);
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        .player-card .info-sm .sub-sm .highlight {
-            color: var(--gold-light);
-            font-weight: 600;
-        }
-        .player-card .info-sm .sub-sm .arrow-up {
-            color: var(--success);
-            font-weight: 900;
-        }
-        .player-card .info-sm .sub-sm .arrow-down {
-            color: var(--danger);
-            font-weight: 900;
-        }
-        .player-card .info-sm .sub-sm .arrow-unchanged {
-            color: var(--text-secondary);
-        }
-        .player-card .points-sm {
-            background: var(--gold-gradient);
-            padding: 2px 16px;
-            border-radius: 40px;
-            font-weight: 800;
-            font-size: 0.8rem;
-            color: #0a0e1a;
-            min-width: 40px;
-            text-align: center;
-        }
-        .player-card .progress-mini {
-            width: 60px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 4px;
-        }
-        .player-card .progress-mini .fill-mini {
-            height: 100%;
-            background: var(--gold-gradient);
-            border-radius: 10px;
-            transition: width 0.6s ease;
-            width: 0%;
-        }
-        .player-card .current-user-indicator {
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            border: 2px solid var(--gold);
-            border-radius: var(--radius-md);
-            pointer-events: none;
-            opacity: 0;
-            transition: var(--transition);
-            box-shadow: 0 0 40px rgba(212, 167, 69, 0.08);
-        }
-        .player-card .current-user-indicator.active {
-            opacity: 1;
-        }
-        .player-card .pulse-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-            animation: pulseDot 1.5s infinite;
-        }
-        @keyframes pulseDot {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
+        @media (max-width: 640px) {
+            .leaderboard-iframe-section iframe {
+                height: 500px;
             }
-            50% {
-                opacity: 0.4;
-                transform: scale(0.8);
-            }
-        }
-        .player-card .compare-btn {
-            background: rgba(74, 158, 255, 0.06);
-            border: 1px solid rgba(74, 158, 255, 0.12);
-            color: var(--info);
-            padding: 3px 12px;
-            border-radius: 40px;
-            font-size: 0.55rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            flex-shrink: 0;
-        }
-        .player-card .compare-btn:hover {
-            background: rgba(74, 158, 255, 0.12);
-            border-color: rgba(74, 158, 255, 0.20);
-        }
-
-        /* ============================================================
-           المقارنة
-           ============================================================ */
-        .compare-container {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            align-items: stretch;
-            flex-wrap: wrap;
-            margin: 16px 0;
-        }
-        .compare-player {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: var(--radius-md);
-            padding: 18px 22px;
-            flex: 1;
-            min-width: 200px;
-            border: 1px solid var(--border-subtle);
-            transition: var(--transition);
-        }
-        .compare-player:hover {
-            border-color: var(--border-gold);
-        }
-        .compare-player h3 {
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--gold-light);
-            text-align: center;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .compare-player .stat-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid var(--border-subtle);
-            font-size: 0.8rem;
-        }
-        .compare-player .stat-row .label {
-            color: var(--text-secondary);
-        }
-        .compare-player .stat-row .value {
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        .compare-player .stat-row .value.gold {
-            color: var(--gold-light);
-        }
-        .compare-player .stat-row .value.green {
-            color: var(--success);
-        }
-        .compare-player .stat-row .value.red {
-            color: var(--danger);
-        }
-        .compare-vs {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-        }
-        .compare-select {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .compare-select select {
-            padding: 10px 18px;
-            border-radius: 60px;
-            border: 1px solid var(--border-subtle);
-            background: var(--bg-input);
-            color: var(--text-primary);
-            font-size: 0.8rem;
-            outline: none;
-            transition: var(--transition);
-            font-family: inherit;
-            flex: 1;
-            min-width: 140px;
-        }
-        .compare-select select:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 3px var(--gold-glow);
-        }
-        .compare-select select option {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
         }
 
         /* ============================================================
@@ -2083,7 +1442,7 @@
         .predict-btn-wrap .edit-btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
-            transform: none !important;
+            transform: none;
         }
         .predict-btn-wrap .view-btn {
             flex: 1;
@@ -3400,72 +2759,12 @@
             .day-filter-tabs {
                 justify-content: center;
             }
-            .leaderboard-section {
-                padding: 16px;
+            .leaderboard-iframe-section {
+                padding: 6px;
                 margin: 0 0 20px 0;
             }
-            .leaderboard-section .lb-header .title {
-                font-size: 1.1rem;
-            }
-            .leaderboard-section .lb-header .lb-stats {
-                font-size: 0.6rem;
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-            .lb-period-tabs {
-                justify-content: center;
-            }
-            .champion-card {
-                padding: 16px 18px;
-                flex-direction: column;
-                text-align: center;
-                gap: 12px;
-            }
-            .champion-card .rank-badge {
-                font-size: 2.2rem;
-                min-width: auto;
-            }
-            .champion-card .avatar {
-                width: 56px;
-                height: 56px;
-                font-size: 1.4rem;
-            }
-            .champion-card .info .name {
-                font-size: 1rem;
-                justify-content: center;
-            }
-            .champion-card .info .stats-row {
-                justify-content: center;
-                gap: 12px;
-            }
-            .players-list {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-            .players-list.compact-mode {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 4px;
-            }
-            .player-card {
-                padding: 10px 12px;
-            }
-            .player-card .info-sm .name-sm {
-                font-size: 0.75rem;
-            }
-            .player-card .points-sm {
-                font-size: 0.7rem;
-                padding: 2px 10px;
-            }
-            .player-card .progress-mini {
-                width: 40px;
-            }
-            .tab-btn {
-                padding: 8px 14px;
-                font-size: 0.65rem;
-            }
-            .day-filter-tabs .day-btn {
-                padding: 4px 10px;
-                font-size: 0.6rem;
+            .leaderboard-iframe-section iframe {
+                height: 500px;
             }
             .matches-grid {
                 grid-template-columns: 1fr;
@@ -3640,12 +2939,6 @@
             .matches-grid {
                 grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
             }
-            .players-list {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
-            .players-list.compact-mode {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            }
         }
         @media (min-width: 1024px) {
             .matches-grid {
@@ -3696,22 +2989,9 @@
             </div>
         </div>
 
-        <!-- ===== لوحة المتصدرين ===== -->
-        <div class="leaderboard-section" id="leaderboardSection">
-            <div class="lb-header">
-                <div class="title"><span class="trophy">🏆</span><span>لوحة المتصدرين</span></div>
-                <div class="lb-stats">
-                    <span class="stat">👥 <span class="num" id="lbTotalPlayers">0</span> لاعب</span>
-                    <span class="stat">📊 <span class="num" id="lbTotalPredictions">0</span> توقع</span>
-                    <button class="share-btn" onclick="shareResults()">📤 مشاركة</button>
-                </div>
-            </div>
-            <div class="lb-period-tabs">
-                <button class="period-btn active" data-period="all" onclick="setLeaderboardPeriod('all')">📊 ترتيب عام</button>
-                <button class="period-btn" data-period="24h" onclick="setLeaderboardPeriod('24h')">🕒 آخر 24 ساعة</button>
-                <button class="analytics-trigger" onclick="openAnalytics()">📊 تحليلات متقدمة</button>
-            </div>
-            <div id="leaderboardContainer"><div class="empty-state"><span class="icon">⏳</span> جاري تحميل الترتيب...</div></div>
+        <!-- ===== لوحة المتصدرين — iframe (تم تحديث الرابط) ===== -->
+        <div class="leaderboard-iframe-section" id="leaderboardIframeSection">
+            <iframe src="https://visionof2030-pixel.github.io/LeaderBoard/" loading="lazy" allow="autoplay; encrypted-media" title="لوحة المتصدرين"></iframe>
         </div>
 
         <div class="controls-bar">
@@ -4391,7 +3671,6 @@
             // تحديث جميع التوقعات فوراً
             await renderAllPredictions();
             updateScorers();
-            renderLeaderboard('all');
             renderUpcoming();
             calculateStandings();
             renderTeamStats();
@@ -4916,7 +4195,7 @@
         }
 
         // ============================================================
-        //  بيانات المباريات الثابتة + دور الـ 32 (16 مباراة فقط)
+        //  بيانات المباريات الثابتة + دور الـ 32 (16 مباراة فقط) + ربع النهائي
         // ============================================================
         const rawMatches = [
             // الجولات الثلاث الأولى
@@ -5067,7 +4346,7 @@
             { id: 73, team1: "الأردن", team2: "الأرجنتين", time: "2026-06-28T05:00:00+03:00", round: "third",
                 roundLabel: "الجولة الثالثة" },
 
-            // ===== دور الـ 32 (16 مباراة فقط) =====
+            // ===== دور الـ 32 (16 مباراة) =====
             { id: 101, team1: "جنوب أفريقيا", team2: "كندا", time: "2026-06-28T22:00:00+03:00", round: "round32",
                 roundLabel: "دور الـ 32", stadium: "ملعب سوفي - إنجلوود" },
             { id: 102, team1: "البرازيل", team2: "اليابان", time: "2026-06-29T20:00:00+03:00", round: "round32",
@@ -5101,7 +4380,7 @@
             { id: 116, team1: "كولومبيا", team2: "غانا", time: "2026-07-04T04:30:00+03:00", round: "round32",
                 roundLabel: "دور الـ 32", stadium: "ملعب أروهيد - كانساس سيتي" },
 
-            // ===== المباريات الإضافية المطلوبة =====
+            // ===== دور الـ 16 =====
             { id: 201, team1: "كندا", team2: "المغرب", time: "2026-07-04T20:00:00+03:00", round: "round16",
                 roundLabel: "دور الـ 16", stadium: "هيوستن" },
             { id: 202, team1: "البرازيل", team2: "النرويج", time: "2026-07-05T23:00:00+03:00", round: "round16",
@@ -5116,10 +4395,18 @@
                 roundLabel: "دور الـ 16", stadium: "أتلانتا" },
             { id: 207, team1: "سويسرا", team2: "كولومبيا", time: "2026-07-07T23:00:00+03:00", round: "round16",
                 roundLabel: "دور الـ 16", stadium: "فانكوفر" },
-                
-            // ===== المباراة الجديدة: باراغواي vs فرنسا =====
             { id: 89, team1: "باراغواي", team2: "فرنسا", time: "2026-07-05T00:00:00+03:00", round: "round16",
-                roundLabel: "دور الـ 16", stadium: "ملعب لينكولن فاينانشال فيلد - فيلادلفيا" }
+                roundLabel: "دور الـ 16", stadium: "ملعب لينكولن فاينانشال فيلد - فيلادلفيا" },
+
+            // ===== ربع النهائي (المباريات المطلوبة) =====
+            { id: 301, team1: "المغرب", team2: "فرنسا", time: "2026-07-09T23:00:00+03:00", round: "quarterfinal",
+                roundLabel: "ربع النهائي", stadium: "ملعب جيليت – فوكسبورو، الولايات المتحدة الأمريكية" },
+            { id: 302, team1: "بلجيكا", team2: "إسبانيا", time: "2026-07-10T22:00:00+03:00", round: "quarterfinal",
+                roundLabel: "ربع النهائي", stadium: "ملعب صوفي – لوس أنجلوس، الولايات المتحدة الأمريكية" },
+            { id: 303, team1: "إنجلترا", team2: "النرويج", time: "2026-07-12T00:00:00+03:00", round: "quarterfinal",
+                roundLabel: "ربع النهائي", stadium: "ملعب هارد روك – ميامي، الولايات المتحدة الأمريكية" },
+            { id: 304, team1: "سويسرا", team2: "الأرجنتين", time: "2026-07-12T04:00:00+03:00", round: "quarterfinal",
+                roundLabel: "ربع النهائي", stadium: "Arrowhead Stadium – كانساس سيتي، الولايات المتحدة الأمريكية" }
         ];
 
         const matchesData = rawMatches.map(m => ({
@@ -5207,7 +4494,6 @@
             const streak = recentResults.map(r => r === 'W' ? '✅' : r === 'L' ? '❌' : '➖').join('');
 
             // أفضل الهدافين
-            // نبحث في بيانات openfootball
             if (state.openfootballMatches) {
                 for (let match of state.openfootballMatches) {
                     const homeTeam = translateToArabic(match.team1 || '');
@@ -5224,7 +4510,6 @@
                 }
             }
 
-            // ترتيب الهدافين
             const topScorers = Object.entries(scorers)
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 2)
@@ -5306,7 +4591,6 @@
                 }
             }
 
-            // ترتيب الهدافين
             const topScorers = Object.entries(scorers)
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 5)
@@ -5332,7 +4616,6 @@
         function getTeamScorers(teamName) {
             const scorers = {};
             
-            // قائمة اللاعبين الذين سجلوا في مرمى فرقهم (أهداف عكسية)
             const ownGoalBlacklist = [
                 'Damian Bobadilla', 'بوباديا', 'داميان بوباديا',
                 'Cameron Burgess', 'كاميرون بورغيس',
@@ -5347,7 +4630,6 @@
                 'Yassine Bounou', 'ياسين بونو'
             ];
             
-            // دالة للتحقق من أن اللاعب ليس في القائمة السوداء
             const isOwnGoalScorer = (playerName) => {
                 if (!playerName) return false;
                 const nameLower = playerName.toLowerCase();
@@ -5367,9 +4649,7 @@
                     for (let g of goals) {
                         if (!g.name) continue;
                         let playerName = g.name;
-                        // تخطي الأهداف العكسية
                         if (isOwnGoalScorer(playerName)) continue;
-                        // التحقق من أن اللاعب ليس في الفريق الخصم (هدف عكسي)
                         const isHomePlayer = match.goals1 && match.goals1.some(gg => gg.name === g.name);
                         const isAwayPlayer = match.goals2 && match.goals2.some(gg => gg.name === g.name);
                         if (isHomePlayer && homeTeam !== teamName) continue;
@@ -5392,11 +4672,9 @@
             const modal = document.getElementById('teamStatsModal');
             const content = document.getElementById('teamStatsContent');
             
-            // جلب الإحصائيات الكاملة لكل فريق
             const stats1 = getTeamStatsFull(team1);
             const stats2 = getTeamStatsFull(team2);
             
-            // تحديد الفائز في المباريات السابقة (للسلسلة)
             const getResultSymbol = (teamName, game) => {
                 const result = findMatchResult(game.homeAr, game.awayAr);
                 if (!result) return '⏳';
@@ -5406,14 +4684,12 @@
                 else return '❌';
             };
             
-            // بناء سلسلة النتائج
             const getStreakHtml = (teamName, games) => {
                 const teamGames = games.filter(g => g.homeAr === teamName || g.awayAr === teamName);
                 const recentGames = teamGames.slice(-10);
                 return recentGames.map(g => getResultSymbol(teamName, g)).join(' ');
             };
             
-            // بناء قائمة الهدافين (مع تصفية الأهداف العكسية)
             const getScorersHtml = (teamName) => {
                 const scorers = getTeamScorers(teamName);
                 if (scorers.length === 0) return '<span style="color:var(--text-secondary);font-size:0.6rem;">لا توجد أهداف مسجلة</span>';
@@ -5422,10 +4698,8 @@
                 ).join('');
             };
             
-            // الحصول على جميع مباريات الفريقين
             const allGames = state.previousGamesData || [];
             
-            // إحصائيات الفريق الأول
             const streak1 = getStreakHtml(team1, allGames);
             const goalsFor1 = stats1.goalsFor || 0;
             const goalsAgainst1 = stats1.goalsAgainst || 0;
@@ -5434,7 +4708,6 @@
             const draws1 = stats1.draws || 0;
             const total1 = stats1.total || 0;
             
-            // إحصائيات الفريق الثاني
             const streak2 = getStreakHtml(team2, allGames);
             const goalsFor2 = stats2.goalsFor || 0;
             const goalsAgainst2 = stats2.goalsAgainst || 0;
@@ -5443,14 +4716,11 @@
             const draws2 = stats2.draws || 0;
             const total2 = stats2.total || 0;
             
-            // الهدافين (مع تصفية الأهداف العكسية)
             const scorers1 = getScorersHtml(team1);
             const scorers2 = getScorersHtml(team2);
             
-            // بناء HTML للنافذة (بدون نسبة الفوز)
             content.innerHTML = `
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;">
-                <!-- الفريق الأول -->
                 <div style="background:rgba(255,255,255,0.02);border-radius:var(--radius-md);padding:16px;border:1px solid var(--border-subtle);">
                   <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;border-bottom:1px solid var(--border-gold);padding-bottom:8px;">
                     <span style="font-size:1.5rem;">${getFlag(team1)}</span>
@@ -5477,7 +4747,6 @@
                   </div>
                 </div>
                 
-                <!-- الفريق الثاني -->
                 <div style="background:rgba(255,255,255,0.02);border-radius:var(--radius-md);padding:16px;border:1px solid var(--border-subtle);">
                   <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;border-bottom:1px solid var(--border-gold);padding-bottom:8px;">
                     <span style="font-size:1.5rem;">${getFlag(team2)}</span>
@@ -5695,11 +4964,9 @@
                 }
             }
 
-            // جلب إحصائيات الفرق لحساب النسبة الذكية
             const team1Stats = getTeamStats(m.team1);
             const team2Stats = getTeamStats(m.team2);
 
-            // حساب نسبة الفوز الذكية بناءً على الأهداف المسجلة والمستقبلة
             let smartWinRate1 = 50;
             let smartWinRate2 = 50;
             if (team1Stats.total > 0 && team2Stats.total > 0) {
@@ -5900,10 +5167,8 @@
                     active = allMatchesForGroup;
                 }
                 
-                // ترتيب المباريات حسب التاريخ (الأقرب أولاً)
                 active.sort((a, b) => matchTime(a.timeISO) - matchTime(b.timeISO));
                 
-                // تطبيق فلاتر اليوم/غداً/الأسبوع
                 if (groupFilter === 'all') {
                     if (currentDayFilter === 'today') {
                         active = active.filter(m => isTodaySaudi(m.timeISO));
@@ -5974,7 +5239,6 @@
             });
             text += matchTexts.join(' | ');
 
-            // عرض التسلسل الزمني للمباريات اليوم
             text += ' | 🔄 التسلسل الزمني: ';
             const sortedTodayMatches = [...todayMatches].sort((a, b) => matchTime(a.timeISO) - matchTime(b.timeISO));
             const sequenceTexts = sortedTodayMatches.map((m, index) => {
@@ -6167,7 +5431,6 @@
             currentTimeISO = timeISO;
             currentUserName = userName || localStorage.getItem('lastUserName') || '';
 
-            // تحديد نوع المباراة
             const match = getMatchById(matchId);
             const isKnockout = isKnockoutMatch(match);
 
@@ -6182,11 +5445,9 @@
             document.getElementById('modalFlag2').textContent = getFlag(team2);
             document.getElementById('modalDateTime').textContent = `📅 ${getDateTimeDisplay(timeISO)} (بتوقيت السعودية)`;
 
-            // إظهار/إخفاء خيار التعادل
             const drawOption = document.getElementById('drawOption');
             if (isKnockout) {
                 drawOption.style.display = 'none';
-                // إلغاء تحديد التعادل إذا كان محدداً
                 const drawRadio = document.querySelector('input[name="prediction"][value="DRAW"]');
                 if (drawRadio) drawRadio.checked = false;
             } else {
@@ -6886,7 +6147,6 @@
                 calculateStandings();
                 renderTeamStats();
                 renderBracket();
-                renderLeaderboard(currentLeaderboardPeriod);
                 updateScorers();
                 updateNewsTicker();
             } catch (e) {
@@ -7051,12 +6311,9 @@
             const team1 = parts[1];
             const team2 = parts[2];
             
-            // التحقق أولاً من وجود نتيجة للمباراة
             const result = findMatchResult(team1, team2);
             
-            // إذا لم توجد نتيجة، تحقق مما إذا كانت المباراة قد انتهت
             if (!result) {
-                // نبحث عن المباراة في البيانات
                 const match = matchesData.find(m => 
                     (m.team1 === team1 && m.team2 === team2) || 
                     (m.team1 === team2 && m.team2 === team1)
@@ -7068,12 +6325,9 @@
                 return { status: 'pending', text: '⏳ المباراة لم تلعب بعد', color: 'var(--gold-light)' };
             }
             
-            // تحديد الفائز
             const correctResult = determineWinner(result);
             
-            // إذا لم يتم تحديد فائز (تعادل)
             if (!correctResult) {
-                // التحقق مما إذا كان التوقع تعادلاً أم لا
                 if (prediction.prediction === 'DRAW') {
                     return { status: 'correct', text: '✅ توقع صحيح (تعادل)', color: 'var(--success)' };
                 } else {
@@ -7081,7 +6335,6 @@
                 }
             }
             
-            // مقارنة توقع المستخدم مع النتيجة الصحيحة
             const isCorrect = prediction.prediction === correctResult;
             
             if (isCorrect) {
@@ -7098,7 +6351,6 @@
             const container = document.getElementById('allPredictions');
             const countSpan = document.getElementById('predictionsCount');
             
-            // جلب أحدث التوقعات من Supabase
             if (supabaseClient) {
                 try {
                     const { data, error } = await supabaseClient
@@ -7123,14 +6375,12 @@
                 return;
             }
             
-            // ترتيب التوقعات من الأحدث إلى الأقدم
             const sorted = [...predictions].sort((a, b) => {
                 const dateA = a.created_at ? new Date(a.created_at) : new Date(0);
                 const dateB = b.created_at ? new Date(b.created_at) : new Date(0);
                 return dateB - dateA;
             });
             
-            // عرض أول 100 توقع
             const displayPredictions = sorted.slice(0, 100);
             
             container.innerHTML = displayPredictions.map(p => {
@@ -7286,379 +6536,6 @@
                 return [];
             }
         }
-
-        // ============================================================
-        //  لوحة المتصدرين (محسّنة)
-        // ============================================================
-        function setLeaderboardPeriod(period) {
-            currentLeaderboardPeriod = period;
-            document.querySelectorAll('.period-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.period === period);
-            });
-            renderLeaderboard(period);
-        }
-
-        async function renderLeaderboard(period) {
-            const container = document.getElementById("leaderboardContainer");
-            if (!state.loaded) {
-                container.innerHTML = `<div class="empty-state"><span class="icon">⏳</span> جاري التحميل...</div>`;
-                return;
-            }
-            
-            // جلب أحدث التوقعات
-            if (supabaseClient) {
-                try {
-                    const { data, error } = await supabaseClient
-                        .from("predictions")
-                        .select("*")
-                        .order("created_at", { ascending: false })
-                        .limit(500);
-                    if (!error && data) {
-                        state.predictions = data;
-                    }
-                } catch (e) {
-                    console.warn("⚠️ فشل جلب التوقعات للترتيب:", e);
-                }
-            }
-            
-            const predictions = state.predictions || [];
-            const games = state.previousGamesData || [];
-            if (!predictions.length || !games.length) {
-                container.innerHTML = `<div class="empty-state"><span class="icon">📭</span> لا توجد بيانات كافية</div>`;
-                return;
-            }
-
-            let filteredGames = games;
-            if (period === '24h') {
-                const nowTime = now();
-                const last24h = nowTime - 24 * 60 * 60 * 1000;
-                filteredGames = games.filter(g => {
-                    const ts = g.sortTimestamp || 0;
-                    return ts >= last24h && ts <= nowTime;
-                });
-            }
-
-            const scores = {};
-            for (let p of predictions) {
-                if (!scores[p.user_name]) {
-                    scores[p.user_name] = { name: p.user_name, points: 0, correct: 0, wrong: 0, total: 0 };
-                }
-                scores[p.user_name].total++;
-                const parts = (p.match_id || "").split("_");
-                if (parts.length < 3) continue;
-                const team1 = parts[1],
-                    team2 = parts[2];
-                
-                // استخدام دالة findMatchResult المحسنة
-                const result = findMatchResult(team1, team2);
-                let winner = null;
-                if (result) {
-                    winner = determineWinner(result);
-                }
-                
-                // معالجة التعادل
-                if (winner === null && result) {
-                    // المباراة انتهت بالتعادل
-                    const isCorrect = p.prediction === 'DRAW';
-                    if (isCorrect) {
-                        scores[p.user_name].points++;
-                        scores[p.user_name].correct++;
-                    } else {
-                        scores[p.user_name].wrong++;
-                    }
-                } else if (winner) {
-                    const isCorrect = p.prediction === winner;
-                    if (isCorrect) {
-                        scores[p.user_name].points++;
-                        scores[p.user_name].correct++;
-                    } else {
-                        scores[p.user_name].wrong++;
-                    }
-                }
-            }
-            
-            const board = Object.values(scores).sort((a, b) => b.points - a.points || (b.correct - a.correct));
-            if (!board.length) {
-                container.innerHTML = `<div class="empty-state"><span class="icon">📭</span> لا توجد توقعات صحيحة</div>`;
-                return;
-            }
-            document.getElementById('lbTotalPlayers').textContent = board.length;
-            document.getElementById('lbTotalPredictions').textContent = predictions.length;
-
-            let rank = 1;
-            let i = 0;
-            while (i < board.length) {
-                let j = i;
-                let points = board[i].points;
-                while (j < board.length && board[j].points === points) {
-                    j++;
-                }
-                const groupSize = j - i;
-                for (let k = i; k < j; k++) {
-                    board[k].rank = rank;
-                }
-                i = j;
-                rank += groupSize;
-            }
-
-            const prevRankKey = `prevRank_${period}`;
-            let prevRank = {};
-            try {
-                const raw = localStorage.getItem(prevRankKey);
-                if (raw) prevRank = JSON.parse(raw);
-            } catch (e) {}
-
-            const currentRank = {};
-            board.forEach((p) => {
-                currentRank[p.name] = p.rank;
-            });
-            localStorage.setItem(prevRankKey, JSON.stringify(currentRank));
-
-            const topThree = board.slice(0, 3);
-            const rest = board.slice(3, 10);
-
-            let html = '';
-            if (topThree.length) {
-                const champ = topThree[0];
-                const accuracy = champ.total > 0 ? Math.round((champ.correct / champ.total) * 100) : 0;
-                const isCurrentUser = champ.name === localStorage.getItem('lastUserName') || '';
-                const prevPos = prevRank[champ.name] || 0;
-                const currentPos = champ.rank;
-                let arrow = '';
-                if (prevPos && prevPos !== currentPos) {
-                    if (currentPos < prevPos) arrow = ' <span class="arrow-up">▲</span>';
-                    else if (currentPos > prevPos) arrow = ' <span class="arrow-down">▼</span>';
-                } else if (prevPos) {
-                    arrow = ' <span class="arrow-unchanged">—</span>';
-                }
-                const medal = champ.rank === 1 ? '🥇' : champ.rank === 2 ? '🥈' : champ.rank === 3 ? '🥉' : `#${champ.rank}`;
-                html += `
-              <div class="champion-card" style="${isCurrentUser ? 'border-color:var(--gold);box-shadow:0 0 60px rgba(212,167,69,0.08);' : ''}" onclick="openPlayerPredictions('${champ.name}')">
-                <div class="rank-badge">${medal}</div>
-                <div class="avatar">${champ.name.charAt(0).toUpperCase()}</div>
-                <div class="info">
-                  <div class="name">${champ.name} ${isCurrentUser ? '👤' : ''}
-                    <button class="compare-btn" onclick="event.stopPropagation(); openCompareModal('${champ.name}')">📊 مقارنة</button>
-                  </div>
-                  <div class="stats-row">
-                    <span class="item">🏆 <strong>${champ.points}</strong> نقطة</span>
-                    <span class="item">✅ <strong style="color:var(--gold-light);">${champ.correct}</strong></span>
-                    <span class="item">📊 <strong style="font-size:0.7rem;">${champ.total}</strong></span>
-                    <span class="item">📊 <strong>${accuracy}%</strong> نجاح</span>
-                    <span class="item">${arrow}</span>
-                  </div>
-                  <div class="progress-wrapper">
-                    <div class="progress-label"><span>نسبة النجاح</span><span>${accuracy}%</span></div>
-                    <div class="progress-bar"><div class="fill" style="width:${Math.min(accuracy,100)}%;"></div></div>
-                  </div>
-                </div>
-              </div>
-            `;
-            }
-            if (rest.length || topThree.length > 1) {
-                const allPlayers = [...topThree.slice(1), ...rest];
-                html += `<div class="players-list">`;
-                allPlayers.forEach((player) => {
-                    const rankNum = player.rank;
-                    const accuracy = player.total > 0 ? Math.round((player.correct / player.total) * 100) : 0;
-                    const isCurrentUser = player.name === localStorage.getItem('lastUserName') || '';
-                    let medal = '';
-                    if (rankNum === 1) medal = '🥇';
-                    else if (rankNum === 2) medal = '🥈';
-                    else if (rankNum === 3) medal = '🥉';
-                    else if (rankNum === 4) medal = '4';
-                    else if (rankNum === 5) medal = '5';
-                    else medal = `#${rankNum}`;
-
-                    let rankClass = '';
-                    if (rankNum === 1) rankClass = 'gold';
-                    else if (rankNum === 2) rankClass = 'silver';
-                    else if (rankNum === 3) rankClass = 'bronze';
-                    else rankClass = '';
-
-                    let borderClass = '';
-                    if (rankNum === 1) borderClass = 'gold-border';
-                    else if (rankNum === 2) borderClass = 'silver-border';
-                    else if (rankNum === 3) borderClass = 'bronze-border';
-
-                    const isTie = board.filter(p => p.rank === rankNum).length > 1;
-                    const tieBadge = isTie ? ' ⚡' : '';
-
-                    const prevPos = prevRank[player.name] || 0;
-                    const currentPos = rankNum;
-                    let arrow = '';
-                    if (prevPos && prevPos !== currentPos) {
-                        if (currentPos < prevPos) arrow = ' ▲';
-                        else if (currentPos > prevPos) arrow = ' ▼';
-                    } else if (prevPos) {
-                        arrow = ' —';
-                    }
-                    const arrowClass = arrow.includes('▲') ? 'arrow-up' : (arrow.includes('▼') ? 'arrow-down' :
-                        'arrow-unchanged');
-
-                    html += `
-                <div class="player-card" style="${isCurrentUser ? 'border-color:rgba(212,167,69,0.30);' : ''}" onclick="openPlayerPredictions('${player.name}')">
-                  <div class="rank ${rankClass}">${medal}${tieBadge}</div>
-                  <div class="avatar-sm ${borderClass}">${player.name.charAt(0).toUpperCase()}</div>
-                  <div class="info-sm">
-                    <div class="name-sm">${player.name} ${isCurrentUser ? '👤' : ''}
-                      ${isTie ? `<span class="mini-badge gold">⚡ متعادل</span>` : ''}
-                    </div>
-                    <div class="sub-sm">
-                      <span>✅ <span style="color:var(--gold-light);">${player.correct}</span></span>
-                      <span>📊 <span style="font-size:0.65rem;">${player.total}</span></span>
-                      <span>📊 ${accuracy}%</span>
-                      <span class="${arrowClass}">${arrow.trim()}</span>
-                    </div>
-                    <div class="progress-mini"><div class="fill-mini" style="width:${Math.min(accuracy,100)}%;"></div></div>
-                  </div>
-                  <div class="points-sm">${player.points}</div>
-                  <button class="compare-btn" onclick="event.stopPropagation(); openCompareModal('${player.name}')">📊 مقارنة</button>
-                  ${isCurrentUser ? `<div class="current-user-indicator active"></div><div class="pulse-dot"></div>` : ''}
-                </div>
-              `;
-                });
-                html += `</div>`;
-            }
-            container.innerHTML = html;
-        }
-
-        // ============================================================
-        //  دوال المقارنة
-        // ============================================================
-        function openCompareModal(selectedPlayer) {
-            const modal = document.getElementById('compareModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            const players = Object.keys(getAllPlayersStats());
-            const select1 = document.getElementById('compareSelect1');
-            const select2 = document.getElementById('compareSelect2');
-
-            select1.innerHTML = '<option value="">اختر لاعباً</option>';
-            select2.innerHTML = '<option value="">اختر لاعباً</option>';
-            players.forEach(p => {
-                select1.innerHTML += `<option value="${p}">${p}</option>`;
-                select2.innerHTML += `<option value="${p}">${p}</option>`;
-            });
-
-            if (selectedPlayer) {
-                select1.value = selectedPlayer;
-                const other = players.find(p => p !== selectedPlayer) || '';
-                select2.value = other;
-            }
-
-            renderCompare();
-        }
-
-        function closeCompareModal() {
-            document.getElementById('compareModal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function getAllPlayersStats() {
-            const stats = {};
-            const predictions = state.predictions || [];
-            const games = state.previousGamesData || [];
-
-            for (let p of predictions) {
-                if (!stats[p.user_name]) {
-                    stats[p.user_name] = { name: p.user_name, points: 0, correct: 0, wrong: 0, total: 0, predictions: [] };
-                }
-                stats[p.user_name].total++;
-                const parts = (p.match_id || "").split("_");
-                if (parts.length < 3) continue;
-                const team1 = parts[1],
-                    team2 = parts[2];
-                
-                const result = findMatchResult(team1, team2);
-                let winner = null;
-                if (result) {
-                    winner = determineWinner(result);
-                }
-                
-                if (winner === null && result) {
-                    // تعادل
-                    const isCorrect = p.prediction === 'DRAW';
-                    if (isCorrect) {
-                        stats[p.user_name].points++;
-                        stats[p.user_name].correct++;
-                    } else {
-                        stats[p.user_name].wrong++;
-                    }
-                } else if (winner) {
-                    const isCorrect = p.prediction === winner;
-                    if (isCorrect) {
-                        stats[p.user_name].points++;
-                        stats[p.user_name].correct++;
-                    } else {
-                        stats[p.user_name].wrong++;
-                    }
-                }
-                stats[p.user_name].predictions.push({ matchId: p.match_id, prediction: p.prediction, correct: isCorrect });
-            }
-            return stats;
-        }
-
-        function renderCompare() {
-            const p1 = document.getElementById('compareSelect1').value;
-            const p2 = document.getElementById('compareSelect2').value;
-            const stats = getAllPlayersStats();
-
-            const div1 = document.getElementById('compareStats1');
-            const name1 = document.getElementById('compareName1');
-            if (p1 && stats[p1]) {
-                const s = stats[p1];
-                const acc = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
-                name1.innerHTML = `👤 ${p1}`;
-                div1.innerHTML = `
-              <div class="stat-row"><span class="label">🏆 النقاط</span><span class="value gold">${s.points}</span></div>
-              <div class="stat-row"><span class="label">✅ صحيحة</span><span class="value green">${s.correct}</span></div>
-              <div class="stat-row"><span class="label">❌ خاطئة</span><span class="value red">${s.wrong}</span></div>
-              <div class="stat-row"><span class="label">📊 عدد التوقعات الكلي</span><span class="value">${s.total}</span></div>
-              <div class="stat-row"><span class="label">🎯 نسبة النجاح</span><span class="value gold">${acc}%</span></div>
-            `;
-            } else {
-                name1.innerHTML = '👤 لاعب 1';
-                div1.innerHTML = `<div class="empty-state"><span class="icon">⏳</span> اختر لاعباً</div>`;
-            }
-
-            const div2 = document.getElementById('compareStats2');
-            const name2 = document.getElementById('compareName2');
-            if (p2 && stats[p2]) {
-                const s = stats[p2];
-                const acc = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
-                name2.innerHTML = `👤 ${p2}`;
-                div2.innerHTML = `
-              <div class="stat-row"><span class="label">🏆 النقاط</span><span class="value gold">${s.points}</span></div>
-              <div class="stat-row"><span class="label">✅ صحيحة</span><span class="value green">${s.correct}</span></div>
-              <div class="stat-row"><span class="label">❌ خاطئة</span><span class="value red">${s.wrong}</span></div>
-              <div class="stat-row"><span class="label">📊 عدد التوقعات الكلي</span><span class="value">${s.total}</span></div>
-              <div class="stat-row"><span class="label">🎯 نسبة النجاح</span><span class="value gold">${acc}%</span></div>
-            `;
-            } else {
-                name2.innerHTML = '👤 لاعب 2';
-                div2.innerHTML = `<div class="empty-state"><span class="icon">⏳</span> اختر لاعباً</div>`;
-            }
-        }
-
-        document.getElementById('compareModalCloseBtn').addEventListener('click', closeCompareModal);
-        document.getElementById('compareModal').addEventListener('click', function(e) { if (e.target === this)
-                closeCompareModal(); });
-
-        // ============================================================
-        //  إغلاق نافذة إحصائيات الفريقين
-        // ============================================================
-        document.getElementById('teamStatsCloseBtn').addEventListener('click', function() {
-            document.getElementById('teamStatsModal').classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        document.getElementById('teamStatsModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                document.getElementById('teamStatsModal').classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
 
         // ============================================================
         //  دوال التحليلات المتقدمة
@@ -7866,7 +6743,6 @@
                 }
                 let isCorrect = false;
                 if (winner === null && result) {
-                    // تعادل
                     isCorrect = p.prediction === 'DRAW';
                 } else if (winner) {
                     isCorrect = p.prediction === winner;
@@ -8317,7 +7193,6 @@
 
                 for (let p of matchPredictions) {
                     if (winner === null && result) {
-                        // تعادل
                         if (p.prediction === 'DRAW') correct++;
                         else wrong++;
                     } else if (winner) {
@@ -8808,7 +7683,6 @@
                 if (activeTab === 'scorers') renderScorers();
                 if (activeTab === 'stats') renderTeamStats();
                 if (activeTab === 'predictions') await renderAllPredictions();
-                renderLeaderboard(currentLeaderboardPeriod);
                 updateShareAllCount();
                 updateNewsTicker();
             }, 30000);
@@ -8875,7 +7749,6 @@
         window.toggleArchive = toggleArchive;
         window.openNameModal = openNameModal;
         window.closeNameModal = closeNameModal;
-        window.setLeaderboardPeriod = setLeaderboardPeriod;
         window.openCompareModal = openCompareModal;
         window.closeCompareModal = closeCompareModal;
         window.renderCompare = renderCompare;
@@ -8913,7 +7786,6 @@
             currentTimeISO = timeISO;
             currentUserName = savedUserName;
 
-            // تحديد نوع المباراة
             const match = getMatchById(matchId);
             const isKnockout = isKnockoutMatch(match);
 
@@ -8928,7 +7800,6 @@
             document.getElementById('modalFlag2').textContent = getFlag(team2);
             document.getElementById('modalDateTime').textContent = `📅 ${getDateTimeDisplay(timeISO)} (بتوقيت السعودية)`;
 
-            // إظهار/إخفاء خيار التعادل
             const drawOption = document.getElementById('drawOption');
             if (isKnockout) {
                 drawOption.style.display = 'none';
@@ -8992,6 +7863,9 @@
                 closePlayerPredictionsModal();
                 closeMatchPredictionsModal(); } });
 
+        // ============================================================
+        //  زر حفظ التوقع (مُعدّل)
+        // ============================================================
         document.getElementById('modalSubmitBtn').addEventListener('click', async function() {
             const userName = currentUserName || localStorage.getItem('lastUserName') || '';
             const selected = document.querySelector('input[name="prediction"]:checked');
@@ -9004,6 +7878,13 @@
                 msgEl.className = 'modal-message warning'; return; }
 
             let prediction = selected.value;
+            
+            // تحويل HOME/AWAY إلى اسم الفريق الفعلي للتخزين
+            if (prediction === 'HOME') {
+                prediction = currentTeam1;
+            } else if (prediction === 'AWAY') {
+                prediction = currentTeam2;
+            }
 
             if (isMatchFinished(currentTimeISO)) { msgEl.textContent = '⛔ هذه المباراة انتهت، لا يمكن حفظ التوقع.';
                 msgEl.className = 'modal-message error'; return; }
@@ -9033,7 +7914,6 @@
                     await loadUserPredictions(userName);
                 }
                 await renderAllPredictions();
-                renderLeaderboard(currentLeaderboardPeriod);
                 renderUpcoming();
                 updateNewsTicker();
                 setTimeout(closePredictionModal, 1200);
@@ -9132,6 +8012,139 @@
         async function getPredictionsForUser(userName) {
             return getPredictionsForUserFull(userName);
         }
+
+        // ============================================================
+        //  دالة getAllPlayersStats (تُستخدم في المقارنة)
+        // ============================================================
+        function getAllPlayersStats() {
+            const stats = {};
+            const predictions = state.predictions || [];
+            const games = state.previousGamesData || [];
+
+            for (let p of predictions) {
+                if (!stats[p.user_name]) {
+                    stats[p.user_name] = { name: p.user_name, points: 0, correct: 0, wrong: 0, total: 0, predictions: [] };
+                }
+                stats[p.user_name].total++;
+                const parts = (p.match_id || "").split("_");
+                if (parts.length < 3) continue;
+                const team1 = parts[1],
+                    team2 = parts[2];
+                
+                const result = findMatchResult(team1, team2);
+                let winner = null;
+                if (result) {
+                    winner = determineWinner(result);
+                }
+                let isCorrect = false;
+                if (winner === null && result) {
+                    isCorrect = p.prediction === 'DRAW';
+                } else if (winner) {
+                    isCorrect = p.prediction === winner;
+                }
+                if (isCorrect) {
+                    stats[p.user_name].points++;
+                    stats[p.user_name].correct++;
+                } else {
+                    stats[p.user_name].wrong++;
+                }
+                stats[p.user_name].predictions.push({ matchId: p.match_id, prediction: p.prediction, correct: isCorrect });
+            }
+            return stats;
+        }
+
+        // ============================================================
+        //  دوال المقارنة
+        // ============================================================
+        function openCompareModal(selectedPlayer) {
+            const modal = document.getElementById('compareModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            const players = Object.keys(getAllPlayersStats());
+            const select1 = document.getElementById('compareSelect1');
+            const select2 = document.getElementById('compareSelect2');
+
+            select1.innerHTML = '<option value="">اختر لاعباً</option>';
+            select2.innerHTML = '<option value="">اختر لاعباً</option>';
+            players.forEach(p => {
+                select1.innerHTML += `<option value="${p}">${p}</option>`;
+                select2.innerHTML += `<option value="${p}">${p}</option>`;
+            });
+
+            if (selectedPlayer) {
+                select1.value = selectedPlayer;
+                const other = players.find(p => p !== selectedPlayer) || '';
+                select2.value = other;
+            }
+
+            renderCompare();
+        }
+
+        function closeCompareModal() {
+            document.getElementById('compareModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function renderCompare() {
+            const p1 = document.getElementById('compareSelect1').value;
+            const p2 = document.getElementById('compareSelect2').value;
+            const stats = getAllPlayersStats();
+
+            const div1 = document.getElementById('compareStats1');
+            const name1 = document.getElementById('compareName1');
+            if (p1 && stats[p1]) {
+                const s = stats[p1];
+                const acc = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
+                name1.innerHTML = `👤 ${p1}`;
+                div1.innerHTML = `
+              <div class="stat-row"><span class="label">🏆 النقاط</span><span class="value gold">${s.points}</span></div>
+              <div class="stat-row"><span class="label">✅ صحيحة</span><span class="value green">${s.correct}</span></div>
+              <div class="stat-row"><span class="label">❌ خاطئة</span><span class="value red">${s.wrong}</span></div>
+              <div class="stat-row"><span class="label">📊 عدد التوقعات الكلي</span><span class="value">${s.total}</span></div>
+              <div class="stat-row"><span class="label">🎯 نسبة النجاح</span><span class="value gold">${acc}%</span></div>
+            `;
+            } else {
+                name1.innerHTML = '👤 لاعب 1';
+                div1.innerHTML = `<div class="empty-state"><span class="icon">⏳</span> اختر لاعباً</div>`;
+            }
+
+            const div2 = document.getElementById('compareStats2');
+            const name2 = document.getElementById('compareName2');
+            if (p2 && stats[p2]) {
+                const s = stats[p2];
+                const acc = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
+                name2.innerHTML = `👤 ${p2}`;
+                div2.innerHTML = `
+              <div class="stat-row"><span class="label">🏆 النقاط</span><span class="value gold">${s.points}</span></div>
+              <div class="stat-row"><span class="label">✅ صحيحة</span><span class="value green">${s.correct}</span></div>
+              <div class="stat-row"><span class="label">❌ خاطئة</span><span class="value red">${s.wrong}</span></div>
+              <div class="stat-row"><span class="label">📊 عدد التوقعات الكلي</span><span class="value">${s.total}</span></div>
+              <div class="stat-row"><span class="label">🎯 نسبة النجاح</span><span class="value gold">${acc}%</span></div>
+            `;
+            } else {
+                name2.innerHTML = '👤 لاعب 2';
+                div2.innerHTML = `<div class="empty-state"><span class="icon">⏳</span> اختر لاعباً</div>`;
+            }
+        }
+
+        document.getElementById('compareModalCloseBtn').addEventListener('click', closeCompareModal);
+        document.getElementById('compareModal').addEventListener('click', function(e) { if (e.target === this)
+                closeCompareModal(); });
+
+        // ============================================================
+        //  إغلاق نافذة إحصائيات الفريقين
+        // ============================================================
+        document.getElementById('teamStatsCloseBtn').addEventListener('click', function() {
+            document.getElementById('teamStatsModal').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('teamStatsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                document.getElementById('teamStatsModal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
 
         // ============================================================
         //  START
