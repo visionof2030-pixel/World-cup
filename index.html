@@ -127,6 +127,35 @@
             animation: introTextReveal 2s ease forwards 1.6s;
         }
 
+        .skip-intro-btn {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 167, 69, 0.3);
+            color: var(--gold-light);
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            opacity: 0;
+            animation: introTextReveal 1.5s ease forwards 2.2s;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            pointer-events: auto;
+        }
+        .skip-intro-btn:hover {
+            background: rgba(212, 167, 69, 0.1);
+            border-color: rgba(212, 167, 69, 0.6);
+        }
+        .skip-intro-btn i {
+            margin-inline-start: 6px;
+            font-size: 0.7rem;
+        }
+
         /* ============================================================
            LAYER 1 – المشاهد (السلايدات)
            ============================================================ */
@@ -669,6 +698,107 @@
         }
 
         /* ============================================================
+           عرض أسماء الأبطال السينمائي (Credits Roll)
+           ============================================================ */
+        .credits-heading {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-top: 26px;
+            margin-bottom: 6px;
+            opacity: 0.8;
+        }
+        .credits-viewport {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            height: 46vh;
+            max-height: 380px;
+            margin: 0 auto;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+        }
+        .credits-track {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            transform: translateY(-100%);
+            animation: creditsScroll 26s linear infinite;
+            animation-play-state: paused;
+        }
+        #endCredits.show .credits-track {
+            animation-play-state: running;
+        }
+        .credits-viewport:hover .credits-track {
+            animation-play-state: paused;
+        }
+        @keyframes creditsScroll {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100%);
+            }
+        }
+        .credit-name {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-align: center;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 24px rgba(212, 167, 69, 0.25);
+        }
+        .credit-name.top1 {
+            font-size: 1.65rem;
+            letter-spacing: 2.5px;
+            text-shadow: 0 0 34px rgba(212, 167, 69, 0.45);
+        }
+        .credit-name.top2 {
+            font-size: 1.4rem;
+            text-shadow: 0 0 28px rgba(212, 167, 69, 0.35);
+        }
+        .credit-name.top3 {
+            font-size: 1.3rem;
+            text-shadow: 0 0 28px rgba(212, 167, 69, 0.35);
+        }
+        .credit-medal {
+            margin-inline-end: 6px;
+        }
+        .replay-btn {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 167, 69, 0.35);
+            color: var(--gold-light);
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 10px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        }
+        .replay-btn:hover {
+            background: rgba(212, 167, 69, 0.12);
+            border-color: rgba(212, 167, 69, 0.7);
+            transform: translateY(-2px);
+        }
+        .replay-btn i {
+            margin-inline-end: 6px;
+        }
+
+        /* ============================================================
            NAV & MUTE BUTTON
            ============================================================ */
         .nav-controls {
@@ -703,12 +833,29 @@
             background: rgba(255, 255, 255, 0.1);
             transition: all 0.4s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
         .nav-controls .dot.active {
-            background: var(--gold);
-            width: 18px;
+            background: rgba(212, 167, 69, 0.25);
+            width: 22px;
             border-radius: 10px;
             box-shadow: 0 0 16px rgba(212, 167, 69, 0.15);
+        }
+        .nav-controls .dot.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--gold-light);
+            border-radius: 10px;
+            animation: dotProgress 8s linear forwards;
+        }
+        @keyframes dotProgress {
+            from { width: 0%; }
+            to { width: 100%; }
         }
 
         #muteBtn {
@@ -1066,6 +1213,7 @@
             وكل قصة لها <strong>أبطال</strong>.
         </div>
         <div class="intro-sub">كأس العالم 2026</div>
+        <button id="skipIntroBtn" class="skip-intro-btn">تخطي <i class="fas fa-forward"></i></button>
     </div>
 
     <!-- ============================================================
@@ -1079,6 +1227,13 @@
             <p><strong>والبطولات تنتهي.</strong></p>
             <div class="end-divider"></div>
             <p style="font-size:1rem; color:var(--text-muted);">شكراً لكم جميعاً</p>
+
+            <div class="credits-heading">بترتيب الأبطال</div>
+            <div class="credits-viewport">
+                <div class="credits-track" id="creditsTrack"></div>
+            </div>
+
+            <button id="replayBtn" class="replay-btn"><i class="fas fa-rotate-right"></i> مشاهدة مرة أخرى</button>
         </div>
     </div>
 
@@ -1427,6 +1582,26 @@
         // ============================================================
         let endCreditsShown = false;
 
+        function renderCredits() {
+            const track = document.getElementById('creditsTrack');
+            if (!track) return;
+            const sorted = [...data.players].sort((a, b) => a.rank - b.rank);
+            const medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
+            track.innerHTML = sorted.map(p => {
+                const topClass = p.rank <= 3 ? ` top${p.rank}` : '';
+                const medal = medals[p.rank] ? `<span class="credit-medal">${medals[p.rank]}</span>` : '';
+                return `<div class="credit-name${topClass}">${medal}${p.name}</div>`;
+            }).join('');
+        }
+
+        function restartCreditsAnimation() {
+            const track = document.getElementById('creditsTrack');
+            if (!track) return;
+            track.style.animation = 'none';
+            void track.offsetWidth; // إعادة تشغيل الأنيميشن من البداية
+            track.style.animation = '';
+        }
+
         function showEndCredits() {
             if (endCreditsShown) return;
             endCreditsShown = true;
@@ -1434,6 +1609,7 @@
             document.getElementById('navControls').style.opacity = '0';
             
             setTimeout(() => {
+                restartCreditsAnimation();
                 document.getElementById('endCredits').classList.add('show');
             }, 1500);
         }
@@ -1521,22 +1697,56 @@
         // ============================================================
         //  INIT
         // ============================================================
+        let introHideTimeout = null;
+        let autoplayStartTimeout = null;
+
+        function beginShow() {
+            document.getElementById('introLayer').classList.add('hide');
+            updateDots();
+            startAutoPlay();
+        }
+
+        function restartShow() {
+            document.getElementById('endCredits').classList.remove('show');
+            endCreditsShown = false;
+            currentIndex = 0;
+            slides.forEach((s, i) => {
+                s.classList.remove('active', 'exit-left', 'exit-right');
+                if (i === 0) s.classList.add('active');
+            });
+            updateDots();
+            startAutoPlay();
+            restartCreditsAnimation();
+            document.getElementById('navControls').style.opacity = '0.15';
+            if (backgroundMusic && !isMuted) {
+                backgroundMusic.currentTime = 0;
+                backgroundMusic.play().catch(() => {});
+            }
+        }
+
         function init() {
             renderLeaderboard();
+            renderCredits();
             animateCounterStatic('heroPlayers', data.totalTeams);
             animateCounterStatic('heroPredictions', data.totalPredictions);
             animateCounterStatic('heroPoints', data.topPoints);
 
             // الصفحة التي تسبق Chapter I (introLayer) تبقى 10 ثوانٍ
-            setTimeout(() => {
+            introHideTimeout = setTimeout(() => {
                 document.getElementById('introLayer').classList.add('hide');
             }, INTRO_DELAY);
 
             // بدء العرض التلقائي بعد اختفاء introLayer مباشرةً
-            setTimeout(() => {
+            autoplayStartTimeout = setTimeout(() => {
                 updateDots();
                 startAutoPlay();
             }, INTRO_DELAY + 200);
+
+            document.getElementById('skipIntroBtn').addEventListener('click', function() {
+                clearTimeout(introHideTimeout);
+                clearTimeout(autoplayStartTimeout);
+                beginShow();
+            });
 
             document.querySelectorAll('.dot').forEach(dot => {
                 dot.addEventListener('click', function() {
@@ -1551,21 +1761,13 @@
                 });
             });
 
+            document.getElementById('replayBtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                restartShow();
+            });
+
             document.getElementById('endCredits').addEventListener('click', function() {
-                this.classList.remove('show');
-                endCreditsShown = false;
-                currentIndex = 0;
-                slides.forEach((s, i) => {
-                    s.classList.remove('active', 'exit-left', 'exit-right');
-                    if (i === 0) s.classList.add('active');
-                });
-                updateDots();
-                startAutoPlay();
-                document.getElementById('navControls').style.opacity = '0.15';
-                if (backgroundMusic && !isMuted) {
-                    backgroundMusic.currentTime = 0;
-                    backgroundMusic.play().catch(() => {});
-                }
+                restartShow();
             });
         }
 
